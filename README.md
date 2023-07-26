@@ -18,9 +18,9 @@ I am not inclined to use point-and-click GUI software. I wish to compose music v
 ## Log
 
 26-jul-23:
-	Managed to setup audio/midi libraries in ubuntu. 
-	Wrote drum pattern logic.
-	Achieved sending messages from python to Hydrogen.
+- Managed to setup audio/midi libraries in ubuntu. 
+- Wrote drum pattern logic.
+- Achieved sending messages from python to Hydrogen.
 
 
 ## To-do
