@@ -1,7 +1,7 @@
 # vjpy
 Python module to sequence music videos
 
-![logo](https://i.imgur.com/HmeYbDU.jpg)
+![logo by dall-e mini](https://i.imgur.com/HmeYbDU.jpg)
 
 ## Concept
 
