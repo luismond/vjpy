@@ -37,3 +37,7 @@ I am not inclined to use point-and-click GUI software. I wish to compose music v
 - Sequence video chunks with midi 			[video-midi-player.py]
 - Automate video chunking 					[video-chunker.py]
 
+## YouTube Channel
+
+![](https://www.youtube.com/channel/UCv-tF08UqlP7h_CPqntVhRw)
+

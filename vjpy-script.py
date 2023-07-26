@@ -30,7 +30,7 @@ drumkit = {
     }
 
 def play_note(n, s):
-    #print(drumkit[n])
+    print(drumkit[n])
     msg = Message('note_on', note=n, velocity=50)
     outport.send(msg)
     sleep(s)
@@ -41,6 +41,8 @@ def kick_snare_hats():
     play_note(38, .50)
     play_note(45, .25)
     play_note(45, .25)
+    print('\n')
+
 
 def kick_snare():
     play_note(36, .25)
@@ -48,16 +50,16 @@ def kick_snare():
     play_note(38, .50)
     play_note(45, .25)
     play_note(38, .25)
+    print('\n')
     
 def pattern1():
     kick_snare_hats()
     kick_snare_hats() 
     kick_snare_hats() 
     kick_snare() 
-    #print('\n')
+
 
 for n in range(0, 4):
-    print(n)
     pattern1()
 
 
