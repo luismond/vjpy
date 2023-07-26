@@ -1,6 +1,6 @@
 # vjpy
 Python module to sequence music videos
-![logo](https://imgur.com/pZQ6yjW)
+![logo](https://i.imgur.com/pZQ6yjW.jpeg)
 
 ## Concept
 
