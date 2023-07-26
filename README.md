@@ -20,7 +20,7 @@ I am not inclined to use point-and-click GUI software. I wish to compose music v
 26-jul-23:
 - Managed to setup audio/midi libraries in ubuntu. 
 - Wrote drum pattern logic.
-- Achieved sending messages from python to Hydrogen.
+- Achieved sending messages from python to Hydrogen. ![Video:](https://youtu.be/PWLScepLk58)
 
 
 ## To-do
