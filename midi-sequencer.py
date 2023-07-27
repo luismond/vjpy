@@ -43,7 +43,7 @@ note_values = {
 
 
 
-#%%
+
 drumkit = Drumkit(
     name='TR808EmulationKit',
     drums={
@@ -63,21 +63,20 @@ outport = mido.open_output()
 patterns = {
     '1': Pattern(
         timeline='01..|02..|03..|04..|',
-        pattern= 'kk..|s.hh|kk..|swht|'),
+        pattern='|kk..|s.hh|kk..|swht|'),
     '2': Pattern(
         timeline='05..|06..|07..|08..|',
-        pattern= 'kk..|s.hh|kk..|s.gg|'),
+        pattern='|kk..|s.hh|kk..|s.gg|'),
     '3': Pattern(
         timeline='09..|10..|11..|12..|',
-        pattern= 'kk..|s.hh|kk..|swht|'),
+        pattern='|kk..|s.hh|kk..|swht|'),
     '4': Pattern(
         timeline='13..|14..|15..|16..|',
-        pattern= 'kk..|shhh|kk..|ssss|')
+        pattern='|kk..|shhh|kk..|ssss|')
     }
 
 
-
-# # Functions
+# Functions
 
 
 def play_note(note, duration=0, velocity=50):
@@ -96,7 +95,7 @@ def play_silence(duration=0):
 
 
 def parse_pattern(pattern):
-    note_value = note_values['eigth_note']
+    note_value = note_values['1/8'].relative_value
     for hit in pattern:
         if hit != '|':
             if hit == '.':
