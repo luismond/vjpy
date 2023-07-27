@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """midi player"""
-
-from midi_sequencer import MidiSequencer
-from patterns import PATTERNS
+from vjpy import MidiSequencer, PATTERNS
 
 seq = MidiSequencer()
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """vjpy/hydrogen drumkits"""
 
-from data_classes import Drumkit, Drum
+from vjpy import Drumkit, Drum
 
 TR808EmulationKit = Drumkit(
     name='TR808EmulationKit',  # choose this drumkit in Hydrogen

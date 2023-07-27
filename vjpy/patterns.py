@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """drum patterns"""
 
-from data_classes import Pattern
+from vjpy import Pattern
 
 # Pattern example
 # PATTERNS = {

@@ -4,8 +4,8 @@
 import mido
 from mido import Message
 from time import sleep
-from data_classes import NoteValue
-from drumkits import TR808EmulationKit
+from vjpy import NoteValue
+from vjpy import TR808EmulationKit
 
 # GLOBAL VARIABLES
 OUTPORT = mido.open_output()
