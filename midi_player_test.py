@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""midi player"""
-from vjpy import MidiSequencer, PATTERNS
+"""midi player test"""
+from vjpy import MidiSequencer
+from vjpy.patterns import pattern_1
 
-seq = MidiSequencer()
-
-for n in range(8):
-    for pattern_num in PATTERNS:
-        seq.play_pattern(PATTERNS[pattern_num].pattern)
+seq = MidiSequencer()  # create sequencer instance
+seq.play_pattern(pattern_1.pattern) # play sequence

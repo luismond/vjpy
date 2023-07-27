@@ -10,9 +10,9 @@ from pydantic import BaseModel
 
 # Data Classes
 
-
 class Pattern(BaseModel):
-    timeline: str
+    bars: str
+    beats: str
     pattern: str
 
 
