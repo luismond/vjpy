@@ -11,6 +11,8 @@ Use MIDI, audio and video python modules to create audiovisual beats.
 
 Hexstatic, Coldcut music videos from the early 2000's, created with VJPro. 
 
+Example: https://www.youtube.com/watch?v=f1SLN3LpDiA
+
 ## Motivation
 
 Create audiovisual sequences programatically.
