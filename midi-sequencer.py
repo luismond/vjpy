@@ -1,5 +1,5 @@
 # # -*- coding: utf-8 -*-
-"""vjpy midi sequencer"""
+"""vjpy midi sequencer."""
 
 from pydantic import BaseModel
 import mido
@@ -8,7 +8,7 @@ from time import sleep
 
 # GLOBAL VARIABLES
 OUTPORT = mido.open_output()
-BPM = 60
+BPM = 120
 
 # Data Classes
 
@@ -35,7 +35,7 @@ class NoteValue(BaseModel):
 
 
 DRUMKIT = Drumkit(
-    name='TR808EmulationKit',
+    name='TR808EmulationKit',  # choose this drumkit in Hydrogen
     drums={
         'kick': Drum(name='kick', note=36, short_hand='k'),
         'snare': Drum(name='snare', note=38, short_hand='s'),
@@ -68,7 +68,8 @@ class MidiSequencer:
         sleep(duration)
 
     def play_pattern(self, pattern):
-        note_value = self.note_values['1/4'].relative_value / self.note_duration
+        res = '1/4'  # resolution
+        note_value = self.note_values[res].relative_value / self.note_duration
         for beat in pattern:
             if beat != '|':
                 if beat == '.':
@@ -97,21 +98,29 @@ seq = MidiSequencer()
 
 
 # Pattern example
+# PATTERNS = {
+#     '1': Pattern(
+#         timeline='01..|02..|03..|04..|',
+#         pattern='|kk..|s.hh|kk..|swht|'),
+#     '2': Pattern(
+#         timeline='05..|06..|07..|08..|',
+#         pattern='|kk..|s.hh|kk..|s.gg|'),
+#     '3': Pattern(
+#         timeline='09..|10..|11..|12..|',
+#         pattern='|kk..|s.hh|kk..|swht|'),
+#     '4': Pattern(
+#         timeline='13..|14..|15..|16..|',
+#         pattern='|k.h.|s.h.|k.h.|cccc|')
+#     }
+
+
 PATTERNS = {
     '1': Pattern(
-        timeline='01..|02..|03..|04..|',
-        pattern='|kk..|s.hh|kk..|swht|'),
-    '2': Pattern(
-        timeline='05..|06..|07..|08..|',
-        pattern='|kk..|s.hh|kk..|s.gg|'),
-    '3': Pattern(
-        timeline='09..|10..|11..|12..|',
-        pattern='|kk..|s.hh|kk..|swht|'),
-    '4': Pattern(
-        timeline='13..|14..|15..|16..|',
-        pattern='|k.h.|s.h.|k.h.|cccc|')
+        timeline='....|....|....|....|',
+        pattern='|k.h.|k.h.|k.h.|k.h.|')
     }
 
 
-for pattern_num in PATTERNS:
-    seq.play_pattern(PATTERNS[pattern_num].pattern)
+for n in range(8):
+    for pattern_num in PATTERNS:
+        seq.play_pattern(PATTERNS[pattern_num].pattern)
