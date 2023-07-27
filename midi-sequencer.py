@@ -5,7 +5,7 @@ import mido
 from mido import Message
 from time import sleep
 from pydantic import BaseModel
-from pprint import pprint as pp
+
 
 """
 pydantic example
@@ -27,78 +27,34 @@ class Drum(BaseModel):
 
 class Drumkit(BaseModel):
     name: str
-    drums: list[Drum]
+    drums: dict
 
 
-dk = Drumkit(
+drumkit = Drumkit(
     name='TR808EmulationKit',
-    drums=[
-        Drum(name='kick', note=36, short_hand='k'),
-        Drum(name='snare', note=38, short_hand='s'),
-        Drum(name='clap', note=40, short_hand='c'),
-        Drum(name='tom', note=43, short_hand='t'),
-        Drum(name='hat', note=45, short_hand='h'),
-        Drum(name='conga', note=49, short_hand='g'),
-        Drum(name='clave', note=50, short_hand='v'),
-        Drum(name='cowbell', note=51, short_hand='w'),
-        ]
-    )
-
-
-for x in dk:
-    pp(x)
-
-
-# Define a drumkit
-drumkit = {
-    'name': 'TR808EmulationKit',
-    'drums':
-        {
-             'kick': {
-                      'note': 36,
-                      'short_hand': 'k'
-                      },
-             'snare': {
-                      'note': 38,
-                      'short_hand': 's'
-                      },
-             'clap': {
-                      'note': 40,
-                      'short_hand': 'c'
-                      },
-             'tom': {
-                      'note': 43,
-                      'short_hand': 't'
-                      },
-             'hat': {
-                      'note': 45,
-                      'short_hand': 'h'
-                      },
-             'conga': {
-                      'note': 49,
-                      'short_hand': 'o'
-                      },
-             'clave': {
-                      'note': 50,
-                      'short_hand': 'v'
-                      },
-             'cowbell': {
-                      'note': 51,
-                      'short_hand': 'w'
-                      },
-            }
+    drums={
+        'kick': Drum(name='kick', note=36, short_hand='k'),
+        'snare': Drum(name='snare', note=38, short_hand='s'),
+        'clap': Drum(name='clap', note=40, short_hand='c'),
+        'tom': Drum(name='tom', note=43, short_hand='t'),
+        'hat': Drum(name='hat', note=45, short_hand='h'),
+        'conga': Drum(name='conga', note=49, short_hand='g'),
+        'clave': Drum(name='clave', note=50, short_hand='v'),
+        'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
         }
+    )
 
 
 # todo: define proper note durations
 # todo: define fundamental sequencing objects and actions
 
+
 def tempo():
     pass
 
 
-def pattern():
-    pass
+# def pattern():
+#     pass
 
 
 def instrument():
@@ -127,20 +83,19 @@ def velocity():
     pass
 
 
-def play_note(note, sleep_=0, velocity=50):
+def play_note(note, duration=0, velocity=50):
     msg = Message('note_on',  note=note, velocity=velocity)
     outport.send(msg)
-    sleep(sleep_)
+    sleep(duration)
 
 
 def play_silence(duration=0):
     sleep(duration)
 
 
-# def play_drum(drumkit, drum_name, sleep_):
-#     drum_note = drumkits[drumkit][drum_name]
-#     print(f'{drum_note} - {drum_name} - {sleep_}')
-#     play_note(drum_note, sleep_=sleep_)
+def play_drum(drum_name, duration):
+    drum_note = drumkit.drums[drum_name].note
+    play_note(note=drum_note, duration=duration)
 
 
 note_relative_values = {
@@ -192,21 +147,25 @@ patterns = {
     }
 
 
-drumkit = 'TR808EmulationKit'
-
-# def parse(patt):
-#     note_value = note_relative_values['quarter_note']
-#     for i in patt:
-#         if i != '|':
-#             drum_name = short_hand[i]
-#             if short_hand[i] == 'silence':
-#                 play_silence(duration=note_value)
-#             else:
-#                 play_drum(drumkit, drum_name, note_value)
-
-# for patt_n in patterns:
-#     parse(patterns[patt_n]['pattern'])
+short_hand = dict()
+for d in drumkit.drums:
+    short_hand[drumkit.drums[d].short_hand] = drumkit.drums[d].name
 
 
-# def loop():
-#     pass
+def parse_pattern(pattern):
+    note_value = note_relative_values['quarter_note']
+    for hit in pattern:
+        if hit != '|':
+            if hit == '.':
+                play_silence(duration=note_value)
+            else:
+                drum_name = [
+                    drum.name for drum in drumkit.drums.values()
+                    if drum.short_hand == hit
+                    ][0]
+                print(drum_name)
+                play_drum(drum_name=drum_name, duration=note_value)
+
+
+for pattern in patterns:
+    parse_pattern(patterns[pattern]['pattern'])
