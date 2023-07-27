@@ -8,7 +8,11 @@ from time import sleep
 
 # GLOBAL VARIABLES
 OUTPORT = mido.open_output()
-BPM = 60
+BPMS = {
+       60: 1,
+       90: 1.5,
+       120: 2
+       }
 
 # Data Classes
 
@@ -74,7 +78,7 @@ patterns = {
         pattern='|kk..|s.hh|kk..|swht|'),
     '4': Pattern(
         timeline='13..|14..|15..|16..|',
-        pattern='|kk..|shhh|kk..|ssss|')
+        pattern='|k.h.|s.h.|k.h.|kkkk|')
     }
 
 
@@ -97,7 +101,8 @@ def play_silence(duration=0):
 
 
 def parse_pattern(pattern):
-    note_value = note_values['1/8'].relative_value
+    note_value = note_values['1/4'].relative_value / BPMS[120]
+    print(round(note_value, 2))
     for hit in pattern:
         if hit != '|':
             if hit == '.':
@@ -109,9 +114,9 @@ def parse_pattern(pattern):
                     ][0]  # simplify
                 play_drum(drum_name=drum_name, duration=note_value)
 
-
-for pattern_n in patterns:
-    parse_pattern(patterns[pattern_n].pattern)
+for n in range(2):
+    for pattern_n in patterns:
+        parse_pattern(patterns[pattern_n].pattern)
 
 # %% to_do
 # def tempo():
