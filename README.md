@@ -13,8 +13,7 @@ Hexstatic, Coldcut music videos from the early 2000's, created with VJPro.
 
 ## Motivation
 
-I am not inclined to use point-and-click GUI software. I wish to compose music videos programatically.
-
+Create audiovisual sequences programatically.
 
 ## To-do
 
