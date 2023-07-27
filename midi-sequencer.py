@@ -1,53 +1,63 @@
 # -*- coding: utf-8 -*-
+"""MIDI sequencer."""
 
 import mido
 from mido import Message
 from time import sleep
 
-# Enable MIDI in in Hydrogen
-
-# Send notes to Hydrogen
+# Open port
 outport = mido.open_output()
 
-# Define drumkit note names
-drumkit = {
-    36: 'kick',
-    38: 'snare',
-    45: 'hat'
-    }
+# Define drumkits
+drumkits = {
+    'TR808EmulationKit':
+        {
+             'kick': 36,
+             'snare': 38,
+             'clap': 40,
+             'tom': 43,
+             'hat': 45,
+             'conga': 49,
+             'clave': 50,
+             'cowbell': 51
+            }
+        }
 
-def play_note(n, s):
-    print(drumkit[n])
-    msg = Message('note_on', note=n, velocity=50)
+
+def play_note(note, sleep_=0, velocity=50):
+    msg = Message('note_on',  note=note, velocity=velocity)
     outport.send(msg)
-    sleep(s)
-
-def kick_snare_hats():
-    play_note(36, .25)
-    play_note(36, .75)
-    play_note(38, .50)
-    play_note(45, .25)
-    play_note(45, .25)
-    print('\n')
+    sleep(sleep_)
 
 
-def kick_snare():
-    play_note(36, .25)
-    play_note(36, .75)
-    play_note(38, .50)
-    play_note(45, .25)
-    play_note(38, .25)
-    print('\n')
-    
-def pattern1():
-    kick_snare_hats()
-    kick_snare_hats() 
-    kick_snare_hats() 
-    kick_snare() 
+def play_drum(drumkit, drum_name, sleep_):
+    drum_note = drumkits[drumkit][drum_name]
+    print(f'{drum_note} - {drum_name} - {sleep_}')
+    play_note(drum_note, sleep_=sleep_)
 
 
-for n in range(0, 4):
-    pattern1()
+def drum_pattern(drumkit):
+    print('note - name - sleep')
+    play_drum(drumkit, 'kick', .25)
+    play_drum(drumkit, 'kick', .75)
+    play_drum(drumkit, 'snare', .50)
+    play_drum(drumkit, 'hat', .25)
+    play_drum(drumkit, 'hat', .25)
+    play_drum(drumkit, 'kick', .25)
+    play_drum(drumkit, 'kick', .75)
+    play_drum(drumkit, 'snare', .50)
+    play_drum(drumkit, 'hat', .25)
+    play_drum(drumkit, 'clave', .25)
+    play_drum(drumkit, 'kick', .25)
+    play_drum(drumkit, 'kick', .75)
+    play_drum(drumkit, 'snare', .50)
+    play_drum(drumkit, 'hat', .25)
+    play_drum(drumkit, 'conga', .25)
+    play_drum(drumkit, 'kick', .25)
+    play_drum(drumkit, 'kick', .75)
+    play_drum(drumkit, 'snare', .50)
+    play_drum(drumkit, 'hat', .25)
+    play_drum(drumkit, 'tom', .25)
 
 
-#play_note(45, .1)
+drum_pattern('TR808EmulationKit')
