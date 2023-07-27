@@ -25,19 +25,25 @@ class Drum(BaseModel):
     note: int
     short_hand: str
 
+class NoteValue(BaseModel):
+    name: str
+    relative_value: float
+    repr_: str
 
 # # Objects
 
-note_relative_values = {
-    'whole_note': 1,
-    'half_note': .5,
-    'quarter_note': .25,
-    'eigth_note': .125,
-    'sixteenth_note': 0.0625,
-    'thirty_second_note': 0.03125
+note_values = {
+    '1': NoteValue(name='whole_note', relative_value=1.0, repr_='1'),
+    '1/2': NoteValue(name='half_note', relative_value=0.5, repr_='1/2'),
+    '1/4': NoteValue(name='quarter_note', relative_value=0.25, repr_='1/4'),
+    '1/8': NoteValue(name='eigth_note', relative_value=0.125, repr_='1/8'),
+    '1/16': NoteValue(name='sixteenth_note', relative_value=0.0625, repr_='1/16'),
+    '1/32': NoteValue(name='thirty-second_note', relative_value=0.03125, repr_='1/32')
     }
 
 
+
+#%%
 drumkit = Drumkit(
     name='TR808EmulationKit',
     drums={
@@ -90,7 +96,7 @@ def play_silence(duration=0):
 
 
 def parse_pattern(pattern):
-    note_value = note_relative_values['eigth_note']
+    note_value = note_values['eigth_note']
     for hit in pattern:
         if hit != '|':
             if hit == '.':
