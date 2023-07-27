@@ -1,17 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 26 03:29:00 2023
-
-@author: luism
-"""
-'''
-pip install mido
-sudo apt-get update
-sudo apt-get libasound2-dev
-copy to lib64
-pip install PyAudio
-pip install pyalsaaudio
-'''
 
 import mido
 from mido import Message
