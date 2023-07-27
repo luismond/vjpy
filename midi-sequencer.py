@@ -6,8 +6,11 @@ import mido
 from mido import Message
 from time import sleep
 
+# GLOBAL VARIABLES
+OUTPORT = mido.open_output()
+BPM = 60
 
-# # Data Classes
+# Data Classes
 
 
 class Pattern(BaseModel):
@@ -25,12 +28,14 @@ class Drum(BaseModel):
     note: int
     short_hand: str
 
+
 class NoteValue(BaseModel):
     name: str
     relative_value: float
     repr_: str
 
-# # Objects
+# Objects
+
 
 note_values = {
     '1': NoteValue(name='whole_note', relative_value=1.0, repr_='1'),
@@ -40,8 +45,6 @@ note_values = {
     '1/16': NoteValue(name='sixteenth_note', relative_value=0.0625, repr_='1/16'),
     '1/32': NoteValue(name='thirty-second_note', relative_value=0.03125, repr_='1/32')
     }
-
-
 
 
 drumkit = Drumkit(
@@ -58,7 +61,6 @@ drumkit = Drumkit(
         }
     )
 
-outport = mido.open_output()
 
 patterns = {
     '1': Pattern(
@@ -81,7 +83,7 @@ patterns = {
 
 def play_note(note, duration=0, velocity=50):
     msg = Message('note_on',  note=note, velocity=velocity)
-    outport.send(msg)
+    OUTPORT.send(msg)
     sleep(duration)
 
 
@@ -114,30 +116,3 @@ for pattern_n in patterns:
 # %% to_do
 # def tempo():
 #     pass
-# # def pattern():
-# #     pass
-# # def instrument():
-# #     pass
-# # def note_values():
-# #     pass
-# # def bpm():
-# #     "rel value 1 = 1 second = 60 bpm"
-# #     pass
-# # def time_signature():
-# #     "beats / note value (4/4)"
-# #     pass
-# # def beat():
-# #     pass
-# # def velocity():
-# #     pass
-# def time_line():
-#     pass
-# bar_resolutions = {
-#     '1/4': '....',
-#     '1/8': '........',
-#     '1/16': '................'
-#     }
-# def get_bar(resolution):
-#     return bar_resolutions[resolution]
-# bar = get_bar('1/4')
-# bars = [get_bar('1/4') for n in range(4)]
