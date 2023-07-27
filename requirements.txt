@@ -2,3 +2,4 @@ spyder
 mido==1.3.0
 python-rtmidi==1.5.5
 pydantic==2.1.1
+playsound==1.3.0

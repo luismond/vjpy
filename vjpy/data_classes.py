@@ -30,3 +30,10 @@ class Drum(BaseModel):
 class NoteValue(BaseModel):
     name: str
     relative_value: float
+
+'''
+complement pattern definitions
+
+size, resolution
+
+'''
