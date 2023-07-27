@@ -117,7 +117,7 @@ seq = MidiSequencer()
 PATTERNS = {
     '1': Pattern(
         timeline='....|....|....|....|',
-        pattern='|k.h.|k.h.|k.h.|k.h.|')
+        pattern='|k.h.|c.h.|k.h.|c.h.|')
     }
 
 
