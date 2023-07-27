@@ -1,20 +1,11 @@
 # # -*- coding: utf-8 -*-
-# """vjpy midi sequencer"""
+"""vjpy midi sequencer"""
 
 from pydantic import BaseModel
 import mido
 from mido import Message
 from time import sleep
 
-# GLOBAL VARIABLES
-OUTPORT = mido.open_output()
-
-
-def get_bpm(int_):
-    return int_/60
-
-
-BPM = get_bpm(120)
 
 # Data Classes
 
@@ -40,10 +31,19 @@ class NoteValue(BaseModel):
     relative_value: float
     repr_: str
 
-# Objects
+
+# GLOBAL VARIABLES
+OUTPORT = mido.open_output()
 
 
-note_values = {
+def get_bpm(int_):
+    return int_/60
+
+
+BPM = get_bpm(120)
+
+
+NOTE_VALUES = {
     '1': NoteValue(name='whole_note', relative_value=1.0, repr_='1'),
     '1/2': NoteValue(name='half_note', relative_value=0.5, repr_='1/2'),
     '1/4': NoteValue(name='quarter_note', relative_value=0.25, repr_='1/4'),
@@ -53,7 +53,7 @@ note_values = {
     }
 
 
-drumkit = Drumkit(
+DRUMKIT = Drumkit(
     name='TR808EmulationKit',
     drums={
         'kick': Drum(name='kick', note=36, short_hand='k'),
@@ -68,7 +68,7 @@ drumkit = Drumkit(
     )
 
 
-patterns = {
+PATTERNS = {
     '1': Pattern(
         timeline='01..|02..|03..|04..|',
         pattern='|kk..|s.hh|kk..|swht|'),
@@ -84,38 +84,43 @@ patterns = {
     }
 
 
-# Functions
+class MidiSequencer:
+    def __init__(self):
+        pass
+
+    def play_note(self, note, duration=0, velocity=50):
+        msg = Message('note_on',  note=note, velocity=velocity)
+        OUTPORT.send(msg)
+        sleep(duration)
+
+    def play_drum(self, drum_name, duration=0):
+        drum_note = DRUMKIT.drums[drum_name].note
+        self.play_note(note=drum_note, duration=duration)
+
+    @staticmethod
+    def play_silence(duration=0):
+        sleep(duration)
+
+    def play_pattern(self, pattern):
+        note_value = NOTE_VALUES['1/4'].relative_value / BPM
+        for beat in pattern:
+            if beat != '|':
+                if beat == '.':
+                    self.play_silence(duration=note_value)
+                else:
+                    drum_name = [
+                        drum.name for drum in DRUMKIT.drums.values()
+                        if drum.short_hand == beat
+                        ][0]  # simplify
+                    self.play_drum(drum_name=drum_name, duration=note_value)
 
 
-def play_note(note, duration=0, velocity=50):
-    msg = Message('note_on',  note=note, velocity=velocity)
-    OUTPORT.send(msg)
-    sleep(duration)
+seq = MidiSequencer()
 
+for pattern_num in PATTERNS:
+    seq.play_pattern(PATTERNS[pattern_num].pattern)
 
-def play_drum(drum_name, duration=0):
-    drum_note = drumkit.drums[drum_name].note
-    play_note(note=drum_note, duration=duration)
-
-
-def play_silence(duration=0):
-    sleep(duration)
-
-
-def parse_pattern(pattern):
-    note_value = note_values['1/4'].relative_value / BPM
-    for beat in pattern:
-        if beat != '|':
-            if beat == '.':
-                play_silence(duration=note_value)
-            else:
-                drum_name = [
-                    drum.name for drum in drumkit.drums.values()
-                    if drum.short_hand == beat
-                    ][0]  # simplify
-                play_drum(drum_name=drum_name, duration=note_value)
-
-
-
-for pattern_num in patterns:
-    parse_pattern(patterns[pattern_num].pattern)
+"""
+verbs: play, record
+nouns: beat, note, silence, message, pattern, drum, value
+"""
