@@ -3,7 +3,7 @@
 """sound player"""
 
 import os
-from playsound import playsound
+from playsound import playsound 
 
 sound_dir = 'wavs/my808kit'
 sounds = [f for f in os.listdir(sound_dir)]
