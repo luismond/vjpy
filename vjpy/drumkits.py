@@ -1,11 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """vjpy/hydrogen drumkits"""
-
 from vjpy import Drumkit, Drum
 
 TR808EmulationKit = Drumkit(
-    name='TR808EmulationKit',  # choose this drumkit in Hydrogen
+    name='TR808EmulationKit',
     drums={
         'kick': Drum(name='kick', note=36, short_hand='k'),
         'snare': Drum(name='snare', note=38, short_hand='s'),
