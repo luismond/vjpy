@@ -11,4 +11,4 @@ MSG = mido.Message('note_on', note=60)
 # message sending test
 for n in range(10):
     PORT.send(MSG)
-    time.sleep(.5)
+    time.sleep(.1)
