@@ -1,0 +1,4 @@
+*-checkpoint.py
+*.ipynb_checkpoints
+.virtual_documents
+*.autosave.h2song

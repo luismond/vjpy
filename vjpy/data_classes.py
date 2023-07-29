@@ -1,5 +1,8 @@
 from pydantic import BaseModel
 
+class Bar(BaseModel):
+    num: int
+    content: list[str]
 
 class Pattern(BaseModel):
     pattern: str
@@ -18,3 +21,5 @@ class Drum(BaseModel):
 class NoteValue(BaseModel):
     name: str
     relative_value: float
+
+
