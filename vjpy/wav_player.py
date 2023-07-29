@@ -1,18 +1,33 @@
 """vjpy wav player."""
 
-from vjpy import my808kit
 from playsound import playsound
-
-my808kit_drum_paths = {}
-my808kit_path = "wavs/my808kit"
-for drum_ in my808kit.drums.values():
-    my808kit_drum_paths[drum_.note] = f"{my808kit_path}/{drum_.name}.wav"
+from vjpy.drumkits import my808kit_drum_paths
 
 
-def play_wav(midi_msg):
+class WavPlayer:
     """Wav player."""
-    wav_name = my808kit_drum_paths[midi_msg.note]
-    print(midi_msg)
-    print(wav_name)
-    print("\n\n")
-    playsound(wav_name)
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def play_wav_from_midi_msg(midi_msg):
+        """Play a wav file associated with a midi message."""
+        wav_name = my808kit_drum_paths[midi_msg.note]
+        print(f"Playing: {midi_msg}\n{wav_name}\n\n")
+        playsound(wav_name)
+
+    def rewind(self):
+        """Rewind."""
+        obj = 1
+        return obj
+
+    def forward(self):
+        """Forward."""
+        obj = 1
+        return obj
+
+    def record(self):
+        """Record."""
+        obj = 1
+        return obj

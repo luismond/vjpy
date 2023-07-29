@@ -26,3 +26,9 @@ my808kit = Drumkit(
         'hat': Drum(name='hat', note=45, short_hand='h'),
         }
     )
+
+
+my808kit_drum_paths = {}
+my808kit_path = "wavs/my808kit"
+for drum_ in my808kit.drums.values():
+    my808kit_drum_paths[drum_.note] = f"{my808kit_path}/{drum_.name}.wav"
