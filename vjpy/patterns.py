@@ -7,16 +7,16 @@ from vjpy import Pattern, Bar
 pattern = Pattern(pattern='k.h.')
 
 # Pattern example
-bar_ = Bar(num=1, content=['t.h.', 'chhh', 'thhh', 'chhh'])
+bar_ = Bar(num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
 
 # Bars example
 bars = [
-    Bar(num=1, content=['t.h.', 'chhh', 'thhh', 'chhh']),
-    Bar(num=2, content=['t.h.', 'chhh', 'thhh', 'cchh']),
-    Bar(num=3, content=['t.h.', 'chhh', 'thhh', 'chhh']),
-    Bar(num=4, content=['t.h.', 'chhh', 'ttvv', 'cccc']),
-    Bar(num=5, content=['t.h.', 'chhh', 'thhh', 'chhh']),
-    Bar(num=6, content=['t.h.', 'chhh', 'thhh', 'cchh']),
-    Bar(num=7, content=['t.h.', 'chhh', 'thhh', 'chhh']),
-    Bar(num=8, content=['t.h.', 'chhh', 'tttt', 'cccc'])
+    Bar(num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
+    Bar(num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(num=4, patterns=['k.h.', 'chhh', 'kkvv', 'cccc']),
+    Bar(num=5, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(num=6, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
+    Bar(num=7, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(num=8, patterns=['k.h.', 'chhh', 'kkkk', 'cccc'])
 ]

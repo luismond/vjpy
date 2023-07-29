@@ -117,7 +117,8 @@ class MidiSequencer:
 
         """
         for _ in range(num_loops):
-            self.play_pattern("".join(bar_.content))
+            print(bar_)
+            self.play_pattern("".join(bar_.patterns))
 
     def loop_bars(self, bars, num_loops):
         """
@@ -137,8 +138,8 @@ class MidiSequencer:
         """
         for _ in range(num_loops):
             for bar_ in bars:
-                for pattern in bar_.content:
-                    self.play_pattern(pattern)
+                self.loop_bar(bar_, 1)
+
 
     @property
     def note_values(self):
