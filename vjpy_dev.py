@@ -43,7 +43,7 @@ from vjpy.wav_player import WavPlayer
 wav_player_ = WavPlayer()
 midi_receiver = MidiReceiver()
 
-for m in midi_receiver.receive_midi_msg():
+for m in midi_receiver.yield_midi_msg():
     print(m)
     wav_player_.play_wav_from_midi_msg(m)
 

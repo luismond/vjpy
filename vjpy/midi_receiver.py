@@ -6,8 +6,8 @@ class MidiReceiver:
     """
     MIDI receiver.
 
-    mido opens an inport where messages are received.
-    messages are passed to a wav playing function.
+    1. mido opens an inport where MIDI messages are received.
+    2. MidiReceiver yields each MIDI message.
 
     Instructions:
         1. Run the receiver in a kernel.
@@ -23,7 +23,7 @@ class MidiReceiver:
         self.inport = mido.open_input()
         print("MIDI receiver on\n")
 
-    def receive_midi_msg(self):
+    def yield_midi_msg(self):
         """
         Receive midi message.
 
