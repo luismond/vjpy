@@ -1,13 +1,22 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""drum patterns"""
+"""vjpy midi pattern examples."""
 
-from vjpy import Pattern
+from vjpy import Pattern, Bar
+
 
 # Pattern example
+pattern = Pattern(pattern='k.h.')
 
-pattern_1 = Pattern(
-    bars=   '|1...|2...|3...|4...|5...|6...|7...|8...|',
-    beats=  '|....|....|....|....|....|....|....|....|',
-    pattern='|k.h.|c.h.|k.h.|c.h.|k.h.|c.h.|k.h.|c.h.|'
-    )
+# Pattern example
+bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
+
+# Bars example
+bars = [
+    Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
+    Bar(bar_num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=4, patterns=['k.h.', 'chhh', 'kkvv', 'cccc']),
+    Bar(bar_num=5, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=6, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
+    Bar(bar_num=7, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=8, patterns=['k.h.', 'chhh', 'kkkk', 'cccc'])
+]

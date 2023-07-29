@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+"""vjpy video writer."""
 
 from moviepy.editor import VideoFileClip, CompositeVideoClip
 
-video_name = "/home/user/Videos/python-mido-hydrogen-drum_pattern.webm"
-video = VideoFileClip(video_name).subclip(0, 2)
-result = CompositeVideoClip([video])
-result.write_videofile(f"{video_name}_test.webm", fps=10)
+VIDEO_NAME = "/home/user/Videos/python-mido-hydrogen-drum_pattern.webm"
+VIDEO = VideoFileClip(VIDEO_NAME).subclip(0, 2)
+result = CompositeVideoClip([VIDEO])
+result.write_videofile(f"{VIDEO_NAME}_test.webm", fps=10)
