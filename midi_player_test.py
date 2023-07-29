@@ -1,9 +1,15 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 """midi player test"""
-from vjpy import MidiSequencer
-from vjpy.patterns import pattern_1
 
-seq = MidiSequencer()  # create sequencer instance
-seq.play_pattern(pattern_1.pattern) # play sequence
+from vjpy import MidiSequencer
+from pydantic import BaseModel
+
+seq = MidiSequencer(bpm=60)
+sequence = 'thsh'
+
+
+def loop(sequence, n):
+    for _ in range(n):
+        seq.play_pattern(sequence)
+
+
+loop(sequence, 8)

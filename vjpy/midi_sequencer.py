@@ -1,4 +1,3 @@
-# # -*- coding: utf-8 -*-
 """vjpy midi sequencer."""
 
 import mido
@@ -7,19 +6,16 @@ from time import sleep
 from vjpy import NoteValue
 from vjpy import TR808EmulationKit
 
-# GLOBAL VARIABLES
-OUTPORT = mido.open_output()
-BPM = 120
-
 
 class MidiSequencer:
-    def __init__(self):
-        self.BPM = BPM
-        self.note_duration = self.BPM/60
+    def __init__(self, bpm=120):
+        self.outport = mido.open_output()
+        self.bpm = bpm
+        self.note_duration = self.bpm/60
 
     def play_note(self, note, duration=0, velocity=50):
         msg = Message('note_on',  note=note, velocity=velocity)
-        OUTPORT.send(msg)
+        self.outport.send(msg)
         sleep(duration)
 
     def play_drum(self, drum_name, duration=0):
