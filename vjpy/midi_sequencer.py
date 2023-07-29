@@ -40,6 +40,15 @@ class MidiSequencer:
                         ][0]  # simplify
                     self.play_drum(drum_name=drum_name, duration=note_value)
 
+    def loop_bar(self, bar, n):
+        for _ in range(n):
+            self.play_pattern("".join(bar.content))
+    
+    def loop_bars(self, bars, n):
+        for bar in bars:
+            for pattern in bar.content:
+                self.play_pattern(pattern)
+
     @property
     def note_values(self):
         note_values = {

@@ -1,11 +1,14 @@
 from pydantic import BaseModel
 
+
 class Bar(BaseModel):
     num: int
     content: list[str]
 
+
 class Pattern(BaseModel):
     pattern: str
+
 
 class Drumkit(BaseModel):
     name: str

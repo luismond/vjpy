@@ -1,13 +1,22 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""drum patterns"""
+"""drum pattern examples"""
 
-from vjpy import Pattern
+from vjpy import Pattern, Bar
+
 
 # Pattern example
+pattern = Pattern(pattern='|k.h.|c.h.|k.h.|c.h.')
 
-pattern_1 = Pattern(
-    bars=   '|1...|2...|3...|4...|5...|6...|7...|8...|',
-    beats=  '|....|....|....|....|....|....|....|....|',
-    pattern='|k.h.|c.h.|k.h.|c.h.|k.h.|c.h.|k.h.|c.h.|'
-    )
+# Pattern example
+bar = Bar(num=1, content=['t.h.', 'chhh', 'thhh', 'chhh'])
+
+# Bars example
+bars = [
+    Bar(num=1, content=['t.h.', 'chhh', 'thhh', 'chhh']),
+    Bar(num=2, content=['t.h.', 'chhh', 'thhh', 'cchh']),
+    Bar(num=3, content=['t.h.', 'chhh', 'thhh', 'chhh']),
+    Bar(num=4, content=['t.h.', 'chhh', 'ttvv', 'cccc']),
+    Bar(num=5, content=['t.h.', 'chhh', 'thhh', 'chhh']),
+    Bar(num=6, content=['t.h.', 'chhh', 'thhh', 'cchh']),
+    Bar(num=7, content=['t.h.', 'chhh', 'thhh', 'chhh']),
+    Bar(num=8, content=['t.h.', 'chhh', 'tttt', 'cccc'])
+]
