@@ -14,6 +14,7 @@ class MidiSequencer:
         self.outport = mido.open_output()
         self.bpm = bpm
         self.note_duration = self.bpm/60
+        print(f"Sequencer instantiated. BPM: {self.bpm}\n")
 
     def play_note(self, note, duration=0, velocity=50):
         """
