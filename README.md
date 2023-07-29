@@ -45,6 +45,7 @@ Define the following devices:
 
 29-jul-23;
 - Add looping logic
+- Add MIDI sending & receiving logic
 
 
 # Glossary
