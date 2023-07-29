@@ -35,3 +35,13 @@ num_loops = 2
 print(f"\n\n♪♪ Looping a sequence of bars {num_loops} times:")
 seq.loop_bars(bars, num_loops)
 sleep(1)
+
+# %% Test midi receiver
+from vjpy.midi_receiver import MidiReceiver
+from vjpy.wav_player import play_wav
+
+midi_receiver = MidiReceiver()
+
+for m in midi_receiver.receive_midi_msg():
+    print(m)
+    play_wav(m)

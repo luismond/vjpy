@@ -1,16 +1,10 @@
 """mido sender."""
-import time
 import mido
 
-# First, open receiver.
-
 PORT = mido.open_output()
-MSG = mido.Message('note_on', note=60)
 
-# message sending test
-for n in range(8):
-    PORT.send(mido.Message('note_on', note=36))
-    PORT.send(mido.Message('note_on', note=38))
-    PORT.send(mido.Message('note_on', note=43))
-    PORT.send(mido.Message('note_on', note=45))
-    time.sleep(.05)
+# Send messages
+for note in [36, 38, 43, 45]:
+    msg = mido.Message('note_on', note=note)
+    print(msg)
+    PORT.send(msg)
