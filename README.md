@@ -13,6 +13,128 @@ Hexstatic, Coldcut music videos from the early 2000's, created with VJPro.
 
 Example: https://www.youtube.com/watch?v=f1SLN3LpDiA
 
+## Basic usage
+
+### Pattern example
+```python
+>>> pattern = Pattern(pattern='k.h.')
+```
+
+### Pattern example
+```python
+>>> bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
+```
+
+### Bars example
+```python
+>>> bars = [
+    Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
+    Bar(bar_num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=4, patterns=['k.h.', 'chhh', 'kkvv', 'cccc']),
+    Bar(bar_num=5, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=6, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
+    Bar(bar_num=7, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+    Bar(bar_num=8, patterns=['k.h.', 'chhh', 'kkkk', 'cccc'])
+]
+```
+
+
+### Instantiate a sequencer device and set the bpm to 120
+
+```python
+>>> from vjpy import MidiSequencer, TR808EmulationKit
+>>> from vjpy.patterns import bar_, bars, pattern
+>>> from time import sleep
+
+>>> bpm = 120
+>>> seq = MidiSequencer(bpm=bpm)
+```
+
+
+### Print drumkit info
+```python
+>>> print("Drumkit info:\n")
+>>> pp(TR808EmulationKit.drums)
+```
+
+```python
+Drumkit info:
+
+{'clap': Drum(name='clap', note=40, short_hand='c'),
+ 'clave': Drum(name='clave', note=50, short_hand='v'),
+ 'conga': Drum(name='conga', note=49, short_hand='g'),
+ 'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
+ 'hat': Drum(name='hat', note=45, short_hand='h'),
+ 'kick': Drum(name='kick', note=36, short_hand='k'),
+ 'snare': Drum(name='snare', note=38, short_hand='s'),
+ 'tom': Drum(name='tom', note=43, short_hand='t')}
+```
+
+
+### Play a pattern
+
+```python
+>>> patt = pattern.pattern
+>>> seq.play_pattern(pattern.pattern)
+```
+
+```python
+♪♪ Playing a pattern (a dot represents silence)
+k.h.:
+```
+
+### Play a bar of patterns
+
+```python
+>>> seq.play_bar(bar_)
+```
+
+```python
+♪♪ Playing a bar:
+['k.h.', 'chhh', 'khhh', 'chhh']
+```
+
+### Loop a bar
+```python
+>>> num_loops = 4
+>>> seq.loop_bar(bars[0], num_loops)
+```
+
+```python
+♪♪ Looping a bar 4 times:
+bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+```
+
+### Loop a sequence of bars
+
+```python
+>>> num_loops = 2
+>>> seq.loop_bars(bars, num_loops)
+```
+
+```python
+bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=2 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
+bar_num=3 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=4 patterns=['k.h.', 'chhh', 'kkvv', 'cccc']
+bar_num=5 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=6 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
+bar_num=7 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
+bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=2 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
+bar_num=3 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=4 patterns=['k.h.', 'chhh', 'kkvv', 'cccc']
+bar_num=5 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=6 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
+bar_num=7 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
+bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
+```
+
 ## Roadmap
 
 Define the following devices:
