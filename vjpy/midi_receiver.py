@@ -2,16 +2,17 @@
 
 import mido
 from playsound import playsound
+from vjpy import my808kit
 
-
-midi_wav_dict = {
-    60: "wavs/my808kit/snare2.wav"
-    }
+my808kit_drum_paths = {}
+my808kit_path = "wavs/my808kit"
+for drum_ in my808kit.drums.values():
+    my808kit_drum_paths[drum_.note] = f"{my808kit_path}/{drum_.name}.wav"
 
 
 def play_wav(midi_msg):
     """Wav player."""
-    wav_name = midi_wav_dict[midi_msg.note]
+    wav_name = my808kit_drum_paths[midi_msg.note]
     print(wav_name)
     playsound(wav_name)
 

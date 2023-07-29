@@ -116,7 +116,7 @@ class MidiSequencer:
 
         """
         self.play_pattern("".join(bar_.patterns))
-        
+
     def loop_bar(self, bar_, num_loops):
         """
         Iterate over a bar.

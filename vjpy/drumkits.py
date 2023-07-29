@@ -15,3 +15,14 @@ TR808EmulationKit = Drumkit(
         'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
         }
     )
+
+
+my808kit = Drumkit(
+    name='my808kit',
+    drums={
+        'kick': Drum(name='kick', note=36, short_hand='k'),
+        'snare': Drum(name='snare', note=38, short_hand='s'),
+        'tom': Drum(name='tom', note=43, short_hand='t'),
+        'hat': Drum(name='hat', note=45, short_hand='h'),
+        }
+    )
