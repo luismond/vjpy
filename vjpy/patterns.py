@@ -1,13 +1,13 @@
-"""drum pattern examples"""
+"""vjpy midi pattern examples."""
 
 from vjpy import Pattern, Bar
 
 
 # Pattern example
-pattern = Pattern(pattern='|k.h.|c.h.|k.h.|c.h.')
+pattern = Pattern(pattern='k.h.')
 
 # Pattern example
-bar = Bar(num=1, content=['t.h.', 'chhh', 'thhh', 'chhh'])
+bar_ = Bar(num=1, content=['t.h.', 'chhh', 'thhh', 'chhh'])
 
 # Bars example
 bars = [

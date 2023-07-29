@@ -1,4 +1,5 @@
-"""vjpy/hydrogen drumkits"""
+"""vjpy hydrogen drumkits."""
+
 from vjpy import Drumkit, Drum
 
 TR808EmulationKit = Drumkit(
