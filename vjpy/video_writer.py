@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from moviepy.editor import *
 
+from moviepy.editor import VideoFileClip, CompositeVideoClip
 
-video = VideoFileClip("python-mido-hydrogen-drum_pattern.webm").subclip(0, 2)
+video_name = "/home/user/Videos/python-mido-hydrogen-drum_pattern.webm"
+video = VideoFileClip(video_name).subclip(0, 2)
 result = CompositeVideoClip([video])
-result.write_videofile("python-mido-hydrogen-drum_pattern_.webm", fps=10)
+result.write_videofile(f"{video_name}_test.webm", fps=10)
