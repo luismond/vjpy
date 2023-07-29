@@ -4,9 +4,9 @@ from pydantic import BaseModel
 
 
 class Bar(BaseModel):
-    """Musical bar containing n patterns."""
+    """Musical measure containing patterns"""
 
-    num: int
+    bar_num: int
     patterns: list[str]
 
 

@@ -101,6 +101,22 @@ class MidiSequencer:
                         ][0]  # simplify
                     self.play_drum(drum_name=drum_name, duration=note_value)
 
+    def play_bar(self, bar_):
+        """
+        Play a bar.
+
+        Parameters
+        ----------
+        bar_ : vjpy.data_classes.Bar
+            Musical measure containing patterns.
+
+        Returns
+        -------
+        None.
+
+        """
+        self.play_pattern("".join(bar_.patterns))
+        
     def loop_bar(self, bar_, num_loops):
         """
         Iterate over a bar.
@@ -119,7 +135,7 @@ class MidiSequencer:
         """
         for _ in range(num_loops):
             print(bar_)
-            self.play_pattern("".join(bar_.patterns))
+            self.play_bar(bar_)
 
     def loop_bars(self, bars, num_loops):
         """
