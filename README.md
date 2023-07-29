@@ -144,7 +144,7 @@ Define the following devices:
 ### MIDI
 - Midi sequencer ✓
 - Midi player ✓
-- Midi receiver 
+- Midi receiver ✓
 
 ### AUDIO
 - Audio player

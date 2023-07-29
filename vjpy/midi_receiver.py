@@ -1,23 +1,8 @@
 """mido receiver."""
-
 import mido
-from playsound import playsound
-from vjpy import my808kit
-
-my808kit_drum_paths = {}
-my808kit_path = "wavs/my808kit"
-for drum_ in my808kit.drums.values():
-    my808kit_drum_paths[drum_.note] = f"{my808kit_path}/{drum_.name}.wav"
 
 
-def play_wav(midi_msg):
-    """Wav player."""
-    wav_name = my808kit_drum_paths[midi_msg.note]
-    print(wav_name)
-    playsound(wav_name)
-
-
-def init_midi_receiver():
+class MidiReceiver:
     """
     MIDI receiver.
 
@@ -33,11 +18,21 @@ def init_midi_receiver():
     None.
 
     """
-    print("MIDI receiver on")
-    with mido.open_input() as inport:
-        for msg in inport:
-            print(msg)
-            play_wav(msg)
 
+    def __init__(self):
+        self.inport = mido.open_input()
+        print("MIDI receiver on\n")
 
-init_midi_receiver()
+    def receive_midi_msg(self):
+        """
+        Receive midi message.
+
+        Yields
+        ------
+        midi_msg : mido.msg
+            MIDI message from mido.
+
+        """
+        with self.inport as inport:
+            for midi_msg in inport:
+                yield midi_msg
