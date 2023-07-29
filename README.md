@@ -15,12 +15,18 @@ Example: https://www.youtube.com/watch?v=f1SLN3LpDiA
 
 ## Basic usage
 
+```python
+>>> from vjpy import MidiSequencer, TR808EmulationKit
+>>> from vjpy.patterns import bar_, bars, pattern
+>>> from time import sleep
+```
+
 ### Pattern example
 ```python
 >>> pattern = Pattern(pattern='k.h.')
 ```
 
-### Pattern example
+### Bar example
 ```python
 >>> bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
 ```
@@ -43,10 +49,6 @@ Example: https://www.youtube.com/watch?v=f1SLN3LpDiA
 ### Instantiate a sequencer device and set the bpm to 120
 
 ```python
->>> from vjpy import MidiSequencer, TR808EmulationKit
->>> from vjpy.patterns import bar_, bars, pattern
->>> from time import sleep
-
 >>> bpm = 120
 >>> seq = MidiSequencer(bpm=bpm)
 ```
