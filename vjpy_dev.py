@@ -3,13 +3,13 @@
 from time import sleep
 from vjpy.midi_sequencer import MidiSequencer
 from vjpy.drumkits import TR808EmulationKit
-from vjpy.patterns import pattern_example, bar_example, bars_example
+from vjpy.patterns import pattern_examples, bar_example, bars_example
 from vjpy.wav_player import WavPlayer
 from vjpy.midi_receiver import MidiReceiver
 from vjpy.midi_sender import MidiSender
 
 # %% Instantiate a sequencer device and set the bpm to 120
-BPM = 120
+BPM = 90
 seq = MidiSequencer(instruments=[TR808EmulationKit], bpm=BPM)
 
 # %% Instantiate a drumkit
@@ -17,9 +17,9 @@ print("Drumkit info:\n")
 print(TR808EmulationKit.drums)
 
 # %% Play a pattern
-patt = pattern_example.pattern
-print(f"\n\n♪♪ Playing a pattern (a dot represents silence)\n{patt}:")
-seq.play_pattern(pattern_example.pattern)
+patt = pattern_examples[0].pattern
+print(f"\n\n♪♪ Playing a pattern:\n{patt}")
+seq.play_pattern(patt)
 sleep(1)
 
 # %% Play a bar of patterns
