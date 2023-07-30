@@ -3,13 +3,15 @@
 from time import sleep
 import mido
 from vjpy.data_classes import NoteValue
-from vjpy.drumkits import TR808EmulationKit
 
 
 class MidiSequencer:
     """vjpy midi sequencer."""
 
-    def __init__(self, bpm=120):
+    def __init__(self, instruments, bpm=120):
+        self.resolution = "1/4"
+        self.instruments = instruments
+        self.drumkit = self.instruments[0]
         self.outport = mido.open_output()
         self.bpm = bpm
         self.note_duration = self.bpm/60
@@ -53,7 +55,7 @@ class MidiSequencer:
         None.
 
         """
-        drum_note = TR808EmulationKit.drums[drum_name].note
+        drum_note = self.drumkit.drums[drum_name].note
         self.play_note(note=drum_note, duration=duration)
 
     @staticmethod
@@ -87,18 +89,16 @@ class MidiSequencer:
         None.
 
         """
-        res = '1/4'  # resolution
-        note_value = self.note_values[res].relative_value / self.note_duration
+        note_value = self.note_values[self.resolution].relative_value / self.note_duration
         for beat in pattern:
-            if beat != '|':
-                if beat == '.':
-                    self.play_silence(duration=note_value)
-                else:
-                    drum_name = [
-                        drum.name for drum in TR808EmulationKit.drums.values()
-                        if drum.short_hand == beat
-                        ][0]  # simplify
-                    self.play_drum(drum_name=drum_name, duration=note_value)
+            if beat == '.':
+                self.play_silence(duration=note_value)
+            else:
+                drum_name = [
+                    drum.name for drum in self.drumkit.drums.values()
+                    if drum.short_hand == beat
+                    ][0]  # simplify
+                self.play_drum(drum_name=drum_name, duration=note_value)
 
     def play_bar(self, bar_):
         """
@@ -123,7 +123,7 @@ class MidiSequencer:
         Parameters
         ----------
         bar_ : vjpy.data_classes.Bar
-            Musical bar (or measure).
+            Bar containing patterns.
         num_loops : int
             Number of iterations.
 
@@ -155,7 +155,6 @@ class MidiSequencer:
         for _ in range(num_loops):
             for bar_ in bars:
                 self.loop_bar(bar_, 1)
-
 
     @property
     def note_values(self):

@@ -29,7 +29,9 @@ my808kit = Drumkit(
     )
 
 
-my808kit_drum_paths = {}
-MY808_KIT_PATH = "wavs/my808kit"
-for drum_ in my808kit.drums.values():
-    my808kit_drum_paths[drum_.note] = f"{MY808_KIT_PATH}/{drum_.name}.wav"
+def get_my808kit_paths():
+    my808kit_drum_paths = {}
+    MY808_KIT_PATH = "wavs/my808kit"
+    for drum_ in my808kit.drums.values():
+        my808kit_drum_paths[drum_.note] = f"{MY808_KIT_PATH}/{drum_.name}.wav"
+    return my808kit_drum_paths

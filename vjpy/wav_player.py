@@ -1,7 +1,9 @@
 """vjpy wav player."""
 
 from playsound import playsound
-from vjpy.drumkits import my808kit_drum_paths
+from vjpy.drumkits import get_my808kit_paths
+
+my808kit_drum_paths = get_my808kit_paths()
 
 
 class WavPlayer:

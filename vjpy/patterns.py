@@ -4,9 +4,9 @@ from vjpy.data_classes import Pattern, Bar
 
 
 # Pattern example
-pattern_example = Pattern(pattern='k.h.')  # kick-silence-hat-silence
+pattern_example = Pattern(pattern='k.h.')
 
-# Pattern example
+# Bar example
 bar_example = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
 
 # Bars example
