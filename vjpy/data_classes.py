@@ -11,7 +11,7 @@ class Bar(BaseModel):
 
 
 class Pattern(BaseModel):
-    """Pattern (string using abbreviations of note names. See drumkits.py)."""
+    """Pattern."""
 
     pattern: str
 

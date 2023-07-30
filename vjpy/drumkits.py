@@ -30,6 +30,7 @@ my808kit = Drumkit(
 
 
 def get_my808kit_paths():
+    """Get my drumkit."""
     my808kit_drum_paths = {}
     MY808_KIT_PATH = "wavs/my808kit"
     for drum_ in my808kit.drums.values():
