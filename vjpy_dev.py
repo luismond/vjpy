@@ -7,7 +7,7 @@ from vjpy.patterns import pattern_examples, bar_example, bars_example
 from vjpy.wav_player import WavPlayer
 from vjpy.midi_receiver import MidiReceiver
 from vjpy.midi_sender import MidiSender
-
+from vjpy.pattern_generator import PatternGenerator
 # %% Instantiate a sequencer device and set the bpm to 120
 BPM = 90
 seq = MidiSequencer(instruments=[TR808EmulationKit], bpm=BPM)
@@ -51,3 +51,6 @@ for m in midi_receiver.yield_midi_msg():
 sender = MidiSender()
 for note in [36, 38, 43, 45]:
     sender.send_note(note)
+
+# %% Test pattern generator
+PatternGenerator().generate_random_pattern()
