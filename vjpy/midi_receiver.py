@@ -21,7 +21,7 @@ class MidiReceiver:
 
     def __init__(self):
         self.inport = mido.open_input()
-        print("MIDI receiver on\n")
+        print("MIDI receiver is listening.\n")
 
     def yield_midi_msg(self):
         """

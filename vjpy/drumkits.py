@@ -1,6 +1,6 @@
-"""vjpy hydrogen drumkits."""
+"""vjpy drumkits."""
 
-from vjpy import Drumkit, Drum
+from vjpy.data_classes import Drumkit, Drum
 
 TR808EmulationKit = Drumkit(
     name='TR808EmulationKit',
@@ -17,6 +17,7 @@ TR808EmulationKit = Drumkit(
     )
 
 
+# define a local drumkit
 my808kit = Drumkit(
     name='my808kit',
     drums={
@@ -29,6 +30,6 @@ my808kit = Drumkit(
 
 
 my808kit_drum_paths = {}
-my808kit_path = "wavs/my808kit"
+MY808_KIT_PATH = "wavs/my808kit"
 for drum_ in my808kit.drums.values():
-    my808kit_drum_paths[drum_.note] = f"{my808kit_path}/{drum_.name}.wav"
+    my808kit_drum_paths[drum_.note] = f"{MY808_KIT_PATH}/{drum_.name}.wav"

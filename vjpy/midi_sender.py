@@ -10,9 +10,8 @@ class MidiSender:
     def __init__(self):
         self.port = PORT
 
-    def send(self):
-        """Send."""
-        for note in [36, 38, 43, 45]:
-            msg = mido.Message('note_on', note=note)
-            print(msg)
-            self.port.send(msg)
+    def send_note(self, note):
+        """Send a note."""
+        msg = mido.Message('note_on', note=note)
+        print(msg)
+        self.port.send(msg)
