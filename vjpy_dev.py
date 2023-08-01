@@ -14,6 +14,14 @@ from vjpy import MidiReceiver
 from vjpy import WavPlayer
 import mido
 from mido import Message
+from vjpy.drumkits import get_my808kit_paths
+from playsound import playsound
+from scipy.io import wavfile
+import scipy
+from scipy.io.wavfile import write
+from scipy.io.wavfile import write
+from scipy.io import wavfile
+import scipy
 
 # %% Instantiate a sequencer and set the bpm to 120
 seq = MidiSequencer(drumkit=my808kit, bpm=90)
@@ -42,6 +50,7 @@ seq.loop_bars(bars_example, NUM_LOOPS)
 
 
 # %% Test midi receiver and wav player
+
 midi_receiver = MidiReceiver()
 wav_player = WavPlayer()
 
@@ -51,11 +60,24 @@ for m in midi_receiver.yield_midi_msg():
 
 # %% Test wav player
 
-wav_player = WavPlayer()
+# read wav
+WAV_FILENAME = 'wavs/my808kit/snare2.wav'
+# written wav name
+wav_c_name = f"{WAV_FILENAME[:-4]}_written.wav"
 
-# play a hat
-msg = Message('note_on', note=50, velocity=50, time=0)
-wav_player.play_wav_from_midi_msg(msg)
+SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+
+# concat wav
+data_ = []
+for _ in range(4):
+    data_.append(data)
+data_c = scipy.concatenate(data_)
+
+# write concatenated wav
+write(wav_c_name, SAMPLE_RATE, data_c)
+
+# play concatenated wav
+playsound(wav_c_name)
 
 
 # %% Test midi sender
