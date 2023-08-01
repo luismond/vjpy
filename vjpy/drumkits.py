@@ -13,7 +13,17 @@ TR808EmulationKit = Drumkit(
         'conga': Drum(name='conga', note=49, short_hand='g'),
         'clave': Drum(name='clave', note=50, short_hand='v'),
         'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
-        }
+        },
+    short_hand_drum_dict={
+        "k": "kick",
+        "s": "snare",
+        "c": "clap",
+        "t": "tom",
+        "h": "hat",
+        "g": "conga",
+        "v": "clave",
+        "w": "cowbell"
+    }
     )
 
 

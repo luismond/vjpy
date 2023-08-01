@@ -1,6 +1,7 @@
 """vjpy midi sequencer."""
 
 from time import sleep
+from pprint import pprint as pp
 import mido
 from vjpy.data_classes import NoteValue
 
@@ -8,13 +9,20 @@ from vjpy.data_classes import NoteValue
 class MidiSequencer:
     """vjpy midi sequencer."""
 
-    def __init__(self, drumkit, bpm=90):
-        self.resolution = "1/4"
+    def __init__(self, drumkit, bpm=90, resolution="1/4"):
         self.drumkit = drumkit
-        self.outport = mido.open_output()
         self.bpm = bpm
+        self.resolution = resolution
         self.note_duration = self.bpm/60
-        print(f"Sequencer instantiated. BPM: {self.bpm}\n")
+        self.outport = mido.open_output()
+
+        print(
+            f"MidiSequencer on.\n",
+            f"\tDrumkit: {self.drumkit}\n",
+            f"\tBPM: {self.bpm}\n",
+            f"\tRes: {self.resolution}\n",
+            f"\tOutport: {self.outport}\n",
+        )
 
     def play_note(self, note, duration=0, velocity=50):
         """
@@ -113,7 +121,8 @@ class MidiSequencer:
         None.
 
         """
-        self.play_pattern("".join(bar_.patterns))
+        patterns = "".join(bar_.patterns)
+        self.play_pattern(patterns)
 
     def loop_bar(self, bar_, num_loops):
         """
