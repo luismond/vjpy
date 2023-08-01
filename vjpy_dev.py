@@ -60,29 +60,16 @@ for m in midi_receiver.yield_midi_msg():
 
 # %% Test wav player
 
+# read a wav and store it in a list n times
+# go to windows and trim sounds
+
 data_ = []
-for _ in range(4):
-    WAV_FILENAME = 'wavs/my808kit/tom.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
-
-    WAV_FILENAME = 'wavs/my808kit/hat.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
-
-    WAV_FILENAME = 'wavs/my808kit/hat.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
-
-    WAV_FILENAME = 'wavs/my808kit/hat.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
-
+for _ in range(8):
     WAV_FILENAME = 'wavs/my808kit/snare.wav'
     SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
     data_.append(data)
-
-    WAV_FILENAME = 'wavs/my808kit/hat.wav'
+    
+    WAV_FILENAME = 'wavs/my808kit/ride.wav'
     SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
     data_.append(data)
 
@@ -90,11 +77,8 @@ for _ in range(4):
     SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
     data_.append(data)
 
-    WAV_FILENAME = 'wavs/my808kit/hat.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
 
-# concat wav
+# concatenate wavs
 wav_c_name = "wavs/concat.wav"
 data_c = scipy.concatenate(data_)
 
