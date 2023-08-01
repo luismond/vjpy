@@ -19,12 +19,10 @@ from playsound import playsound
 from scipy.io import wavfile
 import scipy
 from scipy.io.wavfile import write
-from scipy.io.wavfile import write
-from scipy.io import wavfile
-import scipy
+
 
 # %% Instantiate a sequencer and set the bpm to 120
-seq = MidiSequencer(drumkit=my808kit, bpm=90)
+seq = MidiSequencer(drumkit=TR808EmulationKit, bpm=90)
 
 # Play a pattern
 patt = "khshkhshkhshkhsh"
@@ -59,29 +57,24 @@ for m in midi_receiver.yield_midi_msg():
     wav_player.play_wav_from_midi_msg(m)
 
 # %% Test wav player
-
+kit_path = "wavs/myfunkkit"
 # read a wav and store it in a list n times
-# go to windows and trim sounds
+SAMPLE_RATE = 44100
 
-data_ = []
-for _ in range(8):
-    WAV_FILENAME = 'wavs/my808kit/snare.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
-    
-    WAV_FILENAME = 'wavs/my808kit/ride.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
-
-    WAV_FILENAME = 'wavs/my808kit/hat.wav'
-    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-    data_.append(data)
-
+datas = []
+for _ in range(4):
+    _, data = wavfile.read(f"{kit_path}/kick.wav")
+    datas.append(data)
+    _, data = wavfile.read(f"{kit_path}/hat.wav")
+    datas.append(data)
+    _, data = wavfile.read(f"{kit_path}/clap.wav")
+    datas.append(data)
+    _, data = wavfile.read(f"{kit_path}/hat.wav")
+    datas.append(data)
 
 # concatenate wavs
 wav_c_name = "wavs/concat.wav"
-data_c = scipy.concatenate(data_)
-
+data_c = scipy.concatenate(datas)
 
 # write concatenated wav
 write(wav_c_name, SAMPLE_RATE, data_c)

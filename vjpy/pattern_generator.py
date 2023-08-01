@@ -1,13 +1,13 @@
 """pattern generator."""
 import random
 from vjpy.midi_sequencer import MidiSequencer
-
+from vjpy.drumkits import TR808EmulationKit
 
 class PatternGenerator:
     """Pattern generator."""
 
     def __init__(self, seq=MidiSequencer):
-        self.sequencer = seq()
+        self.sequencer = seq(drumkit=TR808EmulationKit)
 
     def generate_random_pattern(self):
         """
