@@ -3,11 +3,13 @@ import random
 from vjpy.midi_sequencer import MidiSequencer
 from vjpy.drumkits import TR808EmulationKit
 
+
 class PatternGenerator:
     """Pattern generator."""
 
-    def __init__(self, seq=MidiSequencer):
-        self.sequencer = seq(drumkit=TR808EmulationKit)
+    def __init__(self):
+        pass
+        #self.sequencer = seq
 
     def generate_random_pattern(self):
         """
@@ -18,9 +20,9 @@ class PatternGenerator:
         None.
 
         """
-        abbvs = ["t", "h", "s", "."]
+        abbvs = ["t", "h", "s", ".", "k", "c", "g", "v"]
         random_pattern = []
-        for _ in range(8):
-            random_pattern.append(random.choice(abbvs))
-        print(f"\n\n♪♪ Playing random pattern:\n{random_pattern}")
-        self.sequencer.play_pattern(random_pattern)
+        for _ in range(4):
+            r = random.choice(abbvs)
+            random_pattern.append(r)
+        return random_pattern

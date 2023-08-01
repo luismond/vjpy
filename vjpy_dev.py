@@ -2,32 +2,22 @@
 
 from vjpy import MidiSequencer
 from vjpy import TR808EmulationKit
-from vjpy import pattern_examples, bar_example, bars_example
-from vjpy import WavPlayer
-from vjpy import MidiReceiver
-from vjpy import MidiSender
-from vjpy import PatternGenerator
-from vjpy.drumkits import my808kit
-from time import sleep
-from vjpy import MidiSender
-from vjpy import MidiReceiver
-from vjpy import WavPlayer
-import mido
-from mido import Message
-from vjpy.drumkits import get_my808kit_paths
+from vjpy.patterns import *
 from playsound import playsound
-from scipy.io import wavfile
 import scipy
+from scipy.io import wavfile
 from scipy.io.wavfile import write
 
 
-# %% Instantiate a sequencer and set the bpm to 120
+# %% Instantiate a sequencer
 seq = MidiSequencer(drumkit=TR808EmulationKit, bpm=90)
 
 # Play a pattern
-patt = "khshkhshkhshkhsh"
-print(f"Playing a pattern:\n{patt}")
-seq.play_pattern(patt)
+#patt = pattern_examples[1].pattern
+for _ in range(8):
+    patt = "khckhkchkhckhckchkchkkchkhckkccc"
+    print(f"Playing a pattern:\n{patt}")
+    seq.play_pattern(patt)
 
 
 # %% Play a bar of patterns
@@ -36,7 +26,7 @@ seq.play_bar(bar_example)
 
 
 # %% Loop a bar
-NUM_LOOPS = 4
+NUM_LOOPS = 8
 print(f"Looping a bar {NUM_LOOPS} times:")
 seq.loop_bar(bars_example[0], NUM_LOOPS)
 
@@ -47,14 +37,23 @@ print(f"Looping a sequence of bars {NUM_LOOPS} times:")
 seq.loop_bars(bars_example, NUM_LOOPS)
 
 
-# %% Test midi receiver and wav player
 
-midi_receiver = MidiReceiver()
-wav_player = WavPlayer()
+# %% Test pattern generator
+from vjpy import PatternGenerator
+from vjpy.midi_sequencer import MidiSequencer
+from vjpy.drumkits import TR808EmulationKit
 
-# Play each midi message received.
-for m in midi_receiver.yield_midi_msg():
-    wav_player.play_wav_from_midi_msg(m)
+seq = MidiSequencer(drumkit=TR808EmulationKit, bpm=100)
+pg = PatternGenerator()
+
+for _ in range(8):
+    rp = pg.generate_random_pattern()
+    print(f"\n\n♪♪ Playing random pattern:\n{rp}")
+    seq.play_pattern(rp)
+    print(f"\n\n♪♪ Playing random pattern:\n{rp}")
+    seq.play_pattern(rp)
+
+
 
 # %% Test wav player
 kit_path = "wavs/myfunkkit"
@@ -83,6 +82,15 @@ write(wav_c_name, SAMPLE_RATE, data_c)
 playsound(wav_c_name)
 
 
+# %% Test midi receiver and wav player
+
+midi_receiver = MidiReceiver()
+wav_player = WavPlayer()
+
+# Play each midi message received.
+for m in midi_receiver.yield_midi_msg():
+    wav_player.play_wav_from_midi_msg(m)
+    
 # %% Test midi sender
 
 sender = MidiSender()
@@ -91,5 +99,8 @@ for _ in range(4):
         sender.send_note(note)
         sleep(.5)
 
-# %% Test pattern generator
-PatternGenerator().generate_random_pattern()
+
+
+
+
+
