@@ -21,16 +21,21 @@ TR808EmulationKit = Drumkit(
 my808kit = Drumkit(
     name='my808kit',
     drums={
-        'kick': Drum(name='kick', note=36, short_hand='k'),
-        'snare': Drum(name='snare', note=38, short_hand='s'),
-        'tom': Drum(name='tom', note=43, short_hand='t'),
-        'hat': Drum(name='hat', note=45, short_hand='h'),
+        'bongo': Drum(name='bongo', note=36, short_hand='b'),
+        'conga': Drum(name='conga', note=38, short_hand='c'),
+        'crash': Drum(name='crash', note=40, short_hand='x'),
+        'hat': Drum(name='hat', note=43, short_hand='h'),
+        'kick': Drum(name='kick', note=45, short_hand='k'),
+        'ride': Drum(name='ride', note=49, short_hand='r'),
+        'snare': Drum(name='snare', note=50, short_hand='s'),
+        'snare2': Drum(name='snare2', note=51, short_hand='z'),
+        'tom': Drum(name='tom', note=51, short_hand='t')
         }
     )
 
 
 def get_my808kit_paths():
-    """Get my drumkit."""
+    """Get my drumkit drum paths."""
     my808kit_drum_paths = {}
     MY808_KIT_PATH = "wavs/my808kit"
     for drum_ in my808kit.drums.values():
