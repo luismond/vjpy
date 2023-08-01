@@ -1,7 +1,5 @@
 """pattern generator."""
 import random
-from vjpy.midi_sequencer import MidiSequencer
-from vjpy.drumkits import TR808EmulationKit
 
 
 class PatternGenerator:
@@ -23,6 +21,5 @@ class PatternGenerator:
         abbvs = ["t", "h", "s", ".", "k", "c", "g", "v"]
         random_pattern = []
         for _ in range(4):
-            r = random.choice(abbvs)
-            random_pattern.append(r)
+            random_pattern.append(random.choice(abbvs))
         return random_pattern
