@@ -1,13 +1,13 @@
 """vjpy examples script."""
 
 from time import sleep
-from vjpy.midi_sequencer import MidiSequencer
-from vjpy.drumkits import TR808EmulationKit
-from vjpy.patterns import pattern_examples, bar_example, bars_example
-from vjpy.wav_player import WavPlayer
-from vjpy.midi_receiver import MidiReceiver
-from vjpy.midi_sender import MidiSender
-from vjpy.pattern_generator import PatternGenerator
+from vjpy import MidiSequencer
+from vjpy import TR808EmulationKit
+from vjpy import pattern_examples, bar_example, bars_example
+from vjpy import WavPlayer
+from vjpy import MidiReceiver
+from vjpy import MidiSender
+from vjpy import PatternGenerator
 # %% Instantiate a sequencer device and set the bpm to 120
 BPM = 90
 seq = MidiSequencer(instruments=[TR808EmulationKit], bpm=BPM)

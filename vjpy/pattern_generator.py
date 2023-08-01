@@ -22,5 +22,5 @@ class PatternGenerator:
         random_pattern = []
         for _ in range(8):
             random_pattern.append(random.choice(abbvs))
-        print(f"\n\n♪♪ Playing random pattern: {random_pattern}")
+        print(f"\n\n♪♪ Playing random pattern:\n{random_pattern}")
         self.sequencer.play_pattern(random_pattern)
