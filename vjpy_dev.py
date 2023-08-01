@@ -1,19 +1,11 @@
 """vjpy examples script."""
 
-from vjpy import MidiSequencer
-from vjpy import TR808EmulationKit
-from vjpy.patterns import *
-from playsound import playsound
-import scipy
-from scipy.io import wavfile
-from scipy.io.wavfile import write
+# %% Play a pattern
+from vjpy.midi_sequencer import MidiSequencer
+from vjpy.drumkits import TR808EmulationKit
 
-
-# %% Instantiate a sequencer
 seq = MidiSequencer(drumkit=TR808EmulationKit, bpm=90)
 
-# Play a pattern
-#patt = pattern_examples[1].pattern
 for _ in range(8):
     patt = "khckhkchkhckhckchkchkkchkhckkccc"
     print(f"Playing a pattern:\n{patt}")
@@ -21,11 +13,13 @@ for _ in range(8):
 
 
 # %% Play a bar of patterns
+from vjpy.patterns import bar_example
 print(f"Playing a bar:\n{bar_example.patterns}")
 seq.play_bar(bar_example)
 
 
 # %% Loop a bar
+from vjpy.patterns import bars_example
 NUM_LOOPS = 8
 print(f"Looping a bar {NUM_LOOPS} times:")
 seq.loop_bar(bars_example[0], NUM_LOOPS)
@@ -39,9 +33,9 @@ seq.loop_bars(bars_example, NUM_LOOPS)
 
 
 # %% Test pattern generator
-from vjpy import PatternGenerator
-from vjpy.midi_sequencer import MidiSequencer
-from vjpy.drumkits import TR808EmulationKit
+from vjpy.pattern_generator import PatternGenerator
+# from vjpy.midi_sequencer import MidiSequencer
+# from vjpy.drumkits import TR808EmulationKit
 
 seq = MidiSequencer(drumkit=TR808EmulationKit, bpm=100)
 pg = PatternGenerator()
@@ -55,7 +49,12 @@ for _ in range(8):
 
 
 
-# %% Test wav player
+# %% Test wav player (achtung: loud!)
+from playsound import playsound
+import scipy
+from scipy.io import wavfile
+from scipy.io.wavfile import write
+
 kit_path = "wavs/myfunkkit"
 # read a wav and store it in a list n times
 SAMPLE_RATE = 44100
@@ -83,6 +82,8 @@ playsound(wav_c_name)
 
 
 # %% Test midi receiver and wav player
+from vjpy.midi_receiver import MidiReceiver
+from vjpy.wav_player import WavPlayer
 
 midi_receiver = MidiReceiver()
 wav_player = WavPlayer()
@@ -92,6 +93,8 @@ for m in midi_receiver.yield_midi_msg():
     wav_player.play_wav_from_midi_msg(m)
     
 # %% Test midi sender
+from vjpy.midi_sender import MidiSender
+from time import sleep
 
 sender = MidiSender()
 for _ in range(4):
