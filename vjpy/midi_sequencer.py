@@ -3,16 +3,14 @@
 from time import sleep
 import mido
 from vjpy.data_classes import NoteValue
-from vjpy.drumkits import TR808EmulationKit
 
 
 class MidiSequencer:
     """vjpy midi sequencer."""
 
-    def __init__(self, instruments=[TR808EmulationKit], bpm=90):
+    def __init__(self, drumkit, bpm=90):
         self.resolution = "1/4"
-        self.instruments = instruments
-        self.drumkit = self.instruments[0]
+        self.drumkit = drumkit
         self.outport = mido.open_output()
         self.bpm = bpm
         self.note_duration = self.bpm/60
