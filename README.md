@@ -7,11 +7,6 @@ Python module to create audiovisual sequences
 
 Use midi, audio and video python modules to create audiovisual sequences. 
 
-## Related work
-
-Hexstatic, Coldcut music videos from the early 2000's, created with VJPro. 
-
-Example: https://www.youtube.com/watch?v=f1SLN3LpDiA
 
 ## Basic usage
 
@@ -171,6 +166,11 @@ Define the following devices:
 - Add looping logic
 - Add MIDI sending & receiving logic
 
+## Related work
+
+Hexstatic, Coldcut music videos from the early 2000's, created with VJPro. 
+
+Example: https://www.youtube.com/watch?v=f1SLN3LpDiA
 
 # Glossary
 
