@@ -60,18 +60,44 @@ for m in midi_receiver.yield_midi_msg():
 
 # %% Test wav player
 
-# read wav
-WAV_FILENAME = 'wavs/my808kit/snare2.wav'
-# written wav name
-wav_c_name = f"{WAV_FILENAME[:-4]}_written.wav"
-
-SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
-
-# concat wav
 data_ = []
 for _ in range(4):
+    WAV_FILENAME = 'wavs/my808kit/tom.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
     data_.append(data)
+
+    WAV_FILENAME = 'wavs/my808kit/hat.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+    data_.append(data)
+
+    WAV_FILENAME = 'wavs/my808kit/hat.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+    data_.append(data)
+
+    WAV_FILENAME = 'wavs/my808kit/hat.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+    data_.append(data)
+
+    WAV_FILENAME = 'wavs/my808kit/snare.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+    data_.append(data)
+
+    WAV_FILENAME = 'wavs/my808kit/hat.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+    data_.append(data)
+
+    WAV_FILENAME = 'wavs/my808kit/hat.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+    data_.append(data)
+
+    WAV_FILENAME = 'wavs/my808kit/hat.wav'
+    SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+    data_.append(data)
+
+# concat wav
+wav_c_name = "wavs/concat.wav"
 data_c = scipy.concatenate(data_)
+
 
 # write concatenated wav
 write(wav_c_name, SAMPLE_RATE, data_c)
