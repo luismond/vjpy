@@ -27,14 +27,16 @@ seq.loop_bars(bars_example, NUM_LOOPS)
 # %% Test pattern generator
 from vjpy.pattern_generator import PatternGenerator
 pg = PatternGenerator()
+patt_len = 4
 
 for _ in range(4):
-    rp = pg.generate_random_pattern()
+    rp = pg.generate_random_pattern(patt_len)
     print(f"Playing random pattern:\n{rp}")
     seq.play_pattern(rp)
 
 # %% Test wav player (achtung: loud!)
 import scipy
+import numpy
 from scipy.io import wavfile
 from scipy.io.wavfile import write
 from playsound import playsound
@@ -56,7 +58,7 @@ for _ in range(4):
     wav_array.append(data)
 
 # concatenate wavs
-wav_array_c = scipy.concatenate(wav_array)
+wav_array_c = numpy.concatenate(wav_array)
 
 # write concatenated wav
 write(WAV_ARRAY_C_NAME, SAMPLE_RATE, wav_array_c)
