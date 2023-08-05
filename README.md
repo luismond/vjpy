@@ -149,6 +149,7 @@ Define the following devices:
 - Video processor
 
 ### Other TODOs:
+- Merge MIDI modules into a MIDI device
 - Test suite
 
 ## Log
