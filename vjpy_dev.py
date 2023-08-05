@@ -59,7 +59,7 @@ for _ in range(4):
 wav_array_c = scipy.concatenate(wav_array)
 
 # write concatenated wav
-write(WAV_C_NAME, SAMPLE_RATE, wav_array_c)
+write(WAV_ARRAY_C_NAME, SAMPLE_RATE, wav_array_c)
 
 # play concatenated wav
 playsound(WAV_ARRAY_C_NAME)

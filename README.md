@@ -148,6 +148,8 @@ Define the following devices:
 - Video player
 - Video processor
 
+### Other TODOs:
+- Test suite
 
 ## Log
 
@@ -162,9 +164,12 @@ Define the following devices:
 28-jul-23:
 - Bootstrap a wav writer, video writer
 
-29-jul-23;
+29-jul-23:
 - Add looping logic
 - Add MIDI sending & receiving logic
+
+04-ago-23:
+- Add wav concatenation logic
 
 ## Related work
 
