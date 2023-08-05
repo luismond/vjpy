@@ -5,14 +5,22 @@ import matplotlib.pyplot as plt
 from scipy.io.wavfile import write
 from scipy.io import wavfile
 from playsound import playsound
-from vjpy.drumkits import get_my808kit_paths
+
+
+def get_my808kit_paths(drumkit):
+    """Get my drumkit drum paths."""
+    my808kit_drum_paths = {}
+    MY808_KIT_PATH = "wavs/my808kit"
+    for drum_ in drumkit.drums.values():
+        my808kit_drum_paths[drum_.note] = f"{MY808_KIT_PATH}/{drum_.name}.wav"
+    return my808kit_drum_paths
 
 
 class WavDevice:
     """vjpy wav device to write, read and play wavs."""
 
-    def __init__(self):
-        self.sound_paths = get_my808kit_paths()
+    def __init__(self, drumkit):
+        self.sound_paths = get_my808kit_paths(drumkit)
         pass
 
     def play_wav_from_midi_msg(self, midi_msg):
@@ -35,7 +43,7 @@ class WavDevice:
         Todo: find out how to change the duration.
         """
         # write wav
-        WAV_FILENAME = 'wavs/sine_wave_example.wav'
+        WAV_FILENAME = '/home/user/github/vjpy/vjpy/data/wav/wav_examples/sine_wave_example.wav'
         SAMPLE_RATE = 44100
         FS = 300  # Hz
         amplitude = np.iinfo(np.int16).max
@@ -44,8 +52,8 @@ class WavDevice:
         write(WAV_FILENAME, SAMPLE_RATE, data)
 
         # play wav
-        input("This will play a loud sinewave! Continue?")
-        playsound(WAV_FILENAME)
+        #input("This will play a loud sinewave! Continue?")
+        #playsound(WAV_FILENAME)
 
         # plot wav
         length = data.shape[0] / SAMPLE_RATE
@@ -59,7 +67,7 @@ class WavDevice:
     @staticmethod
     def test_wav_reading():
         """Read a wav, rewrite it, plot it."""
-        WAV_FILENAME = 'wavs/my808kit/snare.wav'
+        WAV_FILENAME = '/home/user/github/vjpy/vjpy/data/wav/drumkits/my808kit/snare.wav'
         SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
         print(f"number of channels = {data.shape[1]}")
         length = data.shape[0] / SAMPLE_RATE
@@ -90,8 +98,8 @@ class WavDevice:
     @staticmethod
     def write_concatenated_wavs():
         """Take a wav file, concatenate it n times, write the result."""
-        kit_path = "wavs/myfunkkit"
-        wav_array_c_name = "wavs/concat.wav"
+        kit_path = "/home/user/github/vjpy/vjpy/data/wav/drumkits/myfunkkit"
+        wav_array_c_name = "/home/user/github/vjpy/vjpy/data/concat.wav"
         sample_rate = 44100
 
         # read wav files, store them in an array

@@ -4,13 +4,12 @@ from time import sleep
 from pprint import pprint as pp
 import mido
 from vjpy.data_classes import NoteValue
-from vjpy.drumkits import TR808EmulationKit
 
 
 class MidiSequencer:
     """vjpy midi sequencer."""
 
-    def __init__(self, drumkit=TR808EmulationKit, bpm=90, resolution="1/4"):
+    def __init__(self, drumkit, bpm=90, resolution="1/4"):
         self.drumkit = drumkit
         self.bpm = bpm
         self.resolution = resolution
