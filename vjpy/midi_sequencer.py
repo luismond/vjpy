@@ -18,7 +18,6 @@ class MidiSequencer:
 
         print(
             f"MidiSequencer on.\n",
-            f"\tDrumkit: {self.drumkit}\n",
             f"\tBPM: {self.bpm}\n",
             f"\tRes: {self.resolution}\n",
             f"\tOutport: {self.outport}\n",

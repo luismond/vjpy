@@ -30,9 +30,7 @@ pg = PatternGenerator()
 
 for _ in range(4):
     rp = pg.generate_random_pattern()
-    print(f"\n\n♪♪ Playing random pattern:\n{rp}")
-    seq.play_pattern(rp)
-    print(f"\n\n♪♪ Playing random pattern:\n{rp}")
+    print(f"Playing random pattern:\n{rp}")
     seq.play_pattern(rp)
 
 # %% Test wav player (achtung: loud!)
@@ -42,34 +40,32 @@ from scipy.io.wavfile import write
 from playsound import playsound
 
 KIT_PATH = "wavs/myfunkkit"
-# read a wav and store it in a list n times
 SAMPLE_RATE = 44100
+WAV_ARRAY_C_NAME = "wavs/concat.wav"
 
-
-datas = []
+# read a wav and store it in a list n times
+wav_array = []
 for _ in range(4):
     _, data = wavfile.read(f"{KIT_PATH}/kick.wav")
-    datas.append(data)
+    wav_array.append(data)
     _, data = wavfile.read(f"{KIT_PATH}/hat.wav")
-    datas.append(data)
+    wav_array.append(data)
     _, data = wavfile.read(f"{KIT_PATH}/clap.wav")
-    datas.append(data)
+    wav_array.append(data)
     _, data = wavfile.read(f"{KIT_PATH}/hat.wav")
-    datas.append(data)
+    wav_array.append(data)
 
 # concatenate wavs
-WAV_C_NAME = "wavs/concat.wav"
-data_c = scipy.concatenate(datas)
+wav_array_c = scipy.concatenate(wav_array)
 
 # write concatenated wav
-write(WAV_C_NAME, SAMPLE_RATE, data_c)
+write(WAV_C_NAME, SAMPLE_RATE, wav_array_c)
 
 # play concatenated wav
-playsound(WAV_C_NAME)
+playsound(WAV_ARRAY_C_NAME)
 
 
 # %% Test midi receiver and wav player
-from vjpy.pattern_generator import PatternGenerator
 from vjpy.midi_receiver import MidiReceiver
 from vjpy.wav_player import WavPlayer
 
