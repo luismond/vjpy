@@ -3,3 +3,4 @@
 .virtual_documents
 *.autosave.h2song
 vjpy-setup.sh
+.env
