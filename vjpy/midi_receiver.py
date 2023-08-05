@@ -1,4 +1,4 @@
-"""mido receiver."""
+"""vjpy MIDI receiver."""
 import mido
 
 

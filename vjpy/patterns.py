@@ -3,7 +3,7 @@
 from vjpy.data_classes import Pattern, Bar
 
 
-# Pattern examples (define a pattern generator)
+# Pattern examples
 
 pattern_example_0 = Pattern(
     pattern='k.h.sshhh.s.s.k.k.h.s.h.h.k.s.h.k.h.s.hhhhk.s.h.h.h.s.k.k.s.s.h')

@@ -1,4 +1,4 @@
-"""mido sender."""
+"""vjpy MIDI sender."""
 import mido
 
 PORT = mido.open_output()
