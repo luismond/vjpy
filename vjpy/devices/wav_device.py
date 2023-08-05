@@ -9,19 +9,18 @@ from playsound import playsound
 from dotenv import load_dotenv
 load_dotenv()
 
-user = os.environ.get("USER")
-my808kit_path = os.environ.get("MY_808_KIT_PATH")
-sine_wave_example_filepath = os.environ.get("SINE_WAVE_EXAMPLE_FILEPATH")
-snare_wav_filepath = os.environ.get("SNARE_WAV_FILEPATH")
-funk_kit_path = os.environ.get("FUNK_KIT_PATH")
-wav_array_c_name = os.environ.get("WAV_ARRAY_C_NAME")
+MY_808_KIT_PATH = os.environ.get("MY_808_KIT_PATH")
+SINE_WAVE_EXAMPLE_FILEPATH = os.environ.get("SINE_WAVE_EXAMPLE_FILEPATH")
+SNARE_WAV_FILEPATH = os.environ.get("SNARE_WAV_FILEPATH")
+FUNK_KIT_PATH = os.environ.get("FUNK_KIT_PATH")
+WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
 
 
 def get_my808kit_paths(drumkit):
     """Get my drumkit drum paths."""
     my808kit_drum_paths = {}
     for drum_ in drumkit.drums.values():
-        my808kit_drum_paths[drum_.note] = f"{my808kit_path}/{drum_.name}.wav"
+        my808kit_drum_paths[drum_.note] = f"{MY_808_KIT_PATH}/{drum_.name}.wav"
     return my808kit_drum_paths
 
 
@@ -55,11 +54,11 @@ class WavDevice:
         amplitude = np.iinfo(np.int16).max
         time = np.linspace(start=0., stop=1., num=sample_rate)
         data = amplitude * np.sin(2 * np.pi * fs_var * time)
-        write(sine_wave_example_filepath, sample_rate, data)
+        write(SINE_WAVE_EXAMPLE_FILEPATH, sample_rate, data)
 
         # play wav
-        input("This will play a loud sinewave! Continue?")
-        playsound(sine_wave_example_filepath)
+        # input("This will play a loud sinewave! Continue?")
+        # playsound(SINE_WAVE_EXAMPLE_FILEPATH)
 
         # plot wav
         length = data.shape[0] / sample_rate
@@ -73,13 +72,13 @@ class WavDevice:
     @staticmethod
     def test_wav_reading():
         """Read a wav, rewrite it, plot it."""
-        sample_rate, data = wavfile.read(snare_wav_filepath)
+        sample_rate, data = wavfile.read(SNARE_WAV_FILEPATH)
         print(f"number of channels = {data.shape[1]}")
         length = data.shape[0] / sample_rate
         print(f"length = {length}s")
 
         # re-write read wav
-        write(f"{snare_wav_filepath}_test.wav", sample_rate, data)
+        write(f"{SNARE_WAV_FILEPATH}_test.wav", sample_rate, data)
 
         #  plot read wav
         time = np.linspace(0., length, data.shape[0])
@@ -108,20 +107,20 @@ class WavDevice:
         # read wav files, store them in an array
         wav_array = []
         for _ in range(4):
-            _, data = wavfile.read(f"{funk_kit_path}/kick.wav")
+            _, data = wavfile.read(f"{FUNK_KIT_PATH}/kick.wav")
             wav_array.append(data)
-            _, data = wavfile.read(f"{funk_kit_path}/hat.wav")
+            _, data = wavfile.read(f"{FUNK_KIT_PATH}/hat.wav")
             wav_array.append(data)
-            _, data = wavfile.read(f"{funk_kit_path}/clap.wav")
+            _, data = wavfile.read(f"{FUNK_KIT_PATH}/clap.wav")
             wav_array.append(data)
-            _, data = wavfile.read(f"{funk_kit_path}/hat.wav")
+            _, data = wavfile.read(f"{FUNK_KIT_PATH}/hat.wav")
             wav_array.append(data)
 
         # concatenate wavs
         wav_array_c = np.concatenate(wav_array)
 
         # write concatenated wav
-        write(wav_array_c_name, sample_rate, wav_array_c)
+        write(WAV_ARRAY_C_NAME, sample_rate, wav_array_c)
 
         # play concatenated wav
-        playsound(wav_array_c_name)
+        playsound(WAV_ARRAY_C_NAME)

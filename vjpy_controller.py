@@ -12,8 +12,6 @@ from vjpy.data.midi.patterns import bar_example, bars_example
 md = MidiDevice(drumkit=TR808EmulationKit)
 wd = WavDevice(drumkit=My808kit)
 
-# %% Test midi device
-
 # %% Play
 
 # Play a pattern
