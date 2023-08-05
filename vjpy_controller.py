@@ -10,7 +10,14 @@ from vjpy.data.midi.patterns import bar_example, bars_example
 
 # initialize devices
 md = MidiDevice(drumkit=TR808EmulationKit)
-wd = WavDevice(drumkit=My808kit)
+wd = WavDevice()
+
+# %% Test wav device
+wd.create_sine_wave()
+wd.plot_sine()
+wd.test_wav_reading()
+wd.write_concatenated_wavs()
+
 
 # %% Play
 
@@ -43,17 +50,11 @@ for _ in range(4):
 
 # %% Test midi receiving
 midi_in = md.open_midi_in()
-for m in md.yield_midi_msg(midi_in):
-    wd.play_wav_from_midi_msg(m)
+for msg in md.yield_midi_msg(midi_in):
+    wd.play_drum_wav_from_midi_msg(My808kit, msg)
 
 # %% Test midi sending
 midi_sender = md.open_midi_out()
 for _ in range(4):
     for note in [43, 38, 43, 45]:
         md.send_note(note)
-
-# %% Test wav device
-wd.create_sine_wave()
-wd.plot_sine()
-wd.test_wav_reading()
-wd.write_concatenated_wavs()

@@ -9,30 +9,31 @@ from playsound import playsound
 from dotenv import load_dotenv
 load_dotenv()
 
-MY_808_KIT_PATH = os.environ.get("MY_808_KIT_PATH")
+LOCAL_DRUMKIT_PATH = os.environ.get("LOCAL_DRUMKIT_PATH")
 SINE_WAVE_EXAMPLE_FILEPATH = os.environ.get("SINE_WAVE_EXAMPLE_FILEPATH")
 SNARE_WAV_FILEPATH = os.environ.get("SNARE_WAV_FILEPATH")
 FUNK_KIT_PATH = os.environ.get("FUNK_KIT_PATH")
 WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
 
 
-def get_my808kit_paths(drumkit):
-    """Get my drumkit drum paths."""
-    my808kit_drum_paths = {}
-    for drum_ in drumkit.drums.values():
-        my808kit_drum_paths[drum_.note] = f"{MY_808_KIT_PATH}/{drum_.name}.wav"
-    return my808kit_drum_paths
-
-
 class WavDevice:
     """vjpy wav device to write, read and play wavs."""
 
-    def __init__(self, drumkit):
-        self.sound_paths = get_my808kit_paths(drumkit)
+    def __init__(self):
+        pass
 
-    def play_wav_from_midi_msg(self, midi_msg):
-        """Play a wav file associated with a midi message."""
-        wav_name = self.sound_paths[midi_msg.note]
+    @staticmethod
+    def get_local_drumkit_paths(drumkit):
+        """Get local drumkit drum paths."""
+        local_drumkit_paths = {}
+        for drum in drumkit.drums.values():
+            local_drumkit_paths[drum.note] = f"{LOCAL_DRUMKIT_PATH}/{drum.name}.wav"
+        return local_drumkit_paths
+
+    def play_drum_wav_from_midi_msg(self, drumkit, midi_msg):
+        """Play a drum wav file associated with a midi message."""
+        local_drumkit_paths = self.get_local_drumkit_paths(drumkit)
+        wav_name = local_drumkit_paths[midi_msg.note]
         playsound(wav_name)
 
     @staticmethod
