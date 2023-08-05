@@ -10,9 +10,9 @@ from playsound import playsound
 def get_my808kit_paths(drumkit):
     """Get my drumkit drum paths."""
     my808kit_drum_paths = {}
-    MY808_KIT_PATH = "wavs/my808kit"
+    my808kit_path = "/home/user/github/vjpy/vjpy/data/wav/drumkits/my808kit"
     for drum_ in drumkit.drums.values():
-        my808kit_drum_paths[drum_.note] = f"{MY808_KIT_PATH}/{drum_.name}.wav"
+        my808kit_drum_paths[drum_.note] = f"{my808kit_path}/{drum_.name}.wav"
     return my808kit_drum_paths
 
 
@@ -21,12 +21,10 @@ class WavDevice:
 
     def __init__(self, drumkit):
         self.sound_paths = get_my808kit_paths(drumkit)
-        pass
 
     def play_wav_from_midi_msg(self, midi_msg):
         """Play a wav file associated with a midi message."""
         wav_name = self.sound_paths[midi_msg.note]
-        print(f"Playing: {midi_msg}\n{wav_name}\n\n")
         playsound(wav_name)
 
     @staticmethod
@@ -43,20 +41,20 @@ class WavDevice:
         Todo: find out how to change the duration.
         """
         # write wav
-        WAV_FILENAME = '/home/user/github/vjpy/vjpy/data/wav/wav_examples/sine_wave_example.wav'
-        SAMPLE_RATE = 44100
-        FS = 300  # Hz
+        wav_filename = '/home/user/github/vjpy/vjpy/data/wav/wav_examples/sine_wave_example.wav'
+        sample_rate = 44100
+        fs_var = 300  # Hz
         amplitude = np.iinfo(np.int16).max
-        time = np.linspace(start=0., stop=1., num=SAMPLE_RATE)
-        data = amplitude * np.sin(2 * np.pi * FS * time)
-        write(WAV_FILENAME, SAMPLE_RATE, data)
+        time = np.linspace(start=0., stop=1., num=sample_rate)
+        data = amplitude * np.sin(2 * np.pi * fs_var * time)
+        write(wav_filename, sample_rate, data)
 
         # play wav
-        #input("This will play a loud sinewave! Continue?")
-        #playsound(WAV_FILENAME)
+        # input("This will play a loud sinewave! Continue?")
+        # playsound(WAV_FILENAME)
 
         # plot wav
-        length = data.shape[0] / SAMPLE_RATE
+        length = data.shape[0] / sample_rate
         time = np.linspace(0., length, data.shape[0])
         plt.plot(time, data)
         plt.legend()
@@ -67,14 +65,14 @@ class WavDevice:
     @staticmethod
     def test_wav_reading():
         """Read a wav, rewrite it, plot it."""
-        WAV_FILENAME = '/home/user/github/vjpy/vjpy/data/wav/drumkits/my808kit/snare.wav'
-        SAMPLE_RATE, data = wavfile.read(WAV_FILENAME)
+        wav_filename = '/home/user/github/vjpy/vjpy/data/wav/drumkits/my808kit/snare.wav'
+        sample_rate, data = wavfile.read(wav_filename)
         print(f"number of channels = {data.shape[1]}")
-        length = data.shape[0] / SAMPLE_RATE
+        length = data.shape[0] / sample_rate
         print(f"length = {length}s")
 
         # re-write read wav
-        write(f"{WAV_FILENAME}_test.wav", SAMPLE_RATE, data)
+        write(f"{wav_filename}_test.wav", sample_rate, data)
 
         #  plot read wav
         time = np.linspace(0., length, data.shape[0])
@@ -88,10 +86,10 @@ class WavDevice:
     @staticmethod
     def plot_sine():
         """Plot a sine with matplotlib and numpy."""
-        x = np.linspace(-np.pi, np.pi, 201)
-        plt.plot(x, np.sin(x))
+        equis_var = np.linspace(-np.pi, np.pi, 201)
+        plt.plot(equis_var, np.sin(equis_var))
         plt.xlabel('Angle [rad]')
-        plt.ylabel('sin(x)')
+        plt.ylabel('sin(equis_var)')
         plt.axis('tight')
         plt.show()
 
