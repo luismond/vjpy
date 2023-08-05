@@ -5,12 +5,12 @@ from vjpy.devices.midi_device import MidiDevice
 from vjpy.devices.wav_device import WavDevice
 
 # data
-from vjpy.data.midi.drumkits import TR808EmulationKit, my808kit
+from vjpy.data.midi.drumkits import TR808EmulationKit, My808kit
 from vjpy.data.midi.patterns import bar_example, bars_example
 
 # initialize devices
 md = MidiDevice(drumkit=TR808EmulationKit)
-wd = WavDevice(drumkit=my808kit)
+wd = WavDevice(drumkit=My808kit)
 
 # %% Test midi device
 

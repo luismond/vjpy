@@ -137,19 +137,15 @@ bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
 Define the following devices:
 
 ### MIDI
-- Midi sequencer ✓
-- Midi player ✓
-- Midi receiver ✓
+- MIDI device ✓
 
 ### AUDIO
-- Audio player
+- Audio device ✓
 
 ### VIDEO
-- Video player
-- Video processor
+- Video device
 
 ### Other TODOs:
-- Merge MIDI modules into a MIDI device
 - Test suite
 
 ## Log

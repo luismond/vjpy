@@ -27,8 +27,7 @@ TR808EmulationKit = Drumkit(
     )
 
 
-# define a local drumkit
-my808kit = Drumkit(
+My808kit = Drumkit(
     name='my808kit',
     drums={
         'bongo': Drum(name='bongo', note=36, short_hand='b'),
