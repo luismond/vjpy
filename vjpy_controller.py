@@ -14,6 +14,8 @@ wd = WavDevice(drumkit=My808kit)
 
 # %% Test midi device
 
+# %% Play
+
 # Play a pattern
 print("Playing a pattern.")
 md.play_pattern("k.h.c.h.")
@@ -21,6 +23,9 @@ md.play_pattern("k.h.c.h.")
 # Play a bar of patterns
 print(f"Playing a bar:\n{bar_example.patterns}")
 md.play_bar(bar_example)
+
+
+# %% Loop
 
 # Loop a bar
 print("Looping a bar")
@@ -30,6 +35,8 @@ md.loop_bar(bars_example[0], num_loops=2)
 print("Looping a sequence of bars")
 md.loop_bars(bars_example, num_loops=1)
 
+# %% Generate
+
 # Generate random patterns
 for _ in range(4):
     rp = md.generate_random_pattern(patt_len=4)
@@ -37,8 +44,8 @@ for _ in range(4):
     md.play_pattern(rp)
 
 # %% Test midi receiving
-midi_receiver = md.open_midi_receiver()
-for m in md.yield_midi_msg(midi_receiver):
+midi_in = md.open_midi_in()
+for m in md.yield_midi_msg(midi_in):
     wd.play_wav_from_midi_msg(m)
 
 # %% Test midi sending
