@@ -99,13 +99,14 @@ class WavDevice:
         plt.axis('tight')
         plt.show()
 
-    def write_concatenated_wavs(self):
+    def write_concatenated_wavs(self, sound_names):
         """Take a wav file, concatenate it n times, write the result."""
         wav_array = []
         for _ in range(4):
-            wav_name = f"{FUNK_KIT_PATH}/hat.wav"
-            _, data = wavfile.read(wav_name)
-            wav_array.append(data)
+            for sn in sound_names:
+                wav_name = f"{FUNK_KIT_PATH}/{sn}.wav"
+                _, data = wavfile.read(wav_name)
+                wav_array.append(data)
 
         wav_array_c = np.concatenate(wav_array) # concatenate wavs
         write(WAV_ARRAY_C_NAME, self.sample_rate, wav_array_c) # write concatenated wav

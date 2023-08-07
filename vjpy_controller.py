@@ -16,7 +16,7 @@ wd = WavDevice()
 wd.create_sine_wave()
 wd.plot_sine()
 wd.test_wav_reading()
-wd.write_concatenated_wavs()
+wd.write_concatenated_wavs(sound_names=["kick", "hat", "kick", "clap"])
 
 
 # %% Play
