@@ -1,31 +1,39 @@
 """vjpy controller."""
 
 from vjpy_device import VjPyDevice
-from vjpy_device import bar_example, bars_example
-
 vjpd = VjPyDevice()
 
-# %%
-# Wav concatenating
+# %% Wav concatenating
 print("\nConcatenating wavs.")
-notes = [43, 38, 43, 40]
+
+notes = [
+    43, 38, 40, 43,
+    43, 38, 40, 43,
+    43, 38, 40, 43,
+    43, 38, 40, 40,
+    40, 38, 40, 43,
+    43, 38, 40, 43,
+    43, 38, 40, 43,
+    38, 38, 38, 38
+    ]
+
 vjpd.write_concatenated_wavs(notes)
 
-# Pattern playing
+# %% Pattern playing
 print("\nPlaying a pattern.")
 vjpd.play_pattern("k.h.c.h.")
 
 # Bar playing
 print("\nPlaying a bar.")
-vjpd.play_bar(bar_example)
+vjpd.play_bar(vjpd.bar_example)
 
 # Bar looping
 print("\nLooping a bar.")
-vjpd.loop_bar(bars_example[0], num_loops=2)
+vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)
 
 # Bars looping
 print("\nLooping a sequence of bars.")
-vjpd.loop_bars(bars_example, num_loops=1)
+vjpd.loop_bars(vjpd.bars_example, num_loops=1)
 
 # Random pattern generation
 print("\nPlaying random pattern.")
