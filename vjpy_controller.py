@@ -1,58 +1,48 @@
 """vjpy controller."""
 
-# Devices
-from vjpy import MidiDevice
-from vjpy import WavDevice
+from vjpy_device import VjPyDevice
+vjpd = VjPyDevice()
 
-# Data
-from vjpy import TR808EmulationKit, MyFunkKit
-from vjpy import bar_example, bars_example
+# %% Wav concatenating
+print("\nConcatenating wavs.")
 
+notes = [
+    43, 38, 40, 43,
+    43, 38, 40, 43,
+    43, 38, 40, 43,
+    43, 38, 40, 40,
+    40, 38, 40, 43,
+    43, 38, 40, 43,
+    43, 38, 40, 43,
+    38, 38, 38, 38
+    ]
 
-def get_drum_midi_notes_to_names(drumkit):
-    """Drum-midi-notes <-> Drum-wav-names map."""
-    drum_names = {}
-    for drum in drumkit.drums.values():
-        drum_names[drum.note] = drum.name
-    return drum_names
+vjpd.write_concatenated_wavs(notes)
 
+# %% Pattern playing
+print("\nPlaying a pattern.")
+vjpd.play_pattern("k.h.c.h.")
 
-# %% Test wav device
-dmnn = get_drum_midi_notes_to_names(drumkit=MyFunkKit)
-wd = WavDevice(drumkit=MyFunkKit)
-notes = [43, 38, 43, 40]
-wd.write_concatenated_wavs(dmnn, notes)
+# Bar playing
+print("\nPlaying a bar.")
+vjpd.play_bar(vjpd.bar_example)
 
-# %% Test MIDI device
-md = MidiDevice(drumkit=TR808EmulationKit)
-# Pattern
-print("Playing a pattern.")
-md.play_pattern("k.h.c.h.")
-# Bar
-print(f"Playing a bar:\n{bar_example.patterns}")
-md.play_bar(bar_example)
-# Loop a bar
-print("Looping a bar")
-md.loop_bar(bars_example[0], num_loops=2)
-# Loop a sequence of bars
-print("Looping a sequence of bars")
-md.loop_bars(bars_example, num_loops=1)
+# Bar looping
+print("\nLooping a bar.")
+vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)
 
-# %% Generate random patterns
-md = MidiDevice(drumkit=TR808EmulationKit)
-rp = md.generate_random_pattern(patt_len=8)
-print(f"Playing random pattern:{rp}")
-md.play_pattern(rp)
+# Bars looping
+print("\nLooping a sequence of bars.")
+vjpd.loop_bars(vjpd.bars_example, num_loops=1)
+
+# Random pattern generation
+print("\nPlaying random pattern.")
+rp = vjpd.generate_random_pattern(patt_len=4)
+vjpd.play_pattern(rp)
 
 # %% Test midi receiving
-md = MidiDevice(drumkit=TR808EmulationKit)
-midi_in = md.open_midi_in()
-wd = WavDevice(drumkit=MyFunkKit)
-dmnn = get_drum_midi_notes_to_names(drumkit=MyFunkKit)
-
-for msg in md.yield_midi_msg(midi_in):
-    wd.play_drum_wav_from_midi_msg(dmnn, msg)
+for msg in vjpd.yield_midi_msg():
+    vjpd.play_drum_wav_from_midi_msg(msg)
 
 # %% Test midi sending
-md = MidiDevice(drumkit=TR808EmulationKit)
-md.send_note(40)
+vjpd.send_note(40)
