@@ -9,24 +9,24 @@ from vjpy_app import bar_example, bars_example
 drumkit = MyFunkKit
 
 # maps
-dd_names = {}
+drumkit_note_names = {} # drumkit midi notes
 for drum in drumkit.drums.values():
-    dd_names[drum.note] = drum.name
+    drumkit_note_names[drum.note] = drum.name
 
-dd_shorthands = {}
+drumkit_sh_names = {}  # drumkit shorthand names
 for drum in drumkit.drums.values():
-    dd_shorthands[drum.short_hand] = drum.name
+    drumkit_sh_names[drum.short_hand] = drum.name
 
 # initialize devices
 md = MidiDevice(
     drumkit=TR808EmulationKit,
-    dd_shorthands=dd_shorthands
+    drumkit_sh_names=drumkit_sh_names
     )
 wd = WavDevice(drumkit=MyFunkKit)
 
 # %% Test wav device
 notes = [43, 38, 43, 40]
-wd.write_concatenated_wavs(dd_names, notes)
+wd.write_concatenated_wavs(drumkit_note_names, notes)
 
 # Pattern
 print("Playing a pattern.")
@@ -44,7 +44,7 @@ md.loop_bar(bars_example[0], num_loops=2)
 print("Looping a sequence of bars")
 md.loop_bars(bars_example, num_loops=1)
 
-# %% Generate random patterns
+# Generate random patterns
 rp = md.generate_random_pattern(patt_len=8)
 print(f"Playing random pattern:{rp}")
 md.play_pattern(rp)
@@ -54,7 +54,7 @@ midi_in = md.open_midi_in()
 wd = WavDevice(drumkit=MyFunkKit)
 
 for msg in md.yield_midi_msg(midi_in):
-    wd.play_drum_wav_from_midi_msg(dmnn, msg)
+    wd.play_drum_wav_from_midi_msg(drumkit_note_names, msg)
 
 # %% Test midi sending
 md.send_note(40)

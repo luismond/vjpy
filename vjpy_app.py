@@ -16,12 +16,12 @@ WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
 class MidiDevice:
     """vjpy midi device."""
 
-    def __init__(self, drumkit, dd_shorthands, bpm=90,
+    def __init__(self, drumkit, drumkit_sh_names, bpm=90,
                  resolution="1/4"):
         self.drumkit = drumkit
         self.bpm = bpm
         self.resolution = resolution
-        self.dd_shorthands = dd_shorthands
+        self.drumkit_sh_names = drumkit_sh_names
 
     @property
     def note_duration(self):
@@ -31,7 +31,7 @@ class MidiDevice:
     @property
     def outport(self):
         return mido.open_output()
-  
+
     def open_midi_in(self):
         """I/O: MIDI in."""
         return mido.open_input()
@@ -59,7 +59,7 @@ class MidiDevice:
             if beat == '.':
                 self.play_silence(duration=note_value)
             else:
-                drum_name = self.dd_shorthands[beat]
+                drum_name = self.drumkit_sh_names[beat]
                 self.play_drum(drum_name=drum_name, duration=note_value)
 
     def play_drum(self, drum_name, duration=0):
