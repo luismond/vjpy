@@ -40,11 +40,3 @@ MyFunkKit = Drumkit(
         'clap': Drum(name='clap', note=40, short_hand='c')
         }
     )
-
-
-def get_drum_midi_notes_to_names(drumkit):
-    """Drum-midi-notes <-> Drum-wav-names map."""
-    drum_names = {}
-    for drum in drumkit.drums.values():
-        drum_names[drum.note] = drum.name
-    return drum_names
