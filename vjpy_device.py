@@ -13,11 +13,52 @@ from pydantic import BaseModel
 DRUMKIT_PATH = os.environ.get("LOCAL_DRUMKIT_PATH")
 WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
 
-class MidiDevice:
-    """vjpy midi device."""
+# Data classes
+class Bar(BaseModel):
+    """Musical measure containing patterns."""
 
-    def __init__(self, drumkit, drumkit_sh_names, bpm=90,
-                 resolution="1/4"):
+    bar_num: int
+    patterns: list[str]
+
+
+class Pattern(BaseModel):
+    """Pattern."""
+
+    pattern: str
+
+
+class Drumkit(BaseModel):
+    """Object representing a collection of drums."""
+
+    name: str
+    drums: dict
+
+
+class Drum(BaseModel):
+    """Object representing a drum (with name, note, shorthand)."""
+
+    name: str
+    note: int
+    short_hand: str
+
+
+class NoteValue(BaseModel):
+    """Object representing a note value."""
+
+    name: str
+    relative_value: float
+
+
+class VjPyDevice:
+    """vjpy device."""
+
+    def __init__(self,
+                 drumkit,
+                 drumkit_sh_names,
+                 bpm=90,
+                 resolution="1/4"
+                 ):
+        self.sample_rate = 44100
         self.drumkit = drumkit
         self.bpm = bpm
         self.resolution = resolution
@@ -54,7 +95,7 @@ class MidiDevice:
     # PLAY
     def play_pattern(self, pattern):
         """Play a sequence of notes."""
-        note_value = note_values[self.resolution].relative_value / self.note_duration
+        note_value = self.note_values[self.resolution].relative_value / self.note_duration
         for beat in pattern:
             if beat == '.':
                 self.play_silence(duration=note_value)
@@ -103,13 +144,6 @@ class MidiDevice:
             random_pattern.append(random.choice(abbvs))
         return random_pattern
 
-class WavDevice:
-    """vjpy wav device to write, read and play wavs."""
-
-    def __init__(self, drumkit):
-        self.sample_rate = 44100
-        self.drumkit = drumkit
-
     def play_drum_wav_from_midi_msg(self, drum_midi_notes_to_names, midi_msg):
         """Play a drum wav file associated with a midi message."""
         wav_name = drum_midi_notes_to_names[midi_msg.note]
@@ -126,73 +160,22 @@ class WavDevice:
         wav_array_c = np.concatenate(wav_array)
         write(WAV_ARRAY_C_NAME, self.sample_rate, wav_array_c)
         playsound(WAV_ARRAY_C_NAME)
+        
+    @property
+    def note_values(self):
+        note_values = {
+    '1': NoteValue(name='whole_note', relative_value=1.0),
+    '1/2': NoteValue(name='half_note', relative_value=0.5),
+    '1/4': NoteValue(name='quarter_note', relative_value=0.25),
+    '1/8': NoteValue(name='eigth_note', relative_value=0.125),
+    '1/16': NoteValue(name='sixteenth_note', relative_value=0.0625),
+    '1/32': NoteValue(name='thirty-second_note', relative_value=0.03125)
+    }
+        return note_values
 
 
-# Classes
-class Bar(BaseModel):
-    """Musical measure containing patterns."""
-
-    bar_num: int
-    patterns: list[str]
 
 
-class Pattern(BaseModel):
-    """Pattern."""
-
-    pattern: str
-
-
-class Drumkit(BaseModel):
-    """Object representing a collection of drums."""
-
-    name: str
-    drums: dict
-
-
-class Drum(BaseModel):
-    """Object representing a drum (with name, note, shorthand)."""
-
-    name: str
-    note: int
-    short_hand: str
-
-
-class NoteValue(BaseModel):
-    """Object representing a note value."""
-
-    name: str
-    relative_value: float
-
-
-TR808EmulationKit = Drumkit(
-    name='TR808EmulationKit',
-    drums={
-        'kick': Drum(name='kick', note=36, short_hand='k'),
-        'snare': Drum(name='snare', note=38, short_hand='s'),
-        'clap': Drum(name='clap', note=40, short_hand='c'),
-        'tom': Drum(name='tom', note=43, short_hand='t'),
-        'hat': Drum(name='hat', note=45, short_hand='h'),
-        'conga': Drum(name='conga', note=49, short_hand='g'),
-        'clave': Drum(name='clave', note=50, short_hand='v'),
-        'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
-        }
-    )
-
-
-My808kit = Drumkit(
-    name='my808kit',
-    drums={
-        'bongo': Drum(name='bongo', note=36, short_hand='b'),
-        'conga': Drum(name='conga', note=38, short_hand='g'),
-        'crash': Drum(name='crash', note=40, short_hand='x'),
-        'hat': Drum(name='hat', note=43, short_hand='h'),
-        'kick': Drum(name='kick', note=45, short_hand='k'),
-        'ride': Drum(name='ride', note=49, short_hand='r'),
-        'snare': Drum(name='snare', note=50, short_hand='c'),
-        'snare2': Drum(name='snare2', note=51, short_hand='z'),
-        'tom': Drum(name='tom', note=51, short_hand='t')
-        }
-    )
 
 MyFunkKit = Drumkit(
     name='MyFunkKit',
@@ -218,16 +201,6 @@ bars_example = [
     Bar(bar_num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
     Bar(bar_num=4, patterns=['k.h.', 'chhh', 'hhhh', 'cccc'])
 ]
-
-
-note_values = {
-    '1': NoteValue(name='whole_note', relative_value=1.0),
-    '1/2': NoteValue(name='half_note', relative_value=0.5),
-    '1/4': NoteValue(name='quarter_note', relative_value=0.25),
-    '1/8': NoteValue(name='eigth_note', relative_value=0.125),
-    '1/16': NoteValue(name='sixteenth_note', relative_value=0.0625),
-    '1/32': NoteValue(name='thirty-second_note', relative_value=0.03125)
-    }
 
 
 # from moviepy.editor import VideoFileClip, CompositeVideoClip
