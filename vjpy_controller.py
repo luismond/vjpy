@@ -29,12 +29,11 @@ vjpd.loop_bars(bars_example, num_loops=1)
 
 # Random pattern generation
 print("\nPlaying random pattern.")
-rp = vjpd.generate_random_pattern(patt_len=8)
+rp = vjpd.generate_random_pattern(patt_len=4)
 vjpd.play_pattern(rp)
 
 # %% Test midi receiving
-midi_in = vjpd.open_midi_in()
-for msg in vjpd.yield_midi_msg(midi_in):
+for msg in vjpd.yield_midi_msg():
     vjpd.play_drum_wav_from_midi_msg(msg)
 
 # %% Test midi sending

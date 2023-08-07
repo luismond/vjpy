@@ -68,28 +68,24 @@ class VjPyDevice:
 
     # I/O
     @property
-    def outport(self):
-        """MIDI out port."""
-        return mido.open_output()
-
-    def open_midi_in(self):
-        """I/O: MIDI in."""
+    def midi_in(self):
         return mido.open_input()
-
-    def open_midi_out(self):
-        """I/O: MIDI out."""
+    
+    @property
+    def midi_out(self):
         return mido.open_output()
 
-    def yield_midi_msg(self, inport):
+
+    def yield_midi_msg(self):
         """Yield MIDI messages from a MIDI in port."""
-        for midi_msg in inport:
+        for midi_msg in self.midi_in:
             yield midi_msg
 
     def send_note(self, note):
         """Send a MIDI note."""
         msg = mido.Message('note_on', note=note)
-        outport = self.open_midi_out()
-        outport.send(msg)
+        #outport = self.open_midi_out()
+        self.midi_out.send(msg)
 
     # PLAY
     def play_pattern(self, pattern):
@@ -110,7 +106,7 @@ class VjPyDevice:
     def play_note(self, note, duration=0, velocity=50):
         """Send a MIDI note."""
         msg = mido.Message('note_on',  note=note, velocity=velocity)
-        self.outport.send(msg)
+        self.midi_out.send(msg)
         time.sleep(duration)
 
     @staticmethod
@@ -189,7 +185,7 @@ class VjPyDevice:
     @property
     def drumkit_sh_names(self):
         """Inverse mapping short-hand-names <-> full-names."""
-        drumkit_sh_names = {}  # drumkit shorthand names
+        drumkit_sh_names = {}
         for drum in self.my_drumkit.drums.values():
             drumkit_sh_names[drum.short_hand] = drum.name
         return drumkit_sh_names
@@ -203,7 +199,6 @@ class VjPyDevice:
         return drumkit_note_names
 
 # Pattern examples
-
 pattern_example_0 = Pattern(pattern='k.h.sshhh.s.s.k.')
 pattern_examples = [pattern_example_0]
 
