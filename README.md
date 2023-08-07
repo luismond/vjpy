@@ -151,7 +151,7 @@ Define the following devices:
 ## Log
 
 26-jul-23:
-- Setup audio and midi libraries in ubuntu. 
+- Setup audio and midi libraries in ubuntu.
 - Wrote drum pattern logic.
 - Defined communication from Python to Hydrogen.
 
@@ -159,14 +159,17 @@ Define the following devices:
 - Defined a midi drum sequencer.
 
 28-jul-23:
-- Bootstrap a wav writer, video writer
+- Bootstrap a wav writer, video writer.
 
 29-jul-23:
 - Add looping logic
-- Add MIDI sending & receiving logic
+- Add MIDI sending & receiving logic.
 
 04-ago-23:
-- Add wav concatenation logic
+- Add wav concatenation logic.
+
+06-ago-23:
+- Implement receiving of MIDI messages in the wav player.
 
 ## Related work
 
