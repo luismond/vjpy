@@ -29,11 +29,10 @@ class WavDevice:
         """Take a wav file, concatenate it, write the result."""
         wav_array = []
         msgs = [mido.Message('note_on', note=note) for note in notes]
-        for _ in range(4):
-            for msg in msgs:
-                wav_path = DRUMKIT_PATH + "/" + drum_midi_notes_to_names[msg.note] + ".wav"
-                _, data = wavfile.read(wav_path)
-                wav_array.append(data)
+        for msg in msgs:
+            wav_path = DRUMKIT_PATH + "/" + drum_midi_notes_to_names[msg.note] + ".wav"
+            _, data = wavfile.read(wav_path)
+            wav_array.append(data)
         wav_array_c = np.concatenate(wav_array)
         write(WAV_ARRAY_C_NAME, self.sample_rate, wav_array_c)
         playsound(WAV_ARRAY_C_NAME)
