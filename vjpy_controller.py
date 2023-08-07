@@ -12,7 +12,7 @@ from vjpy.data.midi.patterns import bar_example, bars_example
 md = MidiDevice(drumkit=TR808EmulationKit)
 wd = WavDevice()
 
-# %% Test wav device
+# Test wav device
 wd.create_sine_wave()
 wd.plot_sine()
 wd.test_wav_reading()
@@ -21,11 +21,11 @@ wd.write_concatenated_wavs()
 
 # %% Play
 
-# Play a pattern
+# Pattern
 print("Playing a pattern.")
 md.play_pattern("k.h.c.h.")
 
-# Play a bar of patterns
+# Bar
 print(f"Playing a bar:\n{bar_example.patterns}")
 md.play_bar(bar_example)
 
@@ -56,5 +56,5 @@ for msg in md.yield_midi_msg(midi_in):
 # %% Test midi sending
 midi_sender = md.open_midi_out()
 for _ in range(4):
-    for note in [43, 38, 43, 45]:
+    for note in [43, 43]:
         md.send_note(note)

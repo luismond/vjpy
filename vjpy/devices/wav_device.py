@@ -20,6 +20,7 @@ class WavDevice:
     """vjpy wav device to write, read and play wavs."""
 
     def __init__(self):
+        self.sample_rate = 44100
         pass
 
     @staticmethod
@@ -36,8 +37,7 @@ class WavDevice:
         wav_name = local_drumkit_paths[midi_msg.note]
         playsound(wav_name)
 
-    @staticmethod
-    def create_sine_wave():
+    def create_sine_wave(self):
         """
         Write and plot a wave.
 
@@ -50,19 +50,18 @@ class WavDevice:
         Todo: find out how to change the duration.
         """
         # write wav
-        sample_rate = 44100
         fs_var = 300  # Hz
         amplitude = np.iinfo(np.int16).max
-        time = np.linspace(start=0., stop=1., num=sample_rate)
+        time = np.linspace(start=0., stop=1., num=self.sample_rate)
         data = amplitude * np.sin(2 * np.pi * fs_var * time)
-        write(SINE_WAVE_EXAMPLE_FILEPATH, sample_rate, data)
+        write(SINE_WAVE_EXAMPLE_FILEPATH, self.sample_rate, data)
 
         # play wav
         # input("This will play a loud sinewave! Continue?")
         # playsound(SINE_WAVE_EXAMPLE_FILEPATH)
 
         # plot wav
-        length = data.shape[0] / sample_rate
+        length = data.shape[0] /self.sample_rate
         time = np.linspace(0., length, data.shape[0])
         plt.plot(time, data)
         plt.legend()
@@ -100,28 +99,14 @@ class WavDevice:
         plt.axis('tight')
         plt.show()
 
-    @staticmethod
-    def write_concatenated_wavs():
+    def write_concatenated_wavs(self):
         """Take a wav file, concatenate it n times, write the result."""
-        sample_rate = 44100
-
-        # read wav files, store them in an array
         wav_array = []
         for _ in range(4):
-            _, data = wavfile.read(f"{FUNK_KIT_PATH}/kick.wav")
-            wav_array.append(data)
-            _, data = wavfile.read(f"{FUNK_KIT_PATH}/hat.wav")
-            wav_array.append(data)
-            _, data = wavfile.read(f"{FUNK_KIT_PATH}/clap.wav")
-            wav_array.append(data)
-            _, data = wavfile.read(f"{FUNK_KIT_PATH}/hat.wav")
+            wav_name = f"{FUNK_KIT_PATH}/hat.wav"
+            _, data = wavfile.read(wav_name)
             wav_array.append(data)
 
-        # concatenate wavs
-        wav_array_c = np.concatenate(wav_array)
-
-        # write concatenated wav
-        write(WAV_ARRAY_C_NAME, sample_rate, wav_array_c)
-
-        # play concatenated wav
-        playsound(WAV_ARRAY_C_NAME)
+        wav_array_c = np.concatenate(wav_array) # concatenate wavs
+        write(WAV_ARRAY_C_NAME, self.sample_rate, wav_array_c) # write concatenated wav
+        playsound(WAV_ARRAY_C_NAME) # play concatenated wav
