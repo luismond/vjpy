@@ -13,17 +13,7 @@ TR808EmulationKit = Drumkit(
         'conga': Drum(name='conga', note=49, short_hand='g'),
         'clave': Drum(name='clave', note=50, short_hand='v'),
         'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
-        },
-    short_hand_drum_dict={
-        "k": "kick",
-        "s": "snare",
-        "c": "clap",
-        "t": "tom",
-        "h": "hat",
-        "g": "conga",
-        "v": "clave",
-        "w": "cowbell"
-    }
+        }
     )
 
 
@@ -50,3 +40,11 @@ MyFunkKit = Drumkit(
         'clap': Drum(name='clap', note=40, short_hand='c')
         }
     )
+
+
+def get_drum_midi_notes_to_names(drumkit):
+    """Drum-midi-notes <-> Drum-wav-names map."""
+    drum_names = {}
+    for drum in drumkit.drums.values():
+        drum_names[drum.note] = drum.name
+    return drum_names
