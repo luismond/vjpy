@@ -53,24 +53,23 @@ class VjPyDevice:
     """vjpy device."""
 
     def __init__(self,
-                 drumkit,
-                 drumkit_sh_names,
                  bpm=90,
                  resolution="1/4"
                  ):
         self.sample_rate = 44100
-        self.drumkit = drumkit
         self.bpm = bpm
         self.resolution = resolution
-        self.drumkit_sh_names = drumkit_sh_names
+        self.my_drumkit = self.get_my_drumkit()
 
     @property
     def note_duration(self):
+        """Note duration expressed in seconds."""
         return self.bpm/60
 
     # I/O
     @property
     def outport(self):
+        """MIDI out port."""
         return mido.open_output()
 
     def open_midi_in(self):
@@ -105,7 +104,7 @@ class VjPyDevice:
 
     def play_drum(self, drum_name, duration=0):
         """Send a drum MIDI note."""
-        drum_note = self.drumkit.drums[drum_name].note
+        drum_note = self.my_drumkit.drums[drum_name].note
         self.play_note(note=drum_note, duration=duration)
 
     def play_note(self, note, duration=0, velocity=50):
@@ -144,25 +143,26 @@ class VjPyDevice:
             random_pattern.append(random.choice(abbvs))
         return random_pattern
 
-    def play_drum_wav_from_midi_msg(self, drum_midi_notes_to_names, midi_msg):
+    def play_drum_wav_from_midi_msg(self, midi_msg):
         """Play a drum wav file associated with a midi message."""
-        wav_name = drum_midi_notes_to_names[midi_msg.note]
+        wav_name = self.drumkit_note_names[midi_msg.note]
         playsound(DRUMKIT_PATH+"/"+wav_name+".wav")
 
-    def write_concatenated_wavs(self, drum_midi_notes_to_names, notes):
+    def write_concatenated_wavs(self, notes):
         """Take a wav file, concatenate it, write the result."""
         wav_array = []
         msgs = [mido.Message('note_on', note=note) for note in notes]
         for msg in msgs:
-            wav_path = DRUMKIT_PATH + "/" + drum_midi_notes_to_names[msg.note] + ".wav"
+            wav_path = DRUMKIT_PATH + "/" + self.drumkit_note_names[msg.note] + ".wav"
             _, data = wavfile.read(wav_path)
             wav_array.append(data)
         wav_array_c = np.concatenate(wav_array)
         write(WAV_ARRAY_C_NAME, self.sample_rate, wav_array_c)
         playsound(WAV_ARRAY_C_NAME)
-        
+
     @property
     def note_values(self):
+        """Musical definitions of notes' values."""
         note_values = {
     '1': NoteValue(name='whole_note', relative_value=1.0),
     '1/2': NoteValue(name='half_note', relative_value=0.5),
@@ -174,17 +174,33 @@ class VjPyDevice:
         return note_values
 
 
+    def get_my_drumkit(self):
+        """Temp 'my drumkit' object."""
+        mydrumkit = Drumkit(
+        name='MyDrumKit',
+        drums={
+            'kick': Drum(name='kick', note=43, short_hand='k'),
+            'hat': Drum(name='hat', note=38, short_hand='h'),
+            'clap': Drum(name='clap', note=40, short_hand='c')
+            }
+        )
+        return mydrumkit
 
+    @property
+    def drumkit_sh_names(self):
+        """Inverse mapping short-hand-names <-> full-names."""
+        drumkit_sh_names = {}  # drumkit shorthand names
+        for drum in self.my_drumkit.drums.values():
+            drumkit_sh_names[drum.short_hand] = drum.name
+        return drumkit_sh_names
 
-
-MyFunkKit = Drumkit(
-    name='MyFunkKit',
-    drums={
-        'kick': Drum(name='kick', note=43, short_hand='k'),
-        'hat': Drum(name='hat', note=38, short_hand='h'),
-        'clap': Drum(name='clap', note=40, short_hand='c')
-        }
-    )
+    @property
+    def drumkit_note_names(self):
+        """Inverse mapping notes <-> note names."""
+        drumkit_note_names = {}
+        for drum in self.my_drumkit.drums.values():
+            drumkit_note_names[drum.note] = drum.name
+        return drumkit_note_names
 
 # Pattern examples
 
