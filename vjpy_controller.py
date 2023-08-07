@@ -51,5 +51,5 @@ for msg in md.yield_midi_msg(midi_in):
 # %% Test midi sending
 midi_sender = md.open_midi_out()
 for _ in range(4):
-    for note in [43]:
+    for note in [40]:
         md.send_note(note)
