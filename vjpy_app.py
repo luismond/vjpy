@@ -16,19 +16,22 @@ WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
 class MidiDevice:
     """vjpy midi device."""
 
-    def __init__(
-            self,
-            drumkit,
-            bpm=90,
-            resolution="1/4"
-            ):
+    def __init__(self, drumkit, dd_shorthands, bpm=90,
+                 resolution="1/4"):
         self.drumkit = drumkit
         self.bpm = bpm
         self.resolution = resolution
-        self.note_duration = self.bpm/60
-        self.outport = mido.open_output()
+        self.dd_shorthands = dd_shorthands
+
+    @property
+    def note_duration(self):
+        return self.bpm/60
 
     # I/O
+    @property
+    def outport(self):
+        return mido.open_output()
+  
     def open_midi_in(self):
         """I/O: MIDI in."""
         return mido.open_input()
@@ -56,10 +59,7 @@ class MidiDevice:
             if beat == '.':
                 self.play_silence(duration=note_value)
             else:
-                drum_name = [
-                    drum.name for drum in self.drumkit.drums.values()
-                    if drum.short_hand == beat
-                    ][0]  # simplify
+                drum_name = self.dd_shorthands[beat]
                 self.play_drum(drum_name=drum_name, duration=note_value)
 
     def play_drum(self, drum_name, duration=0):
@@ -97,7 +97,7 @@ class MidiDevice:
     # GENERATE
     def generate_random_pattern(self, patt_len):
         """Generate_random_pattern."""
-        abbvs = ["t", "h", "s", ".", "k", "c", "g", "v"]
+        abbvs = ["k", "h", "c"]
         random_pattern = []
         for _ in range(patt_len):
             random_pattern.append(random.choice(abbvs))
@@ -216,7 +216,7 @@ bars_example = [
     Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
     Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
     Bar(bar_num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=4, patterns=['k.h.', 'chhh', 'kkvv', 'cccc'])
+    Bar(bar_num=4, patterns=['k.h.', 'chhh', 'hhhh', 'cccc'])
 ]
 
 
