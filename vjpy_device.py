@@ -69,12 +69,13 @@ class VjPyDevice:
     # I/O
     @property
     def midi_in(self):
+        """MIDI in."""
         return mido.open_input()
-    
+
     @property
     def midi_out(self):
+        """MIDI out."""
         return mido.open_output()
-
 
     def yield_midi_msg(self):
         """Yield MIDI messages from a MIDI in port."""
@@ -83,14 +84,13 @@ class VjPyDevice:
 
     def send_note(self, note):
         """Send a MIDI note."""
-        msg = mido.Message('note_on', note=note)
-        #outport = self.open_midi_out()
-        self.midi_out.send(msg)
+        self.midi_out.send(mido.Message('note_on', note=note))
 
     # PLAY
     def play_pattern(self, pattern):
         """Play a sequence of notes."""
-        note_value = self.note_values[self.resolution].relative_value / self.note_duration
+        note_value = self.note_values[self.resolution].relative_value \
+            / self.note_duration
         for beat in pattern:
             if beat == '.':
                 self.play_silence(duration=note_value)
