@@ -1,6 +1,7 @@
 """vjpy data classes."""
 
-from pydantic import BaseModel
+from typing import Optional
+from pydantic import BaseModel, constr
 
 
 class Bar(BaseModel):
@@ -13,7 +14,7 @@ class Bar(BaseModel):
 class Pattern(BaseModel):
     """Pattern."""
 
-    pattern: str
+    pattern: Optional[constr(min_length=8, max_length=8)]
 
 
 class Drumkit(BaseModel):
