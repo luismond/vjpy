@@ -1,12 +1,8 @@
 """vjpy controller."""
 
-# Devices
-from vjpy import MidiDevice
-from vjpy import WavDevice
-
-# Data
-from vjpy import TR808EmulationKit, MyFunkKit
-from vjpy import bar_example, bars_example
+from vjpy_app import MidiDevice, WavDevice
+from vjpy_app import TR808EmulationKit, MyFunkKit
+from vjpy_app import bar_example, bars_example
 
 
 def get_drum_midi_notes_to_names(drumkit):
