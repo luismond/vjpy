@@ -15,7 +15,6 @@ md = MidiDevice(drumkit=TR808EmulationKit)
 wd = WavDevice(drumkit=MyFunkKit)
 
 # %% Test wav device
-outport = md.open_midi_out()
 notes = [43, 38, 43, 40]
 wd.write_concatenated_wavs(drum_midi_notes_to_names, notes)
 
