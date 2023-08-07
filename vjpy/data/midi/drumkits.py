@@ -41,3 +41,12 @@ My808kit = Drumkit(
         'tom': Drum(name='tom', note=51, short_hand='t')
         }
     )
+
+MyFunkKit = Drumkit(
+    name='MyFunkKit',
+    drums={
+        'kick': Drum(name='kick', note=43, short_hand='k'),
+        'hat': Drum(name='hat', note=38, short_hand='h'),
+        'clap': Drum(name='clap', note=40, short_hand='c')
+        }
+    )

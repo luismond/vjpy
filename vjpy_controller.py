@@ -5,19 +5,15 @@ from vjpy.devices.midi_device import MidiDevice
 from vjpy.devices.wav_device import WavDevice
 
 # data
-from vjpy.data.midi.drumkits import TR808EmulationKit, My808kit
+from vjpy.data.midi.drumkits import TR808EmulationKit, My808kit, MyFunkKit
 from vjpy.data.midi.patterns import bar_example, bars_example
 
 # initialize devices
 md = MidiDevice(drumkit=TR808EmulationKit)
-wd = WavDevice()
+wd = WavDevice(drumkit=MyFunkKit)
 
-# Test wav device
-wd.create_sine_wave()
-wd.plot_sine()
-wd.test_wav_reading()
-wd.write_concatenated_wavs(sound_names=["kick", "hat", "kick", "clap"])
-
+# %% Test wav device
+wd.write_concatenated_wavs(sound_names=["kick", "hat", "clap", "hat"])
 
 # %% Play
 
@@ -43,10 +39,9 @@ md.loop_bars(bars_example, num_loops=1)
 # %% Generate
 
 # Generate random patterns
-for _ in range(4):
-    rp = md.generate_random_pattern(patt_len=4)
-    print(f"Playing random pattern:{rp}")
-    md.play_pattern(rp)
+rp = md.generate_random_pattern(patt_len=4)
+print(f"Playing random pattern:{rp}")
+md.play_pattern(rp)
 
 # %% Test midi receiving
 midi_in = md.open_midi_in()
