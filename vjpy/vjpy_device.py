@@ -8,41 +8,11 @@ import numpy as np
 from scipy.io import wavfile
 from scipy.io.wavfile import write
 from playsound import playsound
-from pydantic import BaseModel
+from vjpy import Bar, Pattern, Drumkit, Drum, NoteValue
 
 DRUMKIT_PATH = os.environ.get("LOCAL_DRUMKIT_PATH")
 WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
 
-# Data classes
-class Bar(BaseModel):
-    """Musical measure containing patterns."""
-
-    bar_num: int
-    patterns: list[str]
-
-class Pattern(BaseModel):
-    """Pattern."""
-
-    pattern: str
-
-class Drumkit(BaseModel):
-    """Object representing a collection of drums."""
-
-    name: str
-    drums: dict
-
-class Drum(BaseModel):
-    """Object representing a drum (with name, note, shorthand)."""
-
-    name: str
-    note: int
-    short_hand: str
-
-class NoteValue(BaseModel):
-    """Object representing a note value."""
-
-    name: str
-    relative_value: float
 
 class VjPyDevice:
     """vjpy device."""
@@ -57,7 +27,7 @@ class VjPyDevice:
         self.resolution = resolution
         self.my_drumkit = self.get_my_drumkit()
 
-    # # NOTE DURATIONS & VALUES
+    # NOTE DURATIONS & VALUES
     @property
     def note_duration(self):
         """Note duration expressed in seconds."""
@@ -77,7 +47,7 @@ class VjPyDevice:
         return note_values
 
 
-    # # I/O
+    # I/O
     @property
     def midi_in(self):
         """MIDI in."""
@@ -97,7 +67,7 @@ class VjPyDevice:
         """Send a MIDI note through a MIDI out port."""
         self.midi_out.send(mido.Message('note_on', note=note))
 
-    # # DRUMS
+    # DRUMS
     @property
     def drumkit_sh_names(self):
         """Mapping short-hand-names <-> full-names."""
@@ -131,13 +101,12 @@ class VjPyDevice:
         )
         return mydrumkit
 
-    # STATIC METHODS
     @staticmethod
     def play_silence(duration=0):
         """Play a silence of n duration."""
         time.sleep(duration)    
     
-    # # PATTERNS & BARS
+    # PATTERNS & BARS
     @property
     def pattern_example(self):
         return Pattern(pattern='k.h.sshhh.s.s.k.')
