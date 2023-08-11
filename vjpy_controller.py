@@ -1,22 +1,12 @@
 """vjpy controller."""
 
-from vjpy_device import VjPyDevice
+from vjpy import VjPyDevice
 vjpd = VjPyDevice()
 
 # %% Wav concatenating
 print("\nConcatenating wavs.")
 
-notes = [
-    43, 38, 40, 43,
-    43, 38, 40, 43,
-    43, 38, 40, 43,
-    43, 38, 40, 40,
-    40, 38, 40, 43,
-    43, 38, 40, 43,
-    43, 38, 40, 43,
-    38, 38, 38, 38
-    ]
-
+notes = [38, 38, 40, 38]
 vjpd.write_concatenated_wavs(notes)
 
 # %% Pattern playing
