@@ -4,3 +4,5 @@
 *.autosave.h2song
 vjpy-setup.sh
 .env
+*.mp4
+*.webm

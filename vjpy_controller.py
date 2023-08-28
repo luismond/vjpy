@@ -6,14 +6,17 @@ vjpd = VjPyDevice()
 # %% Wav concatenating
 print("\nConcatenating wavs.")
 
-notes = [38, 38, 40, 38]
+notes = [
+    38, 38, 40, 38,
+    38, 38, 40, 38
+    ]
 vjpd.write_concatenated_wavs(notes)
 
 # %% Pattern playing
 print("\nPlaying a pattern.")
-vjpd.play_pattern("k.h.c.h.")
+vjpd.play_pattern("khckhkckkhckhkkckhckhkhkckhkchkc")
 
-# Bar playing
+# %% Bar playing
 print("\nPlaying a bar.")
 vjpd.play_bar(vjpd.bar_example)
 
@@ -36,3 +39,17 @@ for msg in vjpd.yield_midi_msg():
 
 # %% Test midi sending
 vjpd.send_note(40)
+
+# %% Test video
+
+video_filename = 'test.mp4'
+subclip_name = 'test_subclip.mp4'
+start = 2.4
+end = 3
+video_clip_ = vjpd.video_clip(video_filename)
+video_subclip_ = vjpd.video_subclip(video_clip_, start, end)
+video_subclip_composite_ = vjpd.video_subclip_composite(video_subclip_)
+vjpd.write_subclip_composite(video_subclip_composite_, subclip_name)
+#video = VideoFileClip("test.mp4").subclip(2.4, 3)
+#result = CompositeVideoClip([video])
+#result.write_videofile("test.webm", fps=25)
