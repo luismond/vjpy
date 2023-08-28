@@ -42,14 +42,31 @@ vjpd.send_note(40)
 
 # %% Test video
 
-video_filename = 'test.mp4'
-subclip_name = 'test_subclip.mp4'
-start = 2.4
-end = 3
-video_clip_ = vjpd.video_clip(video_filename)
-video_subclip_ = vjpd.video_subclip(video_clip_, start, end)
-video_subclip_composite_ = vjpd.video_subclip_composite(video_subclip_)
-vjpd.write_subclip_composite(video_subclip_composite_, subclip_name)
-#video = VideoFileClip("test.mp4").subclip(2.4, 3)
-#result = CompositeVideoClip([video])
-#result.write_videofile("test.webm", fps=25)
+video_data = {
+    "video_filename": 'test.mp4',
+    "subclip_name": 'test_subclip.mp4',
+    "start": '2.4',
+    "end": '3'
+    }
+
+
+video_clip = vjpd.get_video_clip(video_data['video_filename'])
+
+sc_0 = vjpd.get_video_subclip(video_clip, 2.4, 3)
+sc_1 = vjpd.get_video_subclip(video_clip, 3, 3.6)
+sc_2 = vjpd.get_video_subclip(video_clip, 6.9, 7.2)
+sc_3 = vjpd.get_video_subclip(video_clip, 6.9, 7.05)
+
+subclips = [sc_0, sc_0, sc_1, sc_0,
+            sc_0, sc_0, sc_1, sc_2, sc_2,
+            sc_0, sc_0, sc_1, sc_0,
+            sc_0, sc_0, sc_1, sc_3, sc_3, sc_3, sc_3,
+            sc_0, sc_0, sc_1, sc_0,
+            sc_0, sc_0, sc_1, sc_2, sc_2,
+            sc_0, sc_0, sc_1, sc_0,
+            sc_0, sc_0, sc_1, sc_3, sc_3, sc_3, sc_3]
+
+
+c_subclips = vjpd.concatenate_subclips(subclips)
+
+vjpd.write_concatenated_subclips(c_subclips, video_data['subclip_name'])

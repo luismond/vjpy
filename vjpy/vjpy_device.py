@@ -9,7 +9,11 @@ from scipy.io import wavfile
 from scipy.io.wavfile import write
 from playsound import playsound
 from vjpy import Bar, Pattern, Drumkit, Drum, NoteValue
-from moviepy.editor import VideoFileClip, CompositeVideoClip
+from moviepy.editor import (
+    VideoFileClip,
+    CompositeVideoClip,
+    concatenate_videoclips
+    )
 
 DRUMKIT_PATH = os.environ.get("LOCAL_DRUMKIT_PATH")
 WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
@@ -192,14 +196,17 @@ class VjPyDevice:
 
     ## Video methods
 
-    def video_clip(self, video_filename):
+    def get_video_clip(self, video_filename):
         return VideoFileClip(video_filename)
     
-    def video_subclip(self, video_clip, start, end):
+    def get_video_subclip(self, video_clip, start, end):
         return video_clip.subclip(start, end)
-
-    def video_subclip_composite(self, subclip):
-        return CompositeVideoClip([subclip])
     
-    def write_subclip_composite(self, subclip_composite, subclip_name):
-        subclip_composite.write_videofile(subclip_name, fps=25)
+    def concatenate_subclips(self, subclips):
+        return concatenate_videoclips(subclips)
+
+    # def get_video_subclips_composite(self, subclips):
+    #     return CompositeVideoClip(subclips)
+    
+    def write_concatenated_subclips(self, concatenated_subclips, subclip_name):
+        concatenated_subclips.write_videofile(subclip_name)
