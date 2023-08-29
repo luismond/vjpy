@@ -214,12 +214,12 @@ d = vjpd.get_video_subclip(d_clip, d_clip_start, d_clip_start+clip_duration)
 
 # hat open
 e_clip = video_clips[5]
-e_clip_start = 20.8
+e_clip_start = 20.85
 e = vjpd.get_video_subclip(e_clip, e_clip_start, e_clip_start+clip_duration)
 
 # tom
 f_clip = video_clips[6]
-f_clip_start = 20.13
+f_clip_start = 20.17
 f = vjpd.get_video_subclip(f_clip, f_clip_start, f_clip_start+clip_duration)
 
 # snare
@@ -227,8 +227,97 @@ g_clip = video_clips[10]
 g_clip_start = 20.745
 g = vjpd.get_video_subclip(g_clip, g_clip_start, g_clip_start+clip_duration)
 
+# snare-b
+g_clip_b = video_clips[10]
+g_clip_b_start = 20.745
+g_b = vjpd.get_video_subclip(g_clip_b, g_clip_b_start, g_clip_b_start+(clip_duration/2))
+
+patt = [f, b, g, b, # 1
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, e,
+        
+        f, b, g, b, # 2
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, a,
+        
+        f, b, g, b, # 3
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, e,
+        
+        f, b, g, b, # 4
+        f, b, g, b,
+        f, b, g, b,
+        f, b, a, a,
+        
+        f, b, g, b, # 1a
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, g,
+        
+        f, b, g, b, # 2a
+        f, b, g, b,
+        f, b, g, b,
+        f, g, g, f,
+        
+        f, b, g, b, # 3a
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, e,
+        
+        c, b, g, b, # 4a
+        c, b, g, b,
+        f, g, d, g,
+        c, c, g_b, g_b, g_b, g_b,
+        
+        f, b, g, b, # 1
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, e,
+        
+        f, b, g, b, # 2
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, a,
+        
+        f, b, g, b, # 3
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, e,
+        
+        f, b, g, b, # 4
+        f, b, g, b,
+        f, b, g, b,
+        f, b, a, a,
+        
+        f, b, g, b, # 1a
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, g,
+        
+        f, b, g, b, # 2a
+        f, b, g, b,
+        f, b, g, b,
+        f, g, g, f,
+        
+        f, b, g, b, # 3a
+        f, b, g, b,
+        f, b, g, b,
+        f, b, g, e,
+        
+        c, b, g, b, # 4a
+        c, b, g, b,
+        f, g, d, g,
+        c, c, g_b, g_b, g_b, g_b, c
+        ]
 
 
-c_subclips = vjpd.concatenate_subclips([g])
+def loop_patt(patt, n):
+    return patt*n
 
-vjpd.write_concatenated_subclips(c_subclips, 'subclip_test.mp4')
+patt_l = loop_patt(patt, 1)
+c_subclips = vjpd.concatenate_subclips(patt_l)
+
+vjpd.write_concatenated_subclips(c_subclips, 'subclip_test-2.mp4')
