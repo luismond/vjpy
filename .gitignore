@@ -6,3 +6,4 @@ vjpy-setup.sh
 .env
 *.mp4
 *.webm
+*vjpy_controller.py
