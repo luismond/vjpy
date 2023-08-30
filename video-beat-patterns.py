@@ -101,3 +101,27 @@ cymb_patt = [
     hha, hha, hha, hha,
     sh1, sh1, sh1, sh1,
     ]
+
+
+# videobeat-007
+patt = [j, j, g, s, m, s, h, s,
+        j, s, g, s, n, s, h, s,
+        j, s, d, s, m, s, d, s,
+        j, s, d, s, n, m, n, m,
+        
+        j, j, g, h, m, s, h, s,
+        j, s, g, s, n, s, h, s,
+        j, s, d, s, m, d, d, d,
+        j, s, d, s, n, m, o, q,
+        
+        j, j, g, i, m, h, h, s,
+        j, s, g, s, n, s, h, s,
+        j, s, d, s, m, d, d, d,
+        j, s, o, p, n, m, n, m,
+        
+        j, j, g, i, m, h, h, s,
+        j, s, g, s, n, s, h, s,
+        j, s, d, s, m, d, d, d,
+        j, j, a, b, n, m, o, q,
+        
+        ]

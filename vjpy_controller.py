@@ -44,48 +44,66 @@ vjpd.send_note(40)
 # %% Test video sequencing
 
 dir_ = 'robodrum-bank-2'
-video_filenames = sorted([v for v in os.listdir(dir_)]) # kick.mp4, snare.mp4, etc.
+proj = 'videobeat-008'
+if not proj in os.listdir():
+    os.mkdir(proj)
 
-video_clips = []
+# kick.mp4, snare.mp4, etc.
+video_filenames = sorted([v for v in os.listdir(dir_)])
+
+video_clips = {}
 for v in video_filenames:
     vp = os.path.join(dir_, v)
     video_clip = vjpd.get_video_clip(vp)
-    video_clips.append(video_clip)
-
-# %%
-duration = .175#.0875#.35#.175
-
-# video clips corresponding to 1 drum sound each
-
-a = vjpd.get_video_subclip(video_clips[0], 0.05, 0.05+duration) # china
-b = vjpd.get_video_subclip(video_clips[1], 0, 0+duration) # crash1
-c = vjpd.get_video_subclip(video_clips[2], 0, 0+duration) # crash2
-d = vjpd.get_video_subclip(video_clips[9], 0.1, 0.1+duration) # ride
-e = vjpd.get_video_subclip(video_clips[10], 0.05, 0.05+duration) # ride bell
+    video_clips[v[:-4]] = video_clip
 
 
-f = vjpd.get_video_subclip(video_clips[3], 0, 0+duration) # hat pedal
-g = vjpd.get_video_subclip(video_clips[4], 0.05, 0.05+duration) # hat stick a
-h = vjpd.get_video_subclip(video_clips[5], 0.05, 0.05+duration) # hat stick b
-i = vjpd.get_video_subclip(video_clips[6], 0.05, 0.05+duration) # hat open
+# %% video clips corresponding to 1 drum sound each
 
-j = vjpd.get_video_subclip(video_clips[7], 0, 0+duration) # kick a
-k = vjpd.get_video_subclip(video_clips[8], 0.05, 0.05+duration) # kick b
-l = vjpd.get_video_subclip(video_clips[8], 0.05, 0.05+(duration/2)) # kick b/2
+a = vjpd.get_video_subclip(video_clips['china'], start=0.05)
+b = vjpd.get_video_subclip(video_clips['crash1'], start=0.03)
+c = vjpd.get_video_subclip(video_clips['crash2'], start=0.03)
+d = vjpd.get_video_subclip(video_clips['ride1'], start=0.1)
+e = vjpd.get_video_subclip(video_clips['bell1'], start=0.05)
 
-m = vjpd.get_video_subclip(video_clips[11], 0.07, 0.07+duration) # snare right
-n = vjpd.get_video_subclip(video_clips[12], 0.04, 0.04+duration) # snare left
+f = vjpd.get_video_subclip(video_clips['hat1'], start=0) # pedal
+g = vjpd.get_video_subclip(video_clips['hat2'], start=0.05) # stick 1
+h = vjpd.get_video_subclip(video_clips['hat3'], start=0.05) # stick 2
+i = vjpd.get_video_subclip(video_clips['hat4'], start=0.05) # open
 
-o = vjpd.get_video_subclip(video_clips[13], 0.05, 0.05+duration) # tom1 a
-p = vjpd.get_video_subclip(video_clips[14], 0.055, 0.055+duration) # tom1 b
+j = vjpd.get_video_subclip(video_clips['kick1'], start=0.06)
+k = vjpd.get_video_subclip(video_clips['kick2'], start=0.095)
 
-q = vjpd.get_video_subclip(video_clips[15], 0.05, 0.05+duration) # tom2 a
-r = vjpd.get_video_subclip(video_clips[16], 0.07, 0.07+duration) # tom2 b
+m = vjpd.get_video_subclip(video_clips['snare1'], start=0.13)
+n = vjpd.get_video_subclip(video_clips['snare2'], start=0.09)
 
-s = vjpd.get_video_subclip(video_clips[17], 0, 0+duration) # silence
-t = vjpd.get_video_subclip(video_clips[17], 0, 0+(duration/2)) # silence/2
+o = vjpd.get_video_subclip(video_clips['tom1'], start=0.1)
+p = vjpd.get_video_subclip(video_clips['tom2'], start=0.07)
+q = vjpd.get_video_subclip(video_clips['tom3'], start=0.075)
+r = vjpd.get_video_subclip(video_clips['tom4'], start=0.1)
+
+s = vjpd.get_video_subclip(video_clips['silence'], start=0)
 
 
+patt = [a, b, c, d,
+        a, b, c, e,
+        a, b, f, f,
+        a, c, g, g,
+        a, g, h, h,
+        a, b, i, i,
+        
+        j, j, k, k,
+        j, j, m, m,
+        j, j, k, k,
+        j, j, n, n,
+        
+        j, j, o, o,
+        j, j, p, p,
+        j, j, q, q,
+        k, k, r, r,
+        
+        j, s, j, s,
+        j, s, j, s]
 
-c_subclips = vjpd.concatenate_subclips(cymb_patt*16)
-vjpd.write_concatenated_subclips(c_subclips, 'cymbs.mp4')
+c_subclips = vjpd.concatenate_subclips(patt*2)
+vjpd.write_concatenated_subclips(c_subclips, 'test.mp4')
