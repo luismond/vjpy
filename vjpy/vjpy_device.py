@@ -15,9 +15,6 @@ from moviepy.editor import (
     concatenate_videoclips
     )
 
-DRUMKIT_PATH = os.environ.get("LOCAL_DRUMKIT_PATH")
-WAV_ARRAY_C_NAME = os.environ.get("WAV_ARRAY_C_NAME")
-
 
 class VjPyDevice:
     """vjpy device."""
@@ -187,12 +184,13 @@ class VjPyDevice:
         wav_array = []
         for msg in msgs:
             wav_name = f"{self.drumkit_note_names[msg.note]}.wav"
-            wav_path = f"{DRUMKIT_PATH}/{wav_name}"
+            wav_path = f"vjpy/data/wav/drumkits/myfunkkit/{wav_name}"
             _, data = wavfile.read(wav_path)
             wav_array.append(data)
         wav_array_c = np.concatenate(wav_array)
-        write(WAV_ARRAY_C_NAME, self.sample_rate, wav_array_c)
-        playsound(WAV_ARRAY_C_NAME)
+        wav_array_c_name = "vjpy/data/wav/wav_examples/concat.wav"
+        write(wav_array_c_name, self.sample_rate, wav_array_c)
+        playsound(wav_array_c_name)
 
     ## Video methods
 
