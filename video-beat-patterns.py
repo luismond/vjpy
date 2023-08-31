@@ -125,3 +125,67 @@ patt = [j, j, g, s, m, s, h, s,
         j, j, a, b, n, m, o, q,
         
         ]
+
+# robodrum_bank_3, videobeat-009
+a = vjpd.get_video_subclip(video_clips['china'], start=0.05, subclip_duration=.7)
+#b = vjpd.get_video_subclip(video_clips['crash1'], start=0.05, subclip_duration=.7)
+c = vjpd.get_video_subclip(video_clips['crash2'], start=0.05, subclip_duration=.7)
+
+
+d = vjpd.get_video_subclip(video_clips['ride1'], start=0.045)
+e = vjpd.get_video_subclip(video_clips['bell1'], start=0.05)
+
+# f = vjpd.get_video_subclip(video_clips['hat1']) # pedal
+# g = vjpd.get_video_subclip(video_clips['hat2'], start=0.05) 
+h = vjpd.get_video_subclip(video_clips['hat3'], start=0.13) 
+o = vjpd.get_video_subclip(video_clips['hat4'], start=0.1) # open
+
+# j = vjpd.get_video_subclip(video_clips['kick1'], start=0)
+k = vjpd.get_video_subclip(video_clips['kick2'], start=0.075)
+
+s = vjpd.get_video_subclip(video_clips['snare1'], start=0.05)
+z = vjpd.get_video_subclip(video_clips['snare2'], start=0.075)
+
+# o = vjpd.get_video_subclip(video_clips['tom1'], start=0.05)
+# p = vjpd.get_video_subclip(video_clips['tom2'], start=0.05)
+# q = vjpd.get_video_subclip(video_clips['tom3'], start=0.05)
+# r = vjpd.get_video_subclip(video_clips['tom4'], start=0.05)
+
+_ = vjpd.get_video_subclip(video_clips['silence'])
+
+
+patt2 = [
+      # 1  2  3  4  5  6  7  8  # intro
+        k, _, k, _, k, _, k, k,
+        k, _, k, _, k, _, k, k,
+      
+       # 1  2  3  4  5  6  7  8  # bum bap
+         k, _, s, _, k, _, s, k,
+         k, _, s, _, k, _, s, k,
+         k, _, s, _, k, _, s, k,
+         k, _, s, _, k, _, s, s,
+
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 1
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, o,
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, o,
+
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 2
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, o,
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, s,
+        
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 1b
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, e,
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, o,
+
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 2b
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, e,
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, o, a
+         ]

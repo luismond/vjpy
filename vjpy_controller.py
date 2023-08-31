@@ -45,14 +45,14 @@ vjpd.send_note(40)
 
 # video-sound banks directory
 sound_banks_path = os.path.join('vjpy_media', 'sound_banks')
-sound_bank_path = os.path.join(sound_banks_path, 'robodrum_bank_3')
+sound_bank_path = os.path.join(sound_banks_path, 'robodrum_bank_4')
 
 # video-sound bank file names
 sound_bank_video_filenames = sorted([video_fn for video_fn in os.listdir(sound_bank_path)])
 
 # beats directory
 beats_path = os.path.join('vjpy_media', 'beats')
-beat_name = 'videobeat-009'
+beat_name = 'videobeat-010'
 if not beat_name in os.listdir(beats_path):
     os.mkdir(os.path.join(beats_path, beat_name))
 
@@ -70,68 +70,7 @@ for video_filename in sound_bank_video_filenames:
 
 # %% video clips corresponding to 1 drum sound each
 
-a = vjpd.get_video_subclip(video_clips['china'], start=0.05, subclip_duration=.7)
-#b = vjpd.get_video_subclip(video_clips['crash1'], start=0.05, subclip_duration=.7)
-c = vjpd.get_video_subclip(video_clips['crash2'], start=0.05, subclip_duration=.7)
 
-
-d = vjpd.get_video_subclip(video_clips['ride1'], start=0.045)
-e = vjpd.get_video_subclip(video_clips['bell1'], start=0.05)
-
-# f = vjpd.get_video_subclip(video_clips['hat1']) # pedal
-# g = vjpd.get_video_subclip(video_clips['hat2'], start=0.05) 
-h = vjpd.get_video_subclip(video_clips['hat3'], start=0.13) 
-o = vjpd.get_video_subclip(video_clips['hat4'], start=0.1) # open
-
-# j = vjpd.get_video_subclip(video_clips['kick1'], start=0)
-k = vjpd.get_video_subclip(video_clips['kick2'], start=0.075)
-
-s = vjpd.get_video_subclip(video_clips['snare1'], start=0.05)
-z = vjpd.get_video_subclip(video_clips['snare2'], start=0.075)
-
-# o = vjpd.get_video_subclip(video_clips['tom1'], start=0.05)
-# p = vjpd.get_video_subclip(video_clips['tom2'], start=0.05)
-# q = vjpd.get_video_subclip(video_clips['tom3'], start=0.05)
-# r = vjpd.get_video_subclip(video_clips['tom4'], start=0.05)
-
-_ = vjpd.get_video_subclip(video_clips['silence'])
-
-
-patt2 = [
-      # 1  2  3  4  5  6  7  8  # intro
-        k, _, k, _, k, _, k, k,
-        k, _, k, _, k, _, k, k,
-      
-       # 1  2  3  4  5  6  7  8  # bum bap
-         k, _, s, _, k, _, s, k,
-         k, _, s, _, k, _, s, k,
-         k, _, s, _, k, _, s, k,
-         k, _, s, _, k, _, s, s,
-
-      # # 1  2  3  4  5  6  7  8  # bum bap ts 1
-      #   k, h, z, h, k, h, z, h,
-      #   k, h, z, h, k, h, z, o,
-      #   k, h, z, h, k, h, z, h,
-      #   k, h, z, h, k, h, z, o,
-
-      # # 1  2  3  4  5  6  7  8  # bum bap ts 2
-      #   k, h, z, h, k, h, z, h,
-      #   k, h, z, h, k, h, z, o,
-      #   k, h, z, h, k, h, z, h,
-      #   k, h, z, h, k, h, z, s,
-        
-      # # 1  2  3  4  5  6  7  8  # bum bap ts 1b
-      #   k, d, z, d, k, d, z, d,
-      #   k, d, z, d, k, d, z, e,
-      #   k, d, z, d, k, d, z, d,
-      #   k, d, z, d, k, d, z, o,
-
-      # # 1  2  3  4  5  6  7  8  # bum bap ts 2b
-      #   k, d, z, d, k, d, z, d,
-      #   k, d, z, d, k, d, z, e,
-      #   k, d, z, d, k, d, z, d,
-      #   k, d, z, d, k, d, z, o, a
-         ]
 
 c_subclips = vjpd.concatenate_subclips(patt2*1)
 video_result_path = os.path.join(beats_path, f'{beat_name}.mp4')
