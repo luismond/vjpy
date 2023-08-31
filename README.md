@@ -143,7 +143,7 @@ Define the following devices:
 - Audio device ✓
 
 ### VIDEO
-- Video device
+- Video device ✓
 
 ### Other TODOs:
 - Test suite
@@ -171,13 +171,16 @@ Define the following devices:
 06-ago-23:
 - Implement receiving of MIDI messages in the wav player.
 
+30-ago-23:
+- Implemented video sequencing logic.
+
 ## Related work
 
 Hexstatic, Coldcut music videos from the early 2000's, created with VJPro. 
 
 Example: https://www.youtube.com/watch?v=f1SLN3LpDiA
 
-# Glossary
+## Glossary
 
 ### sample rate
 The sampling frequency or sampling rate, fs, is the number of samples divided by the interval length over in which occur, thus fs = 1/T, with the unit sample per second, sometimes referred to as hertz, for example e.g. 48 kHz is 48,000 samples per second.
@@ -187,6 +190,15 @@ The hertz (symbol: Hz) is the unit of frequency in the International System of U
 
 ### amplitude
 In a standing wave, the amplitude of vibration has nulls at some positions where the wave amplitude appears smaller or even zero.
+
+
+## How to create a new video sound bank
+
+- Record video clips hitting drums.
+- Slice the video clips in a video editing software (one video per sound)
+- Try to set the starting frame to a point where the sound is at its peak
+- Name the subvideo clips with the name of the corresponding sound
+- Load the video files into video objects and use them to compose video beats
 
 
 
