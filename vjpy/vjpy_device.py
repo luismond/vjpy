@@ -199,7 +199,7 @@ class VjPyDevice:
     def get_video_clip(self, video_filename):
         return VideoFileClip(video_filename)
     
-    def get_video_subclip(self, video_clip, start=0, subclip_duration=.35):
+    def get_video_subclip(self, video_clip, start=0, subclip_duration=.3):
         return video_clip.subclip(start, start+subclip_duration)
     
     def concatenate_subclips(self, subclips):

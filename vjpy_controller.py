@@ -43,7 +43,7 @@ vjpd.send_note(40)
 
 # %% Test video sequencing
 
-dir_ = 'robodrum-bank-2'
+dir_ = 'robodrum-bank-3'
 proj = 'videobeat-008'
 if not proj in os.listdir():
     os.mkdir(proj)
@@ -60,50 +60,68 @@ for v in video_filenames:
 
 # %% video clips corresponding to 1 drum sound each
 
-a = vjpd.get_video_subclip(video_clips['china'], start=0.05)
-b = vjpd.get_video_subclip(video_clips['crash1'], start=0.03)
-c = vjpd.get_video_subclip(video_clips['crash2'], start=0.03)
-d = vjpd.get_video_subclip(video_clips['ride1'], start=0.1)
+a = vjpd.get_video_subclip(video_clips['china'], start=0.05, subclip_duration=.7)
+#b = vjpd.get_video_subclip(video_clips['crash1'], start=0.05, subclip_duration=.7)
+c = vjpd.get_video_subclip(video_clips['crash2'], start=0.05, subclip_duration=.7)
+
+
+d = vjpd.get_video_subclip(video_clips['ride1'], start=0.045)
 e = vjpd.get_video_subclip(video_clips['bell1'], start=0.05)
 
-f = vjpd.get_video_subclip(video_clips['hat1'], start=0) # pedal
-g = vjpd.get_video_subclip(video_clips['hat2'], start=0.05) # stick 1
-h = vjpd.get_video_subclip(video_clips['hat3'], start=0.05) # stick 2
-i = vjpd.get_video_subclip(video_clips['hat4'], start=0.05) # open
+# f = vjpd.get_video_subclip(video_clips['hat1']) # pedal
+# g = vjpd.get_video_subclip(video_clips['hat2'], start=0.05) 
+h = vjpd.get_video_subclip(video_clips['hat3'], start=0.13) 
+o = vjpd.get_video_subclip(video_clips['hat4'], start=0.1) # open
 
-j = vjpd.get_video_subclip(video_clips['kick1'], start=0.06)
-k = vjpd.get_video_subclip(video_clips['kick2'], start=0.095)
+# j = vjpd.get_video_subclip(video_clips['kick1'], start=0)
+k = vjpd.get_video_subclip(video_clips['kick2'], start=0.075)
 
-m = vjpd.get_video_subclip(video_clips['snare1'], start=0.13)
-n = vjpd.get_video_subclip(video_clips['snare2'], start=0.09)
+s = vjpd.get_video_subclip(video_clips['snare1'], start=0.05)
+z = vjpd.get_video_subclip(video_clips['snare2'], start=0.075)
 
-o = vjpd.get_video_subclip(video_clips['tom1'], start=0.1)
-p = vjpd.get_video_subclip(video_clips['tom2'], start=0.07)
-q = vjpd.get_video_subclip(video_clips['tom3'], start=0.075)
-r = vjpd.get_video_subclip(video_clips['tom4'], start=0.1)
+# o = vjpd.get_video_subclip(video_clips['tom1'], start=0.05)
+# p = vjpd.get_video_subclip(video_clips['tom2'], start=0.05)
+# q = vjpd.get_video_subclip(video_clips['tom3'], start=0.05)
+# r = vjpd.get_video_subclip(video_clips['tom4'], start=0.05)
 
-s = vjpd.get_video_subclip(video_clips['silence'], start=0)
+_ = vjpd.get_video_subclip(video_clips['silence'])
 
 
-patt = [a, b, c, d,
-        a, b, c, e,
-        a, b, f, f,
-        a, c, g, g,
-        a, g, h, h,
-        a, b, i, i,
+patt2 = [
+      # 1  2  3  4  5  6  7  8  # intro
+        # k, _, k, _, k, _, k, k,
+        # k, _, k, _, k, _, k, k,
+      
+      # 1  2  3  4  5  6  7  8  # bum bap
+        k, _, s, _, k, _, s, k,
+        k, _, s, _, k, _, s, k,
+        k, _, s, _, k, _, s, k,
+        k, _, s, _, k, _, s, s,
+
+      # 1  2  3  4  5  6  7  8  # bum bap ts 1
+        k, h, z, h, k, h, z, h,
+        k, h, z, h, k, h, z, o,
+        k, h, z, h, k, h, z, h,
+        k, h, z, h, k, h, z, o,
+
+      # 1  2  3  4  5  6  7  8  # bum bap ts 2
+        k, h, z, h, k, h, z, h,
+        k, h, z, h, k, h, z, o,
+        k, h, z, h, k, h, z, h,
+        k, h, z, h, k, h, z, s,
         
-        j, j, k, k,
-        j, j, m, m,
-        j, j, k, k,
-        j, j, n, n,
-        
-        j, j, o, o,
-        j, j, p, p,
-        j, j, q, q,
-        k, k, r, r,
-        
-        j, s, j, s,
-        j, s, j, s]
+      # 1  2  3  4  5  6  7  8  # bum bap ts 1b
+        k, d, z, d, k, d, z, d,
+        k, d, z, d, k, d, z, e,
+        k, d, z, d, k, d, z, d,
+        k, d, z, d, k, d, z, o,
 
-c_subclips = vjpd.concatenate_subclips(patt*2)
-vjpd.write_concatenated_subclips(c_subclips, 'test.mp4')
+      # 1  2  3  4  5  6  7  8  # bum bap ts 2b
+        k, d, z, d, k, d, z, d,
+        k, d, z, d, k, d, z, e,
+        k, d, z, d, k, d, z, d,
+        k, d, z, d, k, d, z, o, a
+        ]
+
+c_subclips = vjpd.concatenate_subclips(patt2*1)
+vjpd.write_concatenated_subclips(c_subclips, f'{proj}/{proj}.mp4')
