@@ -76,64 +76,70 @@ for video_filename in sound_bank_video_filenames:
 
 video_clip_fn = 'robodrum_bank_4_video_and_sound_cleaned'
 
-a = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.087)
-b = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.9)
-c = vjpd.get_video_subclip(video_clips[video_clip_fn], start=2.23)
-d = vjpd.get_video_subclip(video_clips[video_clip_fn], start=4.62)
+## RIGHT HAND
+### CYMBALS
+a0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.087)     # hat_a_R
+a1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.9)       # hat_b_R
+a2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=2.23)      # hat_c_R
+b0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=8.8565)    # crash1_R
+b1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=18.51)     # crash2_R
+c0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=14.77)     # china_R
+d0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=11.05)     # ride_R
+d1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=13.25)     # bell_R
 
-e = vjpd.get_video_subclip(video_clips[video_clip_fn], start=6.989)
-f = vjpd.get_video_subclip(video_clips[video_clip_fn], start=8.8565)
-g = vjpd.get_video_subclip(video_clips[video_clip_fn], start=11.05)
-h = vjpd.get_video_subclip(video_clips[video_clip_fn], start=13.25)
-
-i = vjpd.get_video_subclip(video_clips[video_clip_fn], start=14.77)
-j = vjpd.get_video_subclip(video_clips[video_clip_fn], start=18.51)
-k = vjpd.get_video_subclip(video_clips[video_clip_fn], start=20.46)
-l = vjpd.get_video_subclip(video_clips[video_clip_fn], start=22.66)
-
-m = vjpd.get_video_subclip(video_clips[video_clip_fn], start=24.61)
-n = vjpd.get_video_subclip(video_clips[video_clip_fn], start=27.10)
-o = vjpd.get_video_subclip(video_clips[video_clip_fn], start=29.38)
-p = vjpd.get_video_subclip(video_clips[video_clip_fn], start=31.605)
-
-q = vjpd.get_video_subclip(video_clips[video_clip_fn], start=34.30)
-r = vjpd.get_video_subclip(video_clips[video_clip_fn], start=37.36)
-s = vjpd.get_video_subclip(video_clips[video_clip_fn], start=39.816)
-t = vjpd.get_video_subclip(video_clips[video_clip_fn], start=42.72)
-
-u = vjpd.get_video_subclip(video_clips[video_clip_fn], start=45.81)
-v = vjpd.get_video_subclip(video_clips[video_clip_fn], start=48.09)
-w = vjpd.get_video_subclip(video_clips[video_clip_fn], start=51.32)
-x = vjpd.get_video_subclip(video_clips[video_clip_fn], start=52.08)
-
-y = vjpd.get_video_subclip(video_clips[video_clip_fn], start=58.88)
-z = vjpd.get_video_subclip(video_clips[video_clip_fn], start=62.32)
-
-a1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=65.56)
-b1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=68.03)
-c1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=73.14)
-d1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=76.05)
-
-e1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=78.34)
-f1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=84.13)
-g1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=96.29)
+### DRUMS
+f0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=4.62)      # snare_R
+g0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=6.989)     # tom1_R
+h0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=20.46)     # tom2_R
 
 
-patt = [a, b, c, d,
-        e, f, g, h,
-        i, j, k, l,
-        m, n, o, p,
-        q, r, s, t,
-        u, v, w, x,
-        y, z, y, z,
-        
-        a1, b1, c1, d1,
-        e1, f1, g1, g1
-        
-        ]
+## LEFT HAND
+### CYMBALS
+i0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=34.30)     # ride_a_L
+i1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=62.47)     # ride_b_L
+i2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=65.56)     # bell_b_L
+j0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=31.605)    # crash1_a_L
+j1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=58.980)    # crash1_b_L
+k0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=39.816)    # crash2_a_L
+k1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=76.05)     # crash2_b_L
+l0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=42.72)     # china_a_L
+l1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=68.03)     # china_b_L
+l2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=73.14)     # china_c_L
+
+### DRUMS
+m0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=27.10)     # snare_a_L
+m1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=45.81)     # snare_b_L
+m2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=48.09)     # snare_c_L
+n0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=29.38)     # tom1_a_L
+n1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=51.32)     # tom1_b_L
+n2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=51.80)     # tom1_c_L
+o0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=37.36)     # tom2_a_L
+o1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=78.34)     # tom2_b_L
 
 
-c_subclips = vjpd.concatenate_subclips(patt*1)
+## RIGHT FOOT
+p0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=22.66)     # kick_a
+p1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=24.61)     # kick_b
+
+## LEFT FOOT
+q0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=84.13)     # hat-pedal_a
+q1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=96.29)     # hat-pedal_b
+
+patt = [a0, a1, a2,
+        b0, b1,
+        c0, d0, d1,
+        f0, g0, h0,
+        i0, i1, i2,
+        j0, j1,
+        k0, k1,
+        l0, l1, l2,
+        m0, m1, m2,
+        n0, n1, n2,
+        o0, o1,
+        p0, p1,
+        q0, q1]
+
+c_subclips = vjpd.concatenate_subclips(patt*2)
 video_result_path = os.path.join(beats_path, beat_name, f'{beat_name}.mp4')
 vjpd.write_concatenated_subclips(c_subclips, video_result_path)
 
