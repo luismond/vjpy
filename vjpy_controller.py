@@ -81,6 +81,8 @@ video_clip_fn = 'robodrum_bank_4_video_and_sound_cleaned'
 a0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.087)     # hat_a_R
 a1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.9)       # hat_b_R
 a2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=2.23)      # hat_c_R
+a3 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=3.50)      # hat_c_R silence
+
 b0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=8.8565)    # crash1_R
 b1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=18.51)     # crash2_R
 c0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=14.77)     # china_R
@@ -125,19 +127,32 @@ p1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=24.61)     # kick_
 q0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=84.13)     # hat-pedal_a
 q1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=96.29)     # hat-pedal_b
 
-patt = [a0, a1, a2,
-        b0, b1,
-        c0, d0, d1,
-        f0, g0, h0,
-        i0, i1, i2,
-        j0, j1,
-        k0, k1,
-        l0, l1, l2,
-        m0, m1, m2,
-        n0, n1, n2,
-        o0, o1,
-        p0, p1,
-        q0, q1]
+# patt = [a0, a1, a2,
+#         b0, b1,
+#         c0, d0, d1,
+#         f0, g0, h0,
+#         i0, i1, i2,
+#         j0, j1,
+#         k0, k1,
+#         l0, l1, l2,
+#         m0, m1, m2,
+#         n0, n1, n2,
+#         o0, o1,
+#         p0, p1,
+#         q0, q1]
+
+
+dd = {
+      'h': a0,
+      'k': p0,
+      's': f0,
+      '_': a3
+      }
+
+patt = [
+   #  1   2   3   4   5   6   7   8   
+      p0, a0, f0, a0, p0, a0, f0, a0,
+    ]
 
 c_subclips = vjpd.concatenate_subclips(patt*2)
 video_result_path = os.path.join(beats_path, beat_name, f'{beat_name}.mp4')
