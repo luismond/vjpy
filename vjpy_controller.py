@@ -48,8 +48,7 @@ sound_banks_path = os.path.join('vjpy_media', 'sound_banks')
 sound_bank_path = os.path.join(sound_banks_path, 'robodrum_bank_3')
 
 # video-sound bank file names
-video_filenames = sorted([video_fn for video_fn in os.listdir(sound_bank_path)])
-
+sound_bank_video_filenames = sorted([video_fn for video_fn in os.listdir(sound_bank_path)])
 
 # beats directory
 beats_path = os.path.join('vjpy_media', 'beats')
@@ -57,14 +56,13 @@ beat_name = 'videobeat-009'
 if not beat_name in os.listdir(beats_path):
     os.mkdir(os.path.join(beats_path, beat_name))
 
+beat_path = os.path.join(beats_path, beat_name)
 
-beat_directory = os.path.join(beats_path, beat_name)
 
-
-#%% make video clip objects from video files
+#%% make video clip objects from sound bank video files
 
 video_clips = {}
-for video_filename in video_filenames:
+for video_filename in sound_bank_video_filenames:
     video_path = os.path.join(sound_bank_path, video_filename)
     video_clip = vjpd.get_video_clip(video_path)
     video_clips[video_filename[:-4]] = video_clip
@@ -136,7 +134,7 @@ patt2 = [
          ]
 
 c_subclips = vjpd.concatenate_subclips(patt2*1)
-video_result_path = os.path.join(beat_directory, f'{beat_name}.mp4')
+video_result_path = os.path.join(beats_path, f'{beat_name}.mp4')
 vjpd.write_concatenated_subclips(c_subclips, video_result_path)
 
 
