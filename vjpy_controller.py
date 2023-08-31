@@ -43,19 +43,31 @@ vjpd.send_note(40)
 
 # %% Test video sequencing
 
-dir_ = 'robodrum-bank-3'
-proj = 'videobeat-008'
-if not proj in os.listdir():
-    os.mkdir(proj)
+# video-sound banks directory
+sound_banks_path = os.path.join('vjpy_media', 'sound_banks')
+sound_bank_path = os.path.join(sound_banks_path, 'robodrum_bank_3')
 
-# kick.mp4, snare.mp4, etc.
-video_filenames = sorted([v for v in os.listdir(dir_)])
+# video-sound bank file names
+video_filenames = sorted([video_fn for video_fn in os.listdir(sound_bank_path)])
+
+
+# beats directory
+beats_path = os.path.join('vjpy_media', 'beats')
+beat_name = 'videobeat-009'
+if not beat_name in os.listdir(beats_path):
+    os.mkdir(os.path.join(beats_path, beat_name))
+
+
+beat_directory = os.path.join(beats_path, beat_name)
+
+
+#%% make video clip objects from video files
 
 video_clips = {}
-for v in video_filenames:
-    vp = os.path.join(dir_, v)
-    video_clip = vjpd.get_video_clip(vp)
-    video_clips[v[:-4]] = video_clip
+for video_filename in video_filenames:
+    video_path = os.path.join(sound_bank_path, video_filename)
+    video_clip = vjpd.get_video_clip(video_path)
+    video_clips[video_filename[:-4]] = video_clip
 
 
 # %% video clips corresponding to 1 drum sound each
@@ -89,39 +101,44 @@ _ = vjpd.get_video_subclip(video_clips['silence'])
 
 patt2 = [
       # 1  2  3  4  5  6  7  8  # intro
-        # k, _, k, _, k, _, k, k,
-        # k, _, k, _, k, _, k, k,
+        k, _, k, _, k, _, k, k,
+        k, _, k, _, k, _, k, k,
       
-      # 1  2  3  4  5  6  7  8  # bum bap
-        k, _, s, _, k, _, s, k,
-        k, _, s, _, k, _, s, k,
-        k, _, s, _, k, _, s, k,
-        k, _, s, _, k, _, s, s,
+       # 1  2  3  4  5  6  7  8  # bum bap
+         k, _, s, _, k, _, s, k,
+         k, _, s, _, k, _, s, k,
+         k, _, s, _, k, _, s, k,
+         k, _, s, _, k, _, s, s,
 
-      # 1  2  3  4  5  6  7  8  # bum bap ts 1
-        k, h, z, h, k, h, z, h,
-        k, h, z, h, k, h, z, o,
-        k, h, z, h, k, h, z, h,
-        k, h, z, h, k, h, z, o,
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 1
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, o,
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, o,
 
-      # 1  2  3  4  5  6  7  8  # bum bap ts 2
-        k, h, z, h, k, h, z, h,
-        k, h, z, h, k, h, z, o,
-        k, h, z, h, k, h, z, h,
-        k, h, z, h, k, h, z, s,
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 2
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, o,
+      #   k, h, z, h, k, h, z, h,
+      #   k, h, z, h, k, h, z, s,
         
-      # 1  2  3  4  5  6  7  8  # bum bap ts 1b
-        k, d, z, d, k, d, z, d,
-        k, d, z, d, k, d, z, e,
-        k, d, z, d, k, d, z, d,
-        k, d, z, d, k, d, z, o,
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 1b
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, e,
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, o,
 
-      # 1  2  3  4  5  6  7  8  # bum bap ts 2b
-        k, d, z, d, k, d, z, d,
-        k, d, z, d, k, d, z, e,
-        k, d, z, d, k, d, z, d,
-        k, d, z, d, k, d, z, o, a
-        ]
+      # # 1  2  3  4  5  6  7  8  # bum bap ts 2b
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, e,
+      #   k, d, z, d, k, d, z, d,
+      #   k, d, z, d, k, d, z, o, a
+         ]
 
 c_subclips = vjpd.concatenate_subclips(patt2*1)
-vjpd.write_concatenated_subclips(c_subclips, f'{proj}/{proj}.mp4')
+video_result_path = os.path.join(beat_directory, f'{beat_name}.mp4')
+vjpd.write_concatenated_subclips(c_subclips, video_result_path)
+
+
+
+
