@@ -99,17 +99,14 @@ g = vjpd.get_video_subclip(video_clips[fn], start=19.39, duration=duration) # ha
 h = vjpd.get_video_subclip(video_clips[fn], start=21.29, duration=duration) # hat3
 i = vjpd.get_video_subclip(video_clips[fn], start=23.07, duration=duration) # hat4
 j = vjpd.get_video_subclip(video_clips[fn], start=23.66, duration=duration) # hat5
-
 k = vjpd.get_video_subclip(video_clips[fn], start=24.95, duration=duration) # kick1
 l = vjpd.get_video_subclip(video_clips[fn], start=26.05, duration=duration) # kick2
 m = vjpd.get_video_subclip(video_clips[fn], start=27.51, duration=duration) # snare1
 n = vjpd.get_video_subclip(video_clips[fn], start=29.50, duration=duration) # snare2
-
 o = vjpd.get_video_subclip(video_clips[fn], start=31.46, duration=duration) # tom1a
 p = vjpd.get_video_subclip(video_clips[fn], start=34.23, duration=duration) # tom1b
 q = vjpd.get_video_subclip(video_clips[fn], start=37.16, duration=duration) # tom2a
 r = vjpd.get_video_subclip(video_clips[fn], start=38.97, duration=duration) # tom2b
-
 _ = vjpd.get_video_subclip(video_clips[fn], start=01.5, duration=duration) # silence
 
 
