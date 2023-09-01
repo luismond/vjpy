@@ -111,8 +111,8 @@ l = vjpd.get_video_subclip(video_clips[fn], start=26.050, duration=dur) # kick2
 s = vjpd.get_video_subclip(video_clips[fn], start=27.513, duration=dur) # snare1
 z = vjpd.get_video_subclip(video_clips[fn], start=29.512, duration=dur) # snare2
 
-t = vjpd.get_video_subclip(video_clips[fn], start=31.460, duration=dur) # tom1a
-v = vjpd.get_video_subclip(video_clips[fn], start=34.230, duration=dur) # tom1b
+t = vjpd.get_video_subclip(video_clips[fn], start=31.505, duration=dur) # tom1a
+v = vjpd.get_video_subclip(video_clips[fn], start=34.248, duration=dur) # tom1b
 w = vjpd.get_video_subclip(video_clips[fn], start=37.160, duration=dur) # tom2a
 u = vjpd.get_video_subclip(video_clips[fn], start=39.010, duration=dur) # tom2b
 
@@ -121,70 +121,72 @@ _ = vjpd.get_video_subclip(video_clips[fn], start=01.500, duration=dur) # silenc
 
 # %% test patterns and bars
 
-#          # 1.2.3.4.
-# patt_01 = [k,_,k,_ ] # kick
-# patt_02 = [x,x,x,_ ] # china
-# patt_03 = [c,c,c,_ ] # crash1
-# patt_04 = [d,d,d,_ ] # crash2
+# PATTERNS
+          # 1.2.3.4.
+patt_01 = [k,_,k,_ ] # kick
+patt_02 = [x,x,x,_ ] # china
+patt_03 = [c,c,c,_ ] # crash1
+patt_04 = [d,d,d,_ ] # crash2
 
-#          # 1.2.3.4.
-# patt_05 = [h,h,h,_ ] # hat1
-# patt_06 = [i,i,i,_ ] # hat2
-# patt_07 = [j,j,j,_ ] # hat1
-# patt_08 = [o,o,o,_ ] # hat2
+          # 1.2.3.4.
+patt_05 = [h,h,h,_ ] # hat1
+patt_06 = [i,i,i,_ ] # hat2
+patt_07 = [j,j,j,_ ] # hat1
+patt_08 = [o,o,o,_ ] # hat2
 
-#          # 1.2.3.4.
-# patt_09 = [s,s,s,_ ] # snare1
-# patt_10 = [z,z,z,_ ] # snare2
-# patt_11 = [s,z,s,_ ]
-# patt_12 = [z,s,z,_ ]
+          # 1.2.3.4.
+patt_09 = [s,s,s,_ ] # snare1
+patt_10 = [z,z,z,_ ] # snare2
+patt_11 = [s,z,s,_ ]
+patt_12 = [z,s,z,_ ]
 
-#          # 1.2.3.4.
-# patt_13 = [t,t,t,_ ] # tom1a (clips!)
-# patt_14 = [v,v,v,_ ] # tom1b
-# patt_15 = [w,w,w,_ ] # tom2a
-# patt_16 = [u,u,u,_ ] # tom2b
-
-
-         # 1.2.3.4.
-patt_17 = [k,_,h,_ ] # 
-patt_18 = [s,_,h,_ ] # 
-patt_19 = [k,_,h,h ] # 
-patt_20 = [z,_,h,_ ] # 
+          # 1.2.3.4.
+patt_13 = [t,t,t,_ ] # tom1a (clips!)
+patt_14 = [v,v,v,_ ] # tom1b (clips!)
+patt_15 = [w,w,w,_ ] # tom2a
+patt_16 = [u,u,u,_ ] # tom2b
 
          # 1.2.3.4.
-patt_21 = [k,_,h,_ ] # 
-patt_22 = [s,_,h,_ ] # 
-patt_23 = [k,k,h,h ] # 
-patt_24 = [z,_,o,_ ] # 
+patt_17 = [k,_,h,_ ] # drum beat
+patt_18 = [s,_,h,_ ]
+patt_19 = [k,_,h,h ]
+patt_20 = [z,_,h,_ ]
 
          # 1.2.3.4.
-patt_25 = [k,_,h,_ ] # 
-patt_26 = [s,_,h,s ] # 
-patt_27 = [k,_,h,h ] # 
-patt_28 = [z,_,h,_ ] # 
+patt_21 = [k,_,h,_ ]
+patt_22 = [s,_,h,_ ]
+patt_23 = [k,k,h,h ]
+patt_24 = [z,_,o,_ ]
 
          # 1.2.3.4.
-patt_29 = [k,_,h,_ ] # 
-patt_30 = [s,_,h,h ] # 
-patt_31 = [w,_,w,_ ] # 
-patt_32 = [s,z,s,z ] # 
+patt_25 = [k,_,h,_ ]
+patt_26 = [s,_,h,s ]
+patt_27 = [k,_,h,h ]
+patt_28 = [z,_,h,_ ]
 
+         # 1.2.3.4.
+patt_29 = [k,_,h,_ ]
+patt_30 = [s,_,h,h ]
+patt_31 = [w,_,w,_ ]
+patt_32 = [s,z,s,z ]
+
+# BARS
         # |1 . . . |2 . . . |3 . . . |4 . . . 
-barr_00 = [
-           # patt_01, patt_02, patt_03, patt_04 ,
-           # patt_05, patt_06, patt_07, patt_08 ,
-           # patt_09, patt_10, patt_11, patt_12 ,
-           # patt_13, patt_14, patt_15, patt_16 ,
-           
-           patt_17, patt_18, patt_19, patt_20 ,
-           patt_21, patt_22, patt_23, patt_24 ,
-           patt_25, patt_26, patt_27, patt_28 ,
-           patt_29, patt_30, patt_31, patt_32 ,
-           
-           ]
+bar_01 = [patt_01, patt_02, patt_03, patt_04 ]
+bar_02 = [patt_05, patt_06, patt_07, patt_08 ]
+bar_03 = [patt_09, patt_10, patt_11, patt_12 ]
+bar_04 = [patt_13, patt_14, patt_15, patt_16 ]
+        # |1 . . . |2 . . . |3 . . . |4 . . . 
+bar_05 = [patt_17, patt_18, patt_19, patt_20 ]
+bar_06 = [patt_21, patt_22, patt_23, patt_24 ]
+bar_07 = [patt_25, patt_26, patt_27, patt_28 ]
+bar_08 = [patt_29, patt_30, patt_31, patt_32 ]
 
-bars = [barr_00 ,barr_00]
+
+bars = [bar_01, bar_02, bar_03, bar_04,
+        bar_05, bar_06, bar_07, bar_08,
+        bar_05, bar_06, bar_07, bar_08,]
+
 
 # make final clip
 subclips = []
