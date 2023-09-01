@@ -247,16 +247,17 @@ for video_filename in sound_bank_video_filenames:
     video_clips[video_filename[:-4]] = video_clip
 
 
-# %% video clips corresponding to 1 drum sound each
+# %% video clips corresponding to 1 sound each
 
-fn = 'cello_bank_1'
+fn = 'cello_bank_1_clean'
+# beat duration aprox: 1.1s
 
-dur = 0.56
+dur = 1.1
 
-a = vjpd.get_video_subclip(video_clips[fn], start=04.100, duration=dur)
-b = vjpd.get_video_subclip(video_clips[fn], start=08.710, duration=dur)
-c = vjpd.get_video_subclip(video_clips[fn], start=06.710, duration=dur)
-d = vjpd.get_video_subclip(video_clips[fn], start=07.710, duration=dur)
+a = vjpd.get_video_subclip(video_clips[fn], start=01.015, duration=dur)
+b = vjpd.get_video_subclip(video_clips[fn], start=03.205, duration=dur)
+c = vjpd.get_video_subclip(video_clips[fn], start=04.271, duration=dur)
+# d = vjpd.get_video_subclip(video_clips[fn], start=07.710, duration=dur)
 
 
 
@@ -265,32 +266,14 @@ d = vjpd.get_video_subclip(video_clips[fn], start=07.710, duration=dur)
 # PATTERNS
 
          # 1.2.3.4.
-patt_01 = [a,b,c,d] # bar 01
-patt_02 = [a,b,d,c]
-patt_03 = [a,b,c,d]
-patt_04 = [a,b,d,d]
-
+patt_01 = [a,a,b,b]
+patt_02 = [a,a,c,c]
 
 # BARS
-        # |1 . . . |2 . . . |3 . . . |4 . . . 
-bar_01 = [patt_01, patt_02, patt_03, patt_04 ]
-# bar_02 = [patt_05, patt_06, patt_07, patt_08 ]
-# bar_03 = [patt_09, patt_10, patt_11, patt_12 ]
-# bar_04 = [patt_13, patt_14, patt_15, patt_16 ]
+       # |1 . . . |2 . . . |3 . . . |4 . . . 
+bar_01 = [patt_01, patt_01, patt_02, patt_02 ]
 
-        # |1 . . . |2 . . . |3 . . . |4 . . . 
-# bar_05 = [patt_17, patt_18, patt_19, patt_20 ]
-# bar_06 = [patt_21, patt_22, patt_23, patt_24 ]
-# bar_07 = [patt_25, patt_26, patt_27, patt_28 ]
-# bar_08 = [patt_29, patt_30, patt_31, patt_32 ]
-
-
-bars = [
-        bar_01, bar_01, bar_01, bar_01,
-        # bar_01, bar_02, bar_03, bar_04,
-        # bar_05, bar_06, bar_07, bar_08,
-        # bar_05, bar_06, bar_07, bar_08,
-        ]
+bars = [bar_01]
 
 
 # make final clip
@@ -311,3 +294,4 @@ video_result_path = os.path.join(
     f'{beat_name}_{iteration}.mp4'
     )
 vjpd.write_concatenated_subclips(final_clip, video_result_path)
+print(f'\nResult written to {video_result_path}.')
