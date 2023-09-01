@@ -216,3 +216,98 @@ vjpd.write_concatenated_subclips(final_clip, video_result_path)
 
 
 # %%
+
+
+# video-sound banks directory
+sound_banks_path = os.path.join('vjpy_media', 'sound_banks')
+sound_bank_path = os.path.join(sound_banks_path, 'cello_bank_1')
+
+# video-sound bank file names
+sound_bank_video_filenames = sorted(
+    [
+     video_fn for video_fn in os.listdir(
+         sound_bank_path
+         ) if video_fn.endswith('mp4')])
+
+# beats directory
+beats_path = os.path.join('vjpy_media', 'beats')
+beat_name = 'videobeat-013'
+if not beat_name in os.listdir(beats_path):
+    os.mkdir(os.path.join(beats_path, beat_name))
+
+beat_path = os.path.join(beats_path, beat_name)
+
+
+#%% make video clip objects from sound bank video files
+
+video_clips = {}
+for video_filename in sound_bank_video_filenames:
+    video_path = os.path.join(sound_bank_path, video_filename)
+    video_clip = vjpd.get_video_clip(video_path)
+    video_clips[video_filename[:-4]] = video_clip
+
+
+# %% video clips corresponding to 1 drum sound each
+
+fn = 'cello_bank_1'
+
+dur = 0.56
+
+a = vjpd.get_video_subclip(video_clips[fn], start=04.100, duration=dur)
+b = vjpd.get_video_subclip(video_clips[fn], start=08.710, duration=dur)
+c = vjpd.get_video_subclip(video_clips[fn], start=06.710, duration=dur)
+d = vjpd.get_video_subclip(video_clips[fn], start=07.710, duration=dur)
+
+
+
+# patterns and bars
+
+# PATTERNS
+
+         # 1.2.3.4.
+patt_01 = [a,b,c,d] # bar 01
+patt_02 = [a,b,d,c]
+patt_03 = [a,b,c,d]
+patt_04 = [a,b,d,d]
+
+
+# BARS
+        # |1 . . . |2 . . . |3 . . . |4 . . . 
+bar_01 = [patt_01, patt_02, patt_03, patt_04 ]
+# bar_02 = [patt_05, patt_06, patt_07, patt_08 ]
+# bar_03 = [patt_09, patt_10, patt_11, patt_12 ]
+# bar_04 = [patt_13, patt_14, patt_15, patt_16 ]
+
+        # |1 . . . |2 . . . |3 . . . |4 . . . 
+# bar_05 = [patt_17, patt_18, patt_19, patt_20 ]
+# bar_06 = [patt_21, patt_22, patt_23, patt_24 ]
+# bar_07 = [patt_25, patt_26, patt_27, patt_28 ]
+# bar_08 = [patt_29, patt_30, patt_31, patt_32 ]
+
+
+bars = [
+        bar_01, bar_01, bar_01, bar_01,
+        # bar_01, bar_02, bar_03, bar_04,
+        # bar_05, bar_06, bar_07, bar_08,
+        # bar_05, bar_06, bar_07, bar_08,
+        ]
+
+
+# make final clip
+subclips = []
+for bar_ in bars:
+    for patt in bar_:
+        for subclip in patt:
+            subclips.append(subclip)
+
+final_clip = vjpd.concatenate_subclips(subclips)
+
+
+# save final clip
+iteration = '001'
+video_result_path = os.path.join(
+    beats_path,
+    beat_name,
+    f'{beat_name}_{iteration}.mp4'
+    )
+vjpd.write_concatenated_subclips(final_clip, video_result_path)
