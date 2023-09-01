@@ -252,29 +252,24 @@ for video_filename in sound_bank_video_filenames:
 fn = 'cello_bank_1_clean'
 # beat duration aprox: 1.1s
 
-dur = 1.1
+#dur = 1.1
+dur = .77
 
-a = vjpd.get_video_subclip(video_clips[fn], start=01.015, duration=dur)
-b = vjpd.get_video_subclip(video_clips[fn], start=03.205, duration=dur)
+a = vjpd.get_video_subclip(video_clips[fn], start=01.025, duration=dur)
+b = vjpd.get_video_subclip(video_clips[fn], start=03.209, duration=dur)
 c = vjpd.get_video_subclip(video_clips[fn], start=04.271, duration=dur)
-# d = vjpd.get_video_subclip(video_clips[fn], start=07.710, duration=dur)
-
-
-
-# patterns and bars
+d = vjpd.get_video_subclip(video_clips[fn], start=08.531, duration=dur)
 
 # PATTERNS
-
-         # 1.2.3.4.
-patt_01 = [a,a,b,b]
-patt_02 = [a,a,c,c]
+         # 12345678
+#patt_00 = [a,b,c,d ]
+patt_01 = [b,b,b,b ]
+patt_02 = [b,b,d,d ]
 
 # BARS
        # |1 . . . |2 . . . |3 . . . |4 . . . 
-bar_01 = [patt_01, patt_01, patt_02, patt_02 ]
-
-bars = [bar_01]
-
+bar_01 = [patt_01, patt_02, patt_01, patt_02 ]
+bars = [bar_01, bar_01, bar_01, bar_01]
 
 # make final clip
 subclips = []
