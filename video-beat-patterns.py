@@ -116,3 +116,99 @@ p2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=25.62)     # kick 
 ## LEFT FOOT
 q0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=84.13)     # hat-pedal_a
 q1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=96.305)     # hat-pedal_b
+
+
+fn = 'robodrum_bank_3_clean'
+
+dur = 0.14
+
+b = vjpd.get_video_subclip(video_clips[fn], start=00.10, duration=dur) # bell
+r = vjpd.get_video_subclip(video_clips[fn], start=03.71, duration=dur) # ride
+
+x = vjpd.get_video_subclip(video_clips[fn], start=07.12, duration=dur) # china
+c = vjpd.get_video_subclip(video_clips[fn], start=09.71, duration=dur) # crash1
+d = vjpd.get_video_subclip(video_clips[fn], start=13.19, duration=dur) # crash2
+
+h = vjpd.get_video_subclip(video_clips[fn], start=17.87, duration=dur) # hat1
+i = vjpd.get_video_subclip(video_clips[fn], start=19.39, duration=dur) # hat2
+j = vjpd.get_video_subclip(video_clips[fn], start=21.29, duration=dur) # hat3
+y = vjpd.get_video_subclip(video_clips[fn], start=23.07, duration=dur) # hat4
+o = vjpd.get_video_subclip(video_clips[fn], start=23.66, duration=dur) # hat5
+
+k = vjpd.get_video_subclip(video_clips[fn], start=24.95, duration=dur) # kick1
+l = vjpd.get_video_subclip(video_clips[fn], start=26.05, duration=dur) # kick2
+
+s = vjpd.get_video_subclip(video_clips[fn], start=27.51, duration=dur) # snare1
+z = vjpd.get_video_subclip(video_clips[fn], start=29.50, duration=dur) # snare2
+
+t = vjpd.get_video_subclip(video_clips[fn], start=31.46, duration=dur) # tom1a
+v = vjpd.get_video_subclip(video_clips[fn], start=34.23, duration=dur) # tom1b
+w = vjpd.get_video_subclip(video_clips[fn], start=37.16, duration=dur) # tom2a
+u = vjpd.get_video_subclip(video_clips[fn], start=39.03, duration=dur) # tom2b
+
+_ = vjpd.get_video_subclip(video_clips[fn], start=01.50, duration=dur) # silence
+
+
+
+# test pattern
+# patt1 = [
+#      # |1 . . . |2 . . . |3 . . . |4 . . . 
+#         k,_,_,_, k,_,_,_, k,_,k,_, k,_,k,_,
+        
+#         k,_,b,_, k,_,b,_, k,_,r,_, k,_,r,_,
+#         k,_,x,_, k,_,x,_, k,_,c,_, k,_,d,_,
+        
+#         k,_,h,_, k,_,i,_, k,_,j,_, k,_,y,_,
+#         k,_,o,_, k,_,o,_, k,_,l,_, k,_,l,_,
+        
+#         k,_,s,_, k,_,z,_, k,_,t,_, k,_,v,_,
+#         k,_,w,_, k,_,w,_, k,_,u,_, k,_,u,_,
+#         ]
+
+# pattern template
+patt = [
+      #|1 . . . |2 . . . |3 . . . |4 . . . 
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        
+      #|5 . . . |6 . . . |7 . . . |8 . . . 
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        ]
+
+patt1 = [
+    #|1 . . . |2 . . . |3 . . . |4 . . .
+      k,h,i,j, s,h,i,j, k,h,i,y, z,h,i,o
+      ]
+
+patt2 = [
+    #|1 . . . |2 . . . |3 . . . |4 . . .
+      k,h,i,j, s,h,i,j, k,h,i,y, s,z,s,z
+      ]
+
+patt3 = [
+    #|1 . . . |2 . . . |3 . . . |4 . . .
+      k,h,i,j, s,h,i,j, k,h,i,y, s,s,s,s
+      ]
+
+patt4 = [
+    #|1 . . . |2 . . . |3 . . . |4 . . .
+      k,x,c,d, s,x,c,r, k,x,c,d, z,x,c,b
+      ]
+
+patt5 = [
+    #|1 . . . |2 . . . |3 . . . |4 . . .
+      k,x,c,d, s,x,c,r, k,x,c,d, z,s,z,s
+      ]
+
+patt6 = [
+    #|1 . . . |2 . . . |3 . . . |4 . . .
+      k,x,c,d, s,x,c,r, k,x,c,d, z,s,z,s
+      ]
+
+patts = (patt1*3)+patt2+(patt1*3)+patt3+ (patt4*3)+patt5+(patt4*3)+patt6
+

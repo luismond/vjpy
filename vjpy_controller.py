@@ -98,61 +98,90 @@ x = vjpd.get_video_subclip(video_clips[fn], start=07.12, duration=dur) # china
 c = vjpd.get_video_subclip(video_clips[fn], start=09.71, duration=dur) # crash1
 d = vjpd.get_video_subclip(video_clips[fn], start=13.19, duration=dur) # crash2
 
-h = vjpd.get_video_subclip(video_clips[fn], start=17.87, duration=dur) # hat1
+h = vjpd.get_video_subclip(video_clips[fn], start=17.91, duration=dur) # hat1
 i = vjpd.get_video_subclip(video_clips[fn], start=19.39, duration=dur) # hat2
 j = vjpd.get_video_subclip(video_clips[fn], start=21.29, duration=dur) # hat3
-y = vjpd.get_video_subclip(video_clips[fn], start=23.07, duration=dur) # hat4
-o = vjpd.get_video_subclip(video_clips[fn], start=23.66, duration=dur) # hat5
+y = vjpd.get_video_subclip(video_clips[fn], start=23.70, duration=dur) # hat5
+o = vjpd.get_video_subclip(video_clips[fn], start=23.12, duration=dur) # hat4 open
+
 
 k = vjpd.get_video_subclip(video_clips[fn], start=24.95, duration=dur) # kick1
 l = vjpd.get_video_subclip(video_clips[fn], start=26.05, duration=dur) # kick2
 
 s = vjpd.get_video_subclip(video_clips[fn], start=27.51, duration=dur) # snare1
-z = vjpd.get_video_subclip(video_clips[fn], start=29.50, duration=dur) # snare2
+z = vjpd.get_video_subclip(video_clips[fn], start=29.55, duration=dur) # snare2
 
 t = vjpd.get_video_subclip(video_clips[fn], start=31.46, duration=dur) # tom1a
 v = vjpd.get_video_subclip(video_clips[fn], start=34.23, duration=dur) # tom1b
 w = vjpd.get_video_subclip(video_clips[fn], start=37.16, duration=dur) # tom2a
-u = vjpd.get_video_subclip(video_clips[fn], start=39.01, duration=dur) # tom2b
+u = vjpd.get_video_subclip(video_clips[fn], start=38.98, duration=dur) # tom2b
 
 _ = vjpd.get_video_subclip(video_clips[fn], start=01.50, duration=dur) # silence
 
 
+# %% test patterns and bars
 
-# test pattern
-# patt1 = [
-#      # |1 . . . |2 . . . |3 . . . |4 . . . 
-#         k,_,_,_, k,_,_,_, k,_,k,_, k,_,k,_,
-        
-#         k,_,b,_, k,_,b,_, k,_,r,_, k,_,r,_,
-#         k,_,x,_, k,_,x,_, k,_,c,_, k,_,d,_,
-        
-#         k,_,h,_, k,_,i,_, k,_,j,_, k,_,y,_,
-#         k,_,o,_, k,_,o,_, k,_,l,_, k,_,l,_,
-        
-#         k,_,s,_, k,_,z,_, k,_,t,_, k,_,v,_,
-#         k,_,w,_, k,_,w,_, k,_,u,_, k,_,u,_,
-#         ]
+         # 1.2.3.4.
+patt_01 = [k,_,k,_ ] # kick
+patt_02 = [x,x,x,_ ] # china
+patt_03 = [c,c,c,_ ] # crash1
+patt_04 = [d,d,d,_ ] # crash2
 
-# pattern template
-patt = [
-      #|1 . . . |2 . . . |3 . . . |4 . . . 
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        
-      #|5 . . . |6 . . . |7 . . . |8 . . . 
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
-        ]
+         # 1.2.3.4.
+patt_05 = [h,h,h,_ ] # hat1
+patt_06 = [i,i,i,_ ] # hat2
+patt_07 = [j,j,j,_ ] # hat1
+patt_08 = [o,o,o,_ ] # hat2
+
+         # 1.2.3.4.
+patt_09 = [s,s,s,_ ] # snare1
+patt_10 = [z,z,z,_ ] # snare2
+patt_11 = [s,z,s,_ ]
+patt_12 = [z,s,z,_ ]
+
+         # 1.2.3.4.
+patt_13 = [t,t,t,_ ] # tom1a (clips!)
+patt_14 = [v,v,v,_ ] # tom1b
+patt_15 = [w,w,w,_ ] # tom2a
+patt_16 = [u,u,u,_ ] # tom2b
+
+         # 1.2.3.4.
+patt_17 = [k,_,h,_ ] # 
+patt_18 = [s,_,i,_ ] # 
+patt_19 = [k,_,h,h ] # 
+patt_20 = [z,_,i,_ ] # 
+
+         # 1.2.3.4.
+patt_21 = [k,_,h,_ ] # 
+patt_22 = [s,_,i,_ ] # 
+patt_23 = [k,k,h,h ] # 
+patt_24 = [z,_,o,_ ] # 
 
 
+        # |1 . . . |2 . . . |3 . . . |4 . . . 
+barr_00 = [
+           # patt_01, patt_02, patt_03, patt_04 ,
+           # patt_05, patt_06, patt_07, patt_08 ,
+           # patt_09, patt_10, patt_11, patt_12 ,
+           # patt_13, patt_14, patt_15, patt_16 ,
+           
+           patt_17, patt_18, patt_19, patt_20 ,
+           patt_21, patt_22, patt_23, patt_24 ,
+           
+           ]
 
-patts = patt1*2
-c_subclips = vjpd.concatenate_subclips(patts)
-iteration = '001'
-video_result_path = os.path.join(beats_path, beat_name, f'{beat_name}_{iteration}.mp4')
-vjpd.write_concatenated_subclips(c_subclips, video_result_path)
+
+# make final clip
+final_clip = vjpd.concatenate_subclips(
+    [subclip for patt in barr_00 for subclip in patt]
+    )
+
+
+# save final clip
+iteration = '002'
+video_result_path = os.path.join(
+    beats_path,
+    beat_name,
+    f'{beat_name}_{iteration}.mp4'
+    )
+vjpd.write_concatenated_subclips(final_clip, video_result_path)
