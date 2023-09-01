@@ -18,10 +18,21 @@ print("\nPlaying a pattern.")
 vjpd.play_pattern("khckhkckkhckhkkckhckhkhkckhkchkc")
 
 # %% Bar playing
+from vjpy import Bar
+
 print("\nPlaying a bar.")
 vjpd.play_bar(vjpd.bar_example)
 
-# Bar looping
+vjpd.play_bar(
+    Bar(
+        bar_num=1, patterns=[
+            # 1...2...3...4...
+             'k...k...k...k...'
+            ]
+        )
+    )
+
+#%% Bar looping
 print("\nLooping a bar.")
 vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)
 
@@ -45,7 +56,7 @@ vjpd.send_note(40)
 
 # video-sound banks directory
 sound_banks_path = os.path.join('vjpy_media', 'sound_banks')
-sound_bank_path = os.path.join(sound_banks_path, 'robodrum_bank_4')
+sound_bank_path = os.path.join(sound_banks_path, 'robodrum_bank_3')
 
 # video-sound bank file names
 sound_bank_video_filenames = sorted(
@@ -56,7 +67,7 @@ sound_bank_video_filenames = sorted(
 
 # beats directory
 beats_path = os.path.join('vjpy_media', 'beats')
-beat_name = 'videobeat-010'
+beat_name = 'videobeat-012'
 if not beat_name in os.listdir(beats_path):
     os.mkdir(os.path.join(beats_path, beat_name))
 
@@ -74,132 +85,65 @@ for video_filename in sound_bank_video_filenames:
 
 # %% video clips corresponding to 1 drum sound each
 
-video_clip_fn = 'robodrum_bank_4_video_and_sound_cleaned'
+fn = 'robodrum_bank_3_clean'
 
-## RIGHT HAND
-### CYMBALS
-a0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.087)     # hat_a_R
-a1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=0.9)       # hat_b_R
-a2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=2.23)      # hat_c_R
-__ = vjpd.get_video_subclip(video_clips[video_clip_fn], start=3.50)      # hat_c_R silence
+duration = 0.15
 
-b0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=8.8565)    # crash1_R
-b1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=18.51)     # crash2_R
-c0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=14.77)     # china_R
-d0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=11.05)     # ride_R
-d1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=13.25)     # bell_R
+a = vjpd.get_video_subclip(video_clips[fn], start=00.10, duration=duration) # bell
+b = vjpd.get_video_subclip(video_clips[fn], start=03.71, duration=duration) # ride
+c = vjpd.get_video_subclip(video_clips[fn], start=07.12, duration=duration) # china
+d = vjpd.get_video_subclip(video_clips[fn], start=09.71, duration=duration) # crash1
+e = vjpd.get_video_subclip(video_clips[fn], start=13.19, duration=duration) # crash2
+f = vjpd.get_video_subclip(video_clips[fn], start=17.87, duration=duration) # hat1
+g = vjpd.get_video_subclip(video_clips[fn], start=19.39, duration=duration) # hat2
+h = vjpd.get_video_subclip(video_clips[fn], start=21.29, duration=duration) # hat3
+i = vjpd.get_video_subclip(video_clips[fn], start=23.07, duration=duration) # hat4
+j = vjpd.get_video_subclip(video_clips[fn], start=23.66, duration=duration) # hat5
 
-### DRUMS
-f0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=4.6254)    # snare_R
-g0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=6.989)     # tom1_R
-h0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=20.46)     # tom2_R
+k = vjpd.get_video_subclip(video_clips[fn], start=24.95, duration=duration) # kick1
+l = vjpd.get_video_subclip(video_clips[fn], start=26.05, duration=duration) # kick2
+m = vjpd.get_video_subclip(video_clips[fn], start=27.51, duration=duration) # snare1
+n = vjpd.get_video_subclip(video_clips[fn], start=29.50, duration=duration) # snare2
 
+o = vjpd.get_video_subclip(video_clips[fn], start=31.46, duration=duration) # tom1a
+p = vjpd.get_video_subclip(video_clips[fn], start=34.23, duration=duration) # tom1b
+q = vjpd.get_video_subclip(video_clips[fn], start=37.16, duration=duration) # tom2a
+r = vjpd.get_video_subclip(video_clips[fn], start=38.97, duration=duration) # tom2b
 
-## LEFT HAND
-### CYMBALS
-i0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=34.50)     # ride_a_L
-i1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=62.52)     # ride_b_L
-i2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=65.65)     # bell_b_L
-j0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=31.605)    # crash1_a_L
-j1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=58.980)    # crash1_b_L
-k0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=39.816)    # crash2_a_L
-k1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=76.05)     # crash2_b_L
-l0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=42.72)     # china_a_L
-l1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=68.03)     # china_b_L
-l2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=73.16)     # china_c_L
+_ = vjpd.get_video_subclip(video_clips[fn], start=01.5, duration=duration) # silence
 
-### DRUMS
-m0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=27.10)     # snare_a_L
-m1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=45.825)     # snare_b_L
-m2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=48.10)     # snare_c_L
-n0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=29.40)     # tom1_a_L
-n1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=51.37)     # tom1_b_L
-n2 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=51.80)     # tom1_c_L
-o0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=37.37)     # tom2_a_L
-o1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=78.34)     # tom2_b_L
-
-
-## RIGHT FOOT
-p0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=22.70)     # kick_a
-p1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=24.62)     # kick_b
-
-## LEFT FOOT
-q0 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=84.13)     # hat-pedal_a
-q1 = vjpd.get_video_subclip(video_clips[video_clip_fn], start=96.305)     # hat-pedal_b
-
-# patt = [a0, a1, a2,
-#         b0, b1,
-#         c0, d0, d1,
-#         f0, g0, h0,
-#         i0, i1, i2,
-#         j0, j1,
-#         k0, k1,
-#         l0, l1, l2,
-#         m0, m1, m2,
-#         n0, n1, n2,
-#         o0, o1,
-#         p0, p1,
-#         q0, q1]
-
-
-patt1 = [
-      # 1   2   3   4   
-        p1, a0, p1, a0,  # intro a
-        p1, a0, p1, a0,
-        p1, a0, p1, a0,
-        a0, a0, a0, a0,
-        ]
 
 patt2 = [
-        p1, a0, f0, a0,  # base beat 
-        p1, a0, f0, a0, 
-        p1, a0, f0, a0, 
-        p1, a0, f0, d0,
-       
-        p1, a0, f0, a0,  # base beat 
-        p1, a0, f0, a0, 
-        p1, a0, f0, a0, 
-        p1, a0, f0, a2,
-
-        p1, a0, f0, a0,  # base beat 
-        p1, a0, f0, a0, 
-        p1, a0, f0, a0, 
-        p1, a0, f0, d0,
-       
-        p1, a0, f0, a0,  # base beat 
-        p1, a0, f0, a0, 
-        p1, a0, f0, a0, 
-        p1, a2, m2, a2,
-
-
-        p1, a0, f0, g0,  # base beat + toms R
-        p1, a0, f0, h0, 
-        p1, a0, f0, g0, 
-        p1, a0, f0, h0,
+     # |1 . . . |2 . . . |3 . . . |4 . . . 
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,k,_, k,_,k,_, k,_,k,_, k,_,k,_,
+        k,_,k,k, k,_,k,_, k,_,k,k, k,_,k,_,
+        k,_,k,k, k,_,k,_, k,_,k,k, k,_,k,_,
         
-        p1, a0, f0, g0,  # base beat + toms R
-        p1, a0, f0, h0, 
-        p1, a0, f0, g0, 
-        g0, h0, g0, h0,
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,a,a, m,n,o,r,
         
-        p1, a0, f0, g0,  # base beat + toms R
-        p1, a0, f0, h0, 
-        p1, a0, f0, g0, 
-        p1, a0, f0, h0,
+        c,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,a,a, m,k,m,k,
         
-        p1, a0, f0, g0,  # base beat + toms R
-        p1, a0, f0, h0, 
-        p1, a0, f0, g0, 
-        g0, h0, g0, g0,
-    ]
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,b,b, m,_,b,_,
+        k,_,b,b, m,_,b,_, k,_,a,a, m,n,o,r,
+        
+        k,_,k,k, k,_,k,_, k,_,k,k, k,_,k,_,
+        k,_,k,k, k,_,k,_, k,_,k,k, k,_,k,_,
+        k,_,_,_, k,_,_,_, k,_,_,_, k,_,_,_,
+        k,_,k,_, k,_,k,_, k,_,k,_, k,_,k,_,
 
-patts = patt1 + (patt2*2)
+        ]
 
-iteration_n = '01'
-c_subclips = vjpd.concatenate_subclips(patts)
-video_result_path = os.path.join(beats_path, beat_name, f'{beat_name}_{iteration_n}.mp4')
+
+c_subclips = vjpd.concatenate_subclips(patt2 * 2)
+
+video_result_path = os.path.join(beats_path, beat_name, f'{beat_name}.mp4')
 vjpd.write_concatenated_subclips(c_subclips, video_result_path)
-
-
-
-

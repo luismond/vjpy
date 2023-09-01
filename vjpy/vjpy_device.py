@@ -197,14 +197,22 @@ class VjPyDevice:
     def get_video_clip(self, video_filename):
         return VideoFileClip(video_filename)
     
-    def get_video_subclip(self, video_clip, start=0, subclip_duration=.3):
-        return video_clip.subclip(start, start+subclip_duration)
+    def get_video_subclip(self, video_clip, start=0, duration=.075):
+        return video_clip.subclip(start, start + duration)
     
     def concatenate_subclips(self, subclips):
         return concatenate_videoclips(subclips)
+    
+    # todo: implement compositing
+    #from moviepy.editor import clips_array, CompositeVideoClip
 
-    # def get_video_subclips_composite(self, subclips):
-    #     return CompositeVideoClip(subclips)
+    # c_subclips = CompositeVideoClip(
+    #     [
+    #      k.set_position((300, 0)),
+    #      m.set_position((400, 50)),
+    #      g.set_position((500, 100))
+    #      ]
+    #     )
     
     def write_concatenated_subclips(self, concatenated_subclips, subclip_name):
         concatenated_subclips.write_videofile(subclip_name)
