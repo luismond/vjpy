@@ -28,7 +28,7 @@ class VjPyDevice:
         self.bpm = bpm
         self.resolution = resolution
         self.my_drumkit = self.get_my_drumkit()
-        self.sound_banks_path = os.path.join('vjpy_media', 'sound_banks')
+        self.soundbanks_path = os.path.join('vjpy_media', 'sound_banks')
         self.videobeats_path = os.path.join('vjpy_media', 'beats')
 
     # NOTE DURATIONS & VALUES
@@ -198,10 +198,10 @@ class VjPyDevice:
 
     ## Video methods
 
-    def get_video_clip(self, video_filename):
+    def get_videoclip(self, video_filename):
         return VideoFileClip(video_filename)
     
-    def get_video_subclip(self, video_clip, start=0, duration=.075):
+    def get_videosubclip(self, video_clip, start=0, duration=.075):
         return video_clip.subclip(start, start + duration)
     
     def concatenate_subclips(self, subclips):
