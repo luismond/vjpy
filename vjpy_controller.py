@@ -2,24 +2,24 @@
 import os
 from vjpy import VjPyDevice, Bar
 vjpd = VjPyDevice()
-# vjpd.write_concatenated_wavs(['k','h','c','h'])         # concat wav
-# vjpd.play_pattern("khchkkch")                           # play pattern
-# vjpd.play_bar(vjpd.bar_example)                         # play bar
-# vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)        # loop bar
-# vjpd.loop_bars(vjpd.bars_example, num_loops=1)          # loop bars
-# rp = vjpd.generate_random_pattern(patt_len=4)           # generate pattern
+# vjpd.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
+# vjpd.play_pattern("khchkkch")                           # Play pattern
+# vjpd.play_bar(vjpd.bar_example)                         # Play bar
+# vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)        # Loop bar
+# vjpd.loop_bars(vjpd.bars_example, num_loops=1)          # Loop bars
+# rp = vjpd.generate_random_pattern(patt_len=4)           # Generate pattern
 # vjpd.play_pattern(rp)
-# for msg in vjpd.yield_midi_msg():                       # receive MIDI msg
+# for msg in vjpd.yield_midi_msg():                       # Receive MIDI msg
 #     vjpd.play_drum_wav_from_midi_msg(msg)
-# vjpd.send_note(40)                                      # send MIDI note
+# vjpd.send_note(40)                                      # Send MIDI note
 
 
 #%% robodrum_bank_3
 soundbank_name = 'robodrum_bank_3'
-dur = 0.14
 soundbank_dir_path = os.path.join(vjpd.soundbanks_path, soundbank_name)
 soundbank_video_path = os.path.join(soundbank_dir_path, f'{soundbank_name}.mp4')
 soundbank_videoclip = vjpd.get_videoclip(soundbank_video_path)
+dur = 0.14
 
 b = vjpd.get_videosubclip(soundbank_videoclip, start=00.100, duration=dur) # bell
 r = vjpd.get_videosubclip(soundbank_videoclip, start=03.710, duration=dur) # ride
@@ -135,3 +135,124 @@ for bar_ in bars:
 final_clip = vjpd.concatenate_subclips(subclips)
 # save final clip
 vjpd.write_concatenated_subclips(final_clip, 'test_cello.mp4')
+
+# %% african kid
+
+soundbank_name = 'drums_06'
+soundbank_dir_path = os.path.join(vjpd.soundbanks_path, soundbank_name)
+soundbank_video_path = os.path.join(soundbank_dir_path, f'{soundbank_name}.mp4')
+soundbank_videoclip = vjpd.get_videoclip(soundbank_video_path)
+
+dur = .5
+
+# chunks
+a = vjpd.get_videosubclip(soundbank_videoclip, start=02.1120, duration=dur)
+b = vjpd.get_videosubclip(soundbank_videoclip, start=02.6340, duration=dur)
+c = vjpd.get_videosubclip(soundbank_videoclip, start=03.1240, duration=dur)
+d = vjpd.get_videosubclip(soundbank_videoclip, start=03.6450, duration=dur)
+
+e = vjpd.get_videosubclip(soundbank_videoclip, start=04.1694, duration=dur)
+f = vjpd.get_videosubclip(soundbank_videoclip, start=04.6664, duration=dur)
+g = vjpd.get_videosubclip(soundbank_videoclip, start=05.1600, duration=dur)
+h = vjpd.get_videosubclip(soundbank_videoclip, start=05.6600, duration=dur)
+
+i = vjpd.get_videosubclip(soundbank_videoclip, start=06.1514, duration=dur)
+j = vjpd.get_videosubclip(soundbank_videoclip, start=06.6787, duration=dur)
+k = vjpd.get_videosubclip(soundbank_videoclip, start=07.1909, duration=dur)
+l = vjpd.get_videosubclip(soundbank_videoclip, start=07.6833, duration=dur)
+
+m = vjpd.get_videosubclip(soundbank_videoclip, start=08.1850, duration=dur)
+n = vjpd.get_videosubclip(soundbank_videoclip, start=08.7360, duration=dur)
+
+
+# PATTERNS 
+         # 12345678
+patt_01 = [a,b,c,d]
+patt_02 = [e,f,g,h]
+patt_03 = [a,b,c,d]
+patt_04 = [e,f,f,h]
+
+patt_05 = [a,b,c,d]
+patt_06 = [e,f,g,h]
+patt_07 = [i,j,k,l]
+patt_08 = [n,n,n,n]
+
+
+# BARS
+       # |1 . . . |2 . . . |3 . . . |4 . . . 
+bar_01 = [patt_01, patt_02, patt_03, patt_04 ]
+bar_02 = [patt_05, patt_06, patt_07, patt_08 ]
+
+bars = [bar_01, bar_02]#, bar_01, bar_02]#, bar_02, bar_01, bar_02]
+
+# make final clip
+subclips = []
+for bar_ in bars:
+    for patt in bar_:
+        for subclip in patt:
+            subclips.append(subclip)
+final_clip = vjpd.concatenate_subclips(subclips)
+# save final clip
+vjpd.write_concatenated_subclips(final_clip, 'drums_06_beat_1.mp4')
+
+#%% african kid b
+
+dur = .25
+
+# chunks
+a = vjpd.get_videosubclip(soundbank_videoclip, start=02.1120, duration=dur)
+b = vjpd.get_videosubclip(soundbank_videoclip, start=02.6340, duration=dur)
+c = vjpd.get_videosubclip(soundbank_videoclip, start=03.1240, duration=dur)
+d = vjpd.get_videosubclip(soundbank_videoclip, start=03.6450, duration=dur)
+
+e = vjpd.get_videosubclip(soundbank_videoclip, start=04.1694, duration=dur)
+f = vjpd.get_videosubclip(soundbank_videoclip, start=04.6664, duration=dur)
+g = vjpd.get_videosubclip(soundbank_videoclip, start=05.1600, duration=dur)
+h = vjpd.get_videosubclip(soundbank_videoclip, start=05.6600, duration=dur)
+
+i = vjpd.get_videosubclip(soundbank_videoclip, start=06.1514, duration=dur)
+j = vjpd.get_videosubclip(soundbank_videoclip, start=06.6787, duration=dur)
+k = vjpd.get_videosubclip(soundbank_videoclip, start=07.1909, duration=dur)
+l = vjpd.get_videosubclip(soundbank_videoclip, start=07.6833, duration=dur)
+
+m = vjpd.get_videosubclip(soundbank_videoclip, start=08.1850, duration=dur)
+n = vjpd.get_videosubclip(soundbank_videoclip, start=08.7360, duration=dur)
+
+
+# PATTERNS 
+         # 12345678
+patt_01 = [a,b,c,d]
+patt_02 = [a,a,c,d]
+patt_03 = [a,b,c,d]
+patt_04 = [a,a,c,e]
+
+patt_05 = [a,b,c,d]
+patt_06 = [a,a,c,d]
+patt_07 = [a,b,c,d]
+patt_08 = [a,a,g,h]
+
+patt_09 = [g,h,g,h]
+
+
+# BARS
+       # |1 . . . |2 . . . |3 . . . |4 . . . 
+bar_01 = [patt_01, patt_02, patt_03, patt_04 ]
+bar_02 = [patt_05, patt_06, patt_07, patt_08 ]
+
+bar_03 = [patt_05, patt_06, patt_09, patt_09 ]
+
+
+bars = [
+        bar_01, bar_02, bar_01, bar_03,
+        bar_01, bar_02, bar_01, bar_03,
+        ]
+
+# make final clip
+subclips = []
+for bar_ in bars:
+    for patt in bar_:
+        for subclip in patt:
+            subclips.append(subclip)
+final_clip = vjpd.concatenate_subclips(subclips)
+# save final clip
+vjpd.write_concatenated_subclips(final_clip, 'drums_06_beat_2.mp4')
