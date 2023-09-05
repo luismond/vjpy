@@ -28,8 +28,7 @@ class VjPyDevice:
         self.bpm = bpm
         self.resolution = resolution
         self.my_drumkit = self.get_my_drumkit()
-        self.soundbanks_path = os.path.join('vjpy_media', 'sound_banks')
-        self.videobeats_path = os.path.join('vjpy_media', 'beats')
+        self.soundbanks_path = os.path.join('soundbanks')
 
     # NOTE DURATIONS & VALUES
     @property
@@ -218,7 +217,7 @@ class VjPyDevice:
     #      ]
     #     )
     
-    def get_subclips_from_bars(self, bars):
+    def get_bars_subclips(self, bars):
         subclips = []
         for bar_ in bars:
             for patt in bar_:

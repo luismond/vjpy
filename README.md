@@ -132,6 +132,21 @@ bar_num=7 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
 bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
 ```
 
+## Video sounbank structure
+
+soundbank name: "drums_01"
+
+|soundbanks             # soundbanks directory
+|_ drums_01             # soundbank directory
+  |_ drums_01.mp4       # source video file
+  |_ drums_01.mp3       # audio-only .mp3 file
+  |_ drums_01.wav       # audio-only .wav file
+  |_ drums_01.aup3      # audacity project file
+  |_ drums_01.osp       # openshot project file
+    |_ drums_01_assets  # openshot project assets
+  |_ beats              # videobeats directory
+    |_ beat_01.mp4      # videobeat file
+ 
 ## Roadmap
 
 Define the following devices:
