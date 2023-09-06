@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """vjpy controller."""
 import os
-from moviepy.editor import CompositeVideoClip, VideoFileClip, clips_array, vfx
-from moviepy.audio.fx.all import volumex
-from vjpy import VjPyDevice, Bar
-
+#from moviepy.editor import CompositeVideoClip, VideoFileClip, clips_array, vfx
+#from moviepy.audio.fx.all import volumex
+from vjpy import VjPyDevice, MidiDevice#, Bar
 
 vjpd = VjPyDevice()
+md = MidiDevice()
 
-vjpd.play_pattern("khchkkch")                           # Play pattern
+md.play_pattern("khchkkch")                           # Play pattern
 
 #%%
 vjpd.play_bar(vjpd.bar_example)                         # Play bar
