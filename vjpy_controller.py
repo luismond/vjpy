@@ -2,6 +2,7 @@
 """vjpy controller."""
 import os
 from moviepy.editor import CompositeVideoClip, VideoFileClip, clips_array, vfx
+from moviepy.audio.fx.all import volumex
 from vjpy import VjPyDevice, Bar
 vjpd = VjPyDevice()
 # vjpd.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
@@ -21,7 +22,11 @@ soundbank_dir_path = os.path.join(vjpd.soundbanks_path, soundbank_name)
 soundbank_video_path = os.path.join(soundbank_dir_path, f'{soundbank_name}.mp4')
 soundbank_videoclip = vjpd.get_videoclip(soundbank_video_path)
 
-dur = 0.15
+#%%
+bpm = 140
+value = .5
+dur = (60/bpm)*value
+print(dur)
 
 b = vjpd.get_videosubclip(soundbank_videoclip, start=00.100, duration=dur) # bell
 r = vjpd.get_videosubclip(soundbank_videoclip, start=03.710, duration=dur) # ride
@@ -59,65 +64,49 @@ patt_01 = [_,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,  
 patt_02 = [k,   k,   _,   _,   s,   _,   _,   _,   _,   _,   _,   _,   z,   _,   k,   _,   ]
 
 #         |01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   
-patt_03 = [_,   _,   r,   _,   _,   _,   r,   _,   _,   _,   r,   _,   _,   _,   r,   _,   ]
+patt_03 = [_,   _,   r,   _,   _,   _,   r,   _,   _,   _,   r,   _,    _,  _,   r,   r,   ]
 
 #         |01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   
 patt_04 = [_,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   u,   ]
 
 # ...........................................................................................
 
-#         |01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   
-patt_05 = [h,   _,   h,   _,   j,   _,   h,   _,   h,   h,   h,   _,   j,   _,   o,   _    ]
-
-#         |01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   
-patt_06 = [k,   k,   k,   _,   s,   _,   _,   _,   _,   _,   _,   _,   z,   _,   k,   _,   ]
-
-#         |01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   
-patt_07 = [_,   _,   _,   _,   _,   _,   _,   _,   _,   _,   _,   x,   _,   _,   c,   c,   ]
-
-#         |01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   
-patt_08 = [_,   _,   _,   _,   _,   _,   v,   v,   _,   _,   _,   _,   w,   u,   w,   u,   ]
-
-# ...........................................................................................
 
 # BARS
-        # |1 . . .|2 . . . |3 . . . |4 . . . 
-bar_01 = [patt_01, patt_05, patt_05, patt_05, patt_01, patt_05, patt_05, patt_05]
-        # |1 . . . |2 . . . |3 . . . |4 . . .
-bar_02 = [patt_02, patt_06, patt_02, patt_06, patt_02, patt_06, patt_02, patt_06]
-        # |1 . . . |2 . . . |3 . . . |4 . . .
-bar_03 = [patt_01, patt_01, patt_03, patt_03, patt_03, patt_03, patt_03, patt_03]
-        # |1 . . . |2 . . . |3 . . . |4 . . .
-bar_04 = [patt_01, patt_01, patt_04, patt_04, patt_04, patt_04, patt_04, patt_08]
+        # |1 . . .|2 . . . |3 . . . |4 . . . |5 . . . |6 . . . |7 . . . |8 . . . 
+bar_01 = [patt_05, patt_01,]# patt_01, patt_01, patt_05, patt_05, patt_05, patt_05]
+        # |1 . . .|2 . . . |#3 . . . |4 . . . |5 . . . |6 . . . |7 . . . |8 . . . 
+bar_02 = [patt_06, patt_06,]# patt_02, patt_02, patt_06, patt_06, patt_06, patt_06]
+        # |1 . . .|2 . . . |3 . . . |4 . . . |5 . . . |6 . . . |7 . . . |8 . . . 
+bar_03 = [patt_03, patt_03,]# patt_03, patt_03, patt_03, patt_07, patt_03, patt_07]
+        # |1 . . .|2 . . . |3 . . . |4 . . . |5 . . . |6 . . . |7 . . . |8 . . . 
+bar_04 = [patt_04, patt_04]#, patt_04, patt_04, patt_04, patt_08, patt_04, patt_08]
+        # |1 . . .|2 . . . |3 . . . |4 . . . |5 . . . |6 . . . |7 . . . |8 . . . 
+
 
 bars_d = {
-        'hats': 
-            [bar_01],
-        'kick_snare':
-            [bar_02],
-        'cymbs':
-            [bar_03],
-        'toms':
-            [bar_04]
+        'hats': [bar_01],#, bar_01],
+        'kick_snare': [bar_02],#, bar_02],
+        'cymbs': [bar_03],#, bar_03],
+        'toms': [bar_04],#, bar_04]
         }
 
 # Make and save final clip
 for drum_name, bars in bars_d.items():
-    bars = bars*2
     beat_n = '14'
-    print(drum_name)
+    bars = bars*8
     subclips = vjpd.get_bars_subclips(bars)
     final_clip = vjpd.concatenate_subclips(subclips)
     final_clip_path = os.path.join(soundbank_dir_path, 'beats', f'{beat_n}', f'{drum_name}.mp4')
     vjpd.write_concatenated_subclips(final_clip, final_clip_path)
 
 
-##%% compositing
-
-
+#%% compositing
 
 clip1 = VideoFileClip(os.path.join(soundbank_dir_path, 'beats', f'{beat_n}', 'hats.mp4'))
 clip1 = clip1.fx(vfx.mirror_x)
+clip1 = clip1.fx(volumex, 0.4)
+
 clip2 = VideoFileClip(os.path.join(soundbank_dir_path, 'beats', f'{beat_n}', 'kick_snare.mp4'))
 
 clip3 = VideoFileClip(os.path.join(soundbank_dir_path, 'beats', f'{beat_n}', 'cymbs.mp4'))
@@ -125,7 +114,29 @@ clip3 = clip3.fx(vfx.mirror_x)
 
 clip4 = VideoFileClip(os.path.join(soundbank_dir_path, 'beats', f'{beat_n}', 'toms.mp4'))
 
-video = clips_array([[clip1, clip2],
-                     [clip3, clip4]])
+video = clips_array([[clip1,],
+                     [clip2,],
+                     [clip3,],
+                     [clip4,]])
 
 video.resize(width=960).write_videofile("my_comp.mp4")
+
+#%% todo: parse midi file and use it to sequence videobeats
+import mido
+
+mid_name = 'Document 1.mid'                 # midi file
+mid = mido.MidiFile(mid_name, clip=True)    # midi object
+tracks = mid.tracks                         # midi tracks
+transport = tracks[0]                       # transport
+inst = tracks[1]                            # instrument 1 (drum machine)
+# meta messages
+inst_track_name = inst[0].name              # track name ('Hip Hop Kit 03')
+inst_name = inst[1].name                    # instrument name ('Hip Hop Kit 03')
+inst_port = inst[2]                         # midi port
+# messages
+messages = [m for m in inst[3:-1]]          # midi messages
+m = messages[0]                             # midi message
+m_type = m.type                             # midi message type ('note on', 'note off')
+m_note = m.note                             # midi message note (int)
+m_time = m.time                             # midi message time (int)
+m_velo = m.velocity                         # midi message velocity (int)
