@@ -15,6 +15,16 @@ from moviepy.editor import (
     concatenate_videoclips
     )
 
+class MidiDevice:
+    def __init__(self,
+                 bpm=90,
+                 resolution="1/4"
+                 ):
+        self.sample_rate = 44100
+        self.bpm = bpm
+        self.resolution = resolution
+        self.my_drumkit = self.get_my_drumkit()
+        self.soundbanks_path = os.path.join('soundbanks')
 
 class VjPyDevice:
     """vjpy device."""

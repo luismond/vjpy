@@ -4,18 +4,24 @@ import os
 from moviepy.editor import CompositeVideoClip, VideoFileClip, clips_array, vfx
 from moviepy.audio.fx.all import volumex
 from vjpy import VjPyDevice, Bar
-vjpd = VjPyDevice()
-# vjpd.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
-# vjpd.play_pattern("khchkkch")                           # Play pattern
-# vjpd.play_bar(vjpd.bar_example)                         # Play bar
-# vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)        # Loop bar
-# vjpd.loop_bars(vjpd.bars_example, num_loops=1)          # Loop bars
-# rp = vjpd.generate_random_pattern(patt_len=4)           # Generate pattern
-# vjpd.play_pattern(rp)
-# for msg in vjpd.yield_midi_msg():                       # Receive MIDI msg
-#     vjpd.play_drum_wav_from_midi_msg(msg)
-# vjpd.send_note(40)                                      # Send MIDI note
 
+
+vjpd = VjPyDevice()
+
+vjpd.play_pattern("khchkkch")                           # Play pattern
+
+#%%
+vjpd.play_bar(vjpd.bar_example)                         # Play bar
+vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)        # Loop bar
+vjpd.loop_bars(vjpd.bars_example, num_loops=1)          # Loop bars
+rp = vjpd.generate_random_pattern(patt_len=4)           # Generate pattern
+vjpd.play_pattern(rp)
+for msg in vjpd.yield_midi_msg():                       # Receive MIDI msg
+    vjpd.play_drum_wav_from_midi_msg(msg)
+vjpd.send_note(40)                                      # Send MIDI note
+
+#%%
+vjpd.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
 #%%
 soundbank_name = 'drums_03'
 soundbank_dir_path = os.path.join(vjpd.soundbanks_path, soundbank_name)
@@ -120,23 +126,3 @@ video = clips_array([[clip1,],
                      [clip4,]])
 
 video.resize(width=960).write_videofile("my_comp.mp4")
-
-#%% todo: parse midi file and use it to sequence videobeats
-import mido
-
-mid_name = 'Document 1.mid'                 # midi file
-mid = mido.MidiFile(mid_name, clip=True)    # midi object
-tracks = mid.tracks                         # midi tracks
-transport = tracks[0]                       # transport
-inst = tracks[1]                            # instrument 1 (drum machine)
-# meta messages
-inst_track_name = inst[0].name              # track name ('Hip Hop Kit 03')
-inst_name = inst[1].name                    # instrument name ('Hip Hop Kit 03')
-inst_port = inst[2]                         # midi port
-# messages
-messages = [m for m in inst[3:-1]]          # midi messages
-m = messages[0]                             # midi message
-m_type = m.type                             # midi message type ('note on', 'note off')
-m_note = m.note                             # midi message note (int)
-m_time = m.time                             # midi message time (int)
-m_velo = m.velocity                         # midi message velocity (int)
