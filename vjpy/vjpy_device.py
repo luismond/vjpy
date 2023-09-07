@@ -56,15 +56,15 @@ class VjPyDevice:
         drumkit = Drumkit(
             name='MyDrumKit',
             drums={
-                'kick1': Drum(name='kick1', note=36, short_hand='k'),
+                'kick1': Drum(name='kick1', note=36, short_hand='👟'),
                 'kick2': Drum(name='kick2', note=37, short_hand='q'),
                 'snare1': Drum(name='snare1', note=38, short_hand='s'),
                 'snare2': Drum(name='snare2', note=39, short_hand='z'),
-                'clap1': Drum(name='clap1', note=40, short_hand='c'),
+                'clap1': Drum(name='clap1', note=40, short_hand='👏'),
                 'tom1': Drum(name='tom1', note=41, short_hand='t'),
                 'tom2': Drum(name='tom2', note=42, short_hand='u'),
                 'tom3': Drum(name='tom3', note=43, short_hand='v'),
-                'hat1': Drum(name='hat1', note=44, short_hand='h'),
+                'hat1': Drum(name='hat1', note=44, short_hand='📀'),
                 'hatp': Drum(name='hatp', note=45, short_hand='i'),
                 'hato': Drum(name='hato', note=46, short_hand='o'),
 

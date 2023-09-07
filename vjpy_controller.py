@@ -2,19 +2,51 @@
 """vjpy controller."""
 import os
 from vjpy import VjPyDevice, Bar
-
-vjpd = VjPyDevice()
+vjpd = VjPyDevice(bpm=120)
 md = vjpd.midi_device
-wv = vjpd.wav_device
-vd = vjpd.video_device
-
-#  Play a MIDI note
-md.play_note(note=36, velocity=80, duration=0)
 
 #  Play MIDI pattern
-pattern = "k.h.c.h. k.k.c.h. q.o.s.i. q.o.z.tt"
-md.play_pattern(pattern)
+patt1 = "👟 📀 👏 📀 "
+patt2 = "👟 👟 👏 📀 "
+patt3 = "👟 👟 👟 👟 "
+patt4 = "👏 👏 👏 👏 "
 
+for n in range(2):
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt2)
+    print("\n")
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt2)
+    print("\n")
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt2)
+    print("\n")
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt3)
+    print("\n")
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt2)
+    print("\n")
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt2)
+    print("\n")
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt2)
+    print("\n")
+    md.play_pattern(patt1)
+    print("\n")
+    md.play_pattern(patt4)
+    print("\n")
+
+
+#%%
 #  Play bar
 bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
 md.play_bar(bar_)

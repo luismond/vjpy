@@ -19,7 +19,7 @@ class MidiDevice:
         self.midi_out = mido.open_output()
         self.resolution = resolution
         self.note_values = note_values
-        self.note_duration = self.bpm/60
+        self.note_duration  = self.bpm/60
         self.drumkit_sh_notes = drumkit_sh_notes
 
     def yield_midi_msg(self):
@@ -35,13 +35,16 @@ class MidiDevice:
         """Play a sequence of notes."""
         res = self.resolution
         note_value = self.note_values[res].relative_value / self.note_duration
+        print("\t 1️⃣  2️⃣  3️⃣  4️⃣ ")
+        print("\t"+pattern)
         for beat in pattern:
-            if beat != " ":
-                if beat == '.':
-                    self.play_silence(duration=note_value)
-                else:
-                    drum_note = self.drumkit_sh_notes[beat]
-                    self.play_note(note=drum_note, duration=note_value)
+#            if beat != " ":
+            if beat == ' ':
+                self.play_silence(duration=note_value)
+            else:
+                #print(beat)
+                drum_note = self.drumkit_sh_notes[beat]
+                self.play_note(note=drum_note, duration=note_value)
 
     def play_note(self, note, velocity=50, duration=0):
         """Send a MIDI note."""
