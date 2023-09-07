@@ -54,23 +54,18 @@ class VjPyDevice:
     def drumkit(self):
         """Sample drumkit object."""
         drumkit = Drumkit(
-            name='MyDrumKit',
+            name='TR808EmulationKit',
             drums={
-                'kick1': Drum(name='kick1', note=36, short_hand='👟'),
-                'kick2': Drum(name='kick2', note=37, short_hand='🥾'),
+                'kick1': Drum(name='kick1', note=36, short_hand='🥾'),
+                'kick2': Drum(name='kick2', note=37, short_hand='👟'),
                 'snare1': Drum(name='snare1', note=38, short_hand='🥁'),
-                # 'snare2': Drum(name='snare2', note=39, short_hand='z'),
                 'clap1': Drum(name='clap1', note=41, short_hand='👏'),
                 'tom1': Drum(name='tom1', note=42, short_hand='🪘'),
-                # 'tom2': Drum(name='tom2', note=42, short_hand='u'),
-                # 'tom3': Drum(name='tom3', note=43, short_hand='v'),
-                'hat1': Drum(name='hat1', note=43, short_hand='🎩'),
-                # 'hatp': Drum(name='hatp', note=45, short_hand='i'),
+                'hat1': Drum(name='hat1', note=43, short_hand='🔔'),
                 'hato': Drum(name='hato', note=46, short_hand='🐍'),
                 'shkr': Drum(name='shaker', note=49, short_hand='🧂'),
                 'clve': Drum(name='clave', note=50, short_hand='🪵'),
                 'cwbl': Drum(name='cowbell', note=51, short_hand='🐄'),
-
                 }
             )
         return drumkit

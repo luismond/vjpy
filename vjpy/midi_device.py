@@ -35,15 +35,15 @@ class MidiDevice:
         """Play a sequence of notes."""
         res = self.resolution
         note_value = self.note_values[res].relative_value / self.note_duration
-        # print("\t 1️⃣  2️⃣  3️⃣  4️⃣ ")
-        # print("\t"+pattern)
+        print("\t"+"❶"+"❷"+"❸"+"❹"+" ❺"+"❻"+"❼"+"❽")
+        print("\t"+pattern)
         for beat in pattern:
-            if beat == ' ':
-                self.play_silence(duration=note_value)
-            else:
-                drum_note = self.drumkit_sh_notes[beat]
-                print(beat)
-                self.play_note(note=drum_note, duration=note_value)
+            if beat != ' ':
+                if beat == '🔇':
+                    self.play_silence(duration=note_value)
+                else:
+                    drum_note = self.drumkit_sh_notes[beat]
+                    self.play_note(note=drum_note, duration=note_value)
 
     def play_note(self, note, velocity=50, duration=0):
         """Send a MIDI note."""
@@ -73,7 +73,7 @@ class MidiDevice:
 
     def generate_random_pattern(self, patt_len):
         """Generate_random_pattern."""
-        abbvs = ["k", "h", "c"]
+        abbvs = ["👟", "🥾", "🥁", "👏", "🪘", "🎩", "🐍", "🧂", "🪵", "🐄"]
         random_pattern = []
         for _ in range(patt_len):
             random_pattern.append(random.choice(abbvs))

@@ -2,33 +2,44 @@
 """vjpy controller."""
 import os
 from vjpy import VjPyDevice, Bar
-vjpd = VjPyDevice(bpm=120)
+vjpd = VjPyDevice(bpm=90)
 md = vjpd.midi_device
 
-# %%
-md.play_note(note=51, velocity=50, duration=.5)
+# Play MIDI note
+#md.play_note(note=51, velocity=50, duration=.5)
 
-# %%  Play MIDI pattern
-patt1 = "👟 🥁 👟 👏 👟 🪘 👟 🪘 👟 🥁 🐍 🎩 🧂 🧂 🪵 🪵 🐄 🐄"
-md.play_pattern(patt1)
+# Play MIDI pattern
+# patt1 = "👟🥁👏🪘🐍🎩🧂🪵🐄"
+# md.play_pattern(patt1)
 
-
-#%%
 #  Play bar
-bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
-md.play_bar(bar_)
+bar_1 = Bar(bar_num=1, patterns=['🥾🔇🧂🔇', ' 👏🔔🔔🔔'])
+bar_2 = Bar(bar_num=1, patterns=['🥾🧂🧂🧂', ' 🥁🔔🪘🔔'])
+bar_3 = Bar(bar_num=1, patterns=['🥾🔇🧂🔇', ' 👏🔔🔔🔔'])
+bar_4 = Bar(bar_num=1, patterns=['🥾🧂🧂🧂', ' 🥁🪘🪘🪘'])
 
-# Loop bar
-md.loop_bar(bar_, num_loops=2)
+bar_5 = Bar(bar_num=1, patterns=['🥾🧂🧂🧂', ' 👏🐍🐍🐍'])
+bar_6 = Bar(bar_num=1, patterns=['🥾🥾🧂🧂', ' 🪵🔔🪘🔔'])
+bar_7 = Bar(bar_num=1, patterns=['🥾🔇🧂🔇', ' 👏🐍🐍🐍'])
+bar_8 = Bar(bar_num=1, patterns=['🥾🥾🪵🪵', ' 🐄🐄🐄🐄'])
 
-# Loop bars
-bars = [
-        Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-        Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh'])
-        ]
-md.loop_bars(bars, num_loops=1)
+for _ in range(4):
+    md.play_bar(bar_1)
+    md.play_bar(bar_2)
+    md.play_bar(bar_3)
+    md.play_bar(bar_4)
+    print('\n')
+    md.play_bar(bar_5)
+    md.play_bar(bar_6)
+    md.play_bar(bar_7)
+    md.play_bar(bar_8)
+    print('\n')
 
-# Generate pattern
+# %%Loop bar
+md.loop_bar(bar_1, num_loops=4)
+
+
+#%% Generate pattern
 rp = md.generate_random_pattern(patt_len=4)
 md.play_pattern(rp)
 
