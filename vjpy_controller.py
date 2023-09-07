@@ -5,45 +5,12 @@ from vjpy import VjPyDevice, Bar
 vjpd = VjPyDevice(bpm=120)
 md = vjpd.midi_device
 
-#  Play MIDI pattern
-patt1 = "👟 📀 👏 📀 "
-patt2 = "👟 👟 👏 📀 "
-patt3 = "👟 👟 👟 👟 "
-patt4 = "👏 👏 👏 👏 "
+# %%
+md.play_note(note=51, velocity=50, duration=.5)
 
-for n in range(2):
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt2)
-    print("\n")
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt2)
-    print("\n")
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt2)
-    print("\n")
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt3)
-    print("\n")
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt2)
-    print("\n")
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt2)
-    print("\n")
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt2)
-    print("\n")
-    md.play_pattern(patt1)
-    print("\n")
-    md.play_pattern(patt4)
-    print("\n")
+# %%  Play MIDI pattern
+patt1 = "👟 🥁 👟 👏 👟 🪘 👟 🪘 👟 🥁 🐍 🎩 🧂 🧂 🪵 🪵 🐄 🐄"
+md.play_pattern(patt1)
 
 
 #%%
