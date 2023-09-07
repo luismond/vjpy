@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
 """vjpy controller."""
 import os
-from vjpy import VjPyDevice, MidiDevice, Bar
+from vjpy import VjPyDevice, Bar
 
-vjpd = VjPyDevice()
+vjpd = VjPyDevice(bpm=80)
 md = vjpd.midi_device
 # wv = vjpd.wav_device
 # vd = vjpd.video_device
-#%% Play pattern
-pattern = "khchkkch"
+
+# %% Play a MIDI note
+md.play_note(note=36, velocity=80, duration=0)
+
+
+
+
+# %% Play pattern
+pattern = "k.h.c.h.k.k.c.h."
 md.play_pattern(pattern)
 
-#%% Play bar
+# %% Play bar
 bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
 md.play_bar(bar_)
 
