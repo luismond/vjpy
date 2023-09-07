@@ -5,8 +5,8 @@ from vjpy import VjPyDevice, MidiDevice, Bar
 
 vjpd = VjPyDevice()
 md = vjpd.midi_device
-wv = vjpd.wav_device
-vd = vjpd.video_device
+# wv = vjpd.wav_device
+# vd = vjpd.video_device
 #%% Play pattern
 pattern = "khchkkch"
 md.play_pattern(pattern)

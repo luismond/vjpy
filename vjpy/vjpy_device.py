@@ -8,7 +8,7 @@ import numpy as np
 from scipy.io import wavfile
 from scipy.io.wavfile import write
 from playsound import playsound
-from vjpy import Bar, Pattern, Drumkit, Drum, NoteValue
+from vjpy import Drumkit, Drum, NoteValue  # Bar, Pattern,
 from moviepy.editor import (
     VideoFileClip,
     CompositeVideoClip,
@@ -25,10 +25,9 @@ class VjPyDevice:
     # INIT AND PROPERTIES
     def __init__(self, bpm=90):
         self.bpm = bpm
-        self.my_drumkit = self.get_my_drumkit()
         self.midi_device = MidiDevice(
             bpm=self.bpm,
-            my_drumkit=self.my_drumkit,
+            drumkit=self.drumkit,
             note_values=self.note_values,
             drumkit_sh_names=self.drumkit_sh_names
             )
@@ -52,23 +51,24 @@ class VjPyDevice:
             }
         return note_values
 
-    def get_my_drumkit(self):
-        """Temp 'my drumkit' object."""
-        mydrumkit = Drumkit(
-        name='MyDrumKit',
-        drums={
-            'kick': Drum(name='kick', note=43, short_hand='k'),
-            'hat': Drum(name='hat', note=38, short_hand='h'),
-            'clap': Drum(name='clap', note=40, short_hand='c')
-            }
-        )
-        return mydrumkit
+    @property
+    def drumkit(self):
+        """Sample drumkit object."""
+        drumkit = Drumkit(
+            name='MyDrumKit',
+            drums={
+                'kick': Drum(name='kick', note=43, short_hand='k'),
+                'hat': Drum(name='hat', note=38, short_hand='h'),
+                'clap': Drum(name='clap', note=40, short_hand='c')
+                }
+            )
+        return drumkit
 
     @property
     def drumkit_sh_names(self):
         """Mapping short-hand-names <-> full-names."""
         drumkit_sh_names = {}
-        for drum in self.my_drumkit.drums.values():
+        for drum in self.drumkit.drums.values():
             drumkit_sh_names[drum.short_hand] = drum.name
         return drumkit_sh_names
 
@@ -76,22 +76,24 @@ class VjPyDevice:
     def drumkit_note_names(self):
         """Mapping notes <-> note names."""
         drumkit_note_names = {}
-        for drum in self.my_drumkit.drums.values():
+        for drum in self.drumkit.drums.values():
             drumkit_note_names[drum.note] = drum.name
         return drumkit_note_names
 
 
 class MidiDevice:
+    """MIDI device."""
+
     def __init__(self,
                  bpm,
-                 my_drumkit,
+                 drumkit,
                  note_values,
                  drumkit_sh_names,
                  resolution="1/4"
                  ):
         self.bpm = bpm
         self.resolution = resolution
-        self.my_drumkit = my_drumkit
+        self.drumkit = drumkit
         self.note_values = note_values
         self.drumkit_sh_names = drumkit_sh_names
         self.midi_in = mido.open_input()
@@ -170,7 +172,7 @@ class MidiDevice:
     # DRUMS
     def play_drum(self, drum_name, duration=0):
         """Send a drum MIDI note."""
-        drum_note = self.my_drumkit.drums[drum_name].note
+        drum_note = self.drumkit.drums[drum_name].note
         self.play_note(note=drum_note, duration=duration)
 
 
