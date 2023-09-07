@@ -23,9 +23,11 @@ class VjPyDevice:
     """vjpy device."""
 
     # INIT AND PROPERTIES
-    def __init__(self):
+    def __init__(self, bpm=90):
+        self.bpm = bpm
         self.my_drumkit = self.get_my_drumkit()
         self.midi_device = MidiDevice(
+            bpm=self.bpm,
             my_drumkit=self.my_drumkit,
             note_values=self.note_values,
             drumkit_sh_names=self.drumkit_sh_names
@@ -81,10 +83,10 @@ class VjPyDevice:
 
 class MidiDevice:
     def __init__(self,
+                 bpm,
                  my_drumkit,
                  note_values,
                  drumkit_sh_names,
-                 bpm=90,
                  resolution="1/4"
                  ):
         self.bpm = bpm
@@ -92,17 +94,19 @@ class MidiDevice:
         self.my_drumkit = my_drumkit
         self.note_values = note_values
         self.drumkit_sh_names = drumkit_sh_names
+        self.midi_in = mido.open_input()
+        self.midi_out = mido.open_output()
 
 
-    @property
-    def midi_in(self):
-        """MIDI in."""
-        return mido.open_input()
+    # @property
+    # def midi_in(self):
+    #     """MIDI in."""
+    #     return mido.open_input()
 
-    @property
-    def midi_out(self):
-        """MIDI out."""
-        return mido.open_output()
+    # @property
+    # def midi_out(self):
+    #     """MIDI out."""
+    #     return mido.open_output()
 
     def yield_midi_msg(self):
         """Yield MIDI messages from a MIDI in port."""
