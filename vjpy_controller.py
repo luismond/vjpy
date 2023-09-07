@@ -1,27 +1,44 @@
 # -*- coding: utf-8 -*-
 """vjpy controller."""
 import os
-#from moviepy.editor import CompositeVideoClip, VideoFileClip, clips_array, vfx
-#from moviepy.audio.fx.all import volumex
-from vjpy import VjPyDevice, MidiDevice#, Bar
+from vjpy import VjPyDevice, MidiDevice, Bar
 
 vjpd = VjPyDevice()
-md = MidiDevice()
+md = vjpd.midi_device
+wv = vjpd.wav_device
+vd = vjpd.video_device
+#%% Play pattern
+pattern = "khchkkch"
+md.play_pattern(pattern)
 
-md.play_pattern("khchkkch")                           # Play pattern
+#%% Play bar
+bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
+md.play_bar(bar_)
+
+# Loop bar
+md.loop_bar(bar_, num_loops=2)
+
+# Loop bars
+bars = [
+        Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
+        Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh'])
+        ]
+md.loop_bars(bars, num_loops=1)
+
+# Generate pattern
+rp = md.generate_random_pattern(patt_len=4)
+md.play_pattern(rp)
 
 #%%
-vjpd.play_bar(vjpd.bar_example)                         # Play bar
-vjpd.loop_bar(vjpd.bars_example[0], num_loops=2)        # Loop bar
-vjpd.loop_bars(vjpd.bars_example, num_loops=1)          # Loop bars
-rp = vjpd.generate_random_pattern(patt_len=4)           # Generate pattern
-vjpd.play_pattern(rp)
-for msg in vjpd.yield_midi_msg():                       # Receive MIDI msg
-    vjpd.play_drum_wav_from_midi_msg(msg)
-vjpd.send_note(40)                                      # Send MIDI note
+for msg in md.yield_midi_msg():                       # Receive MIDI msg
+    wv.play_drum_wav_from_midi_msg(msg)
 
 #%%
-vjpd.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
+md.send_note(40)                                      # Send MIDI note
+
+#%%
+wv.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
+
 #%%
 soundbank_name = 'drums_03'
 soundbank_dir_path = os.path.join(vjpd.soundbanks_path, soundbank_name)
