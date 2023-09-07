@@ -19,18 +19,22 @@ from moviepy.audio.fx.all import volumex
 class VjPyDevice:
     """vjpy device."""
 
-    def __init__(self, bpm=90):
+    def __init__(self, bpm=100, resolution="1/4"):
         self.bpm = bpm
+        self.resolution = resolution
+
         self.midi_device = MidiDevice(
             bpm=self.bpm,
-            drumkit=self.drumkit,
+            resolution=self.resolution,
             note_values=self.note_values,
-            drumkit_sh_names=self.drumkit_sh_names
+            drumkit_sh_notes=self.drumkit_sh_notes
             )
+
         self.wav_device = WavDevice(
             drumkit_note_names=self.drumkit_note_names,
             drumkit_sh_names=self.drumkit_sh_names
             )
+
         self.video_device = VideoDevice()
 
     @property
@@ -52,17 +56,17 @@ class VjPyDevice:
         drumkit = Drumkit(
             name='MyDrumKit',
             drums={
-                'kick1': Drum(name='kick', note=36, short_hand='k'),
-                'kick2': Drum(name='kick', note=37, short_hand='q'),
-                'snare1': Drum(name='kick', note=38, short_hand='s'),
-                'snare2': Drum(name='kick', note=39, short_hand='z'),
-                'clap1': Drum(name='kick', note=40, short_hand='c'),
-                'tom1': Drum(name='kick', note=41, short_hand='t'),
-                'tom2': Drum(name='kick', note=42, short_hand='u'),
-                'tom3': Drum(name='kick', note=43, short_hand='v'),
-                'hat1': Drum(name='kick', note=44, short_hand='h'),
-                'hatp': Drum(name='kick', note=45, short_hand='i'),
-                'hato': Drum(name='kick', note=46, short_hand='o'),
+                'kick1': Drum(name='kick1', note=36, short_hand='k'),
+                'kick2': Drum(name='kick2', note=37, short_hand='q'),
+                'snare1': Drum(name='snare1', note=38, short_hand='s'),
+                'snare2': Drum(name='snare2', note=39, short_hand='z'),
+                'clap1': Drum(name='clap1', note=40, short_hand='c'),
+                'tom1': Drum(name='tom1', note=41, short_hand='t'),
+                'tom2': Drum(name='tom2', note=42, short_hand='u'),
+                'tom3': Drum(name='tom3', note=43, short_hand='v'),
+                'hat1': Drum(name='hat1', note=44, short_hand='h'),
+                'hatp': Drum(name='hatp', note=45, short_hand='i'),
+                'hato': Drum(name='hato', note=46, short_hand='o'),
 
                 }
             )
@@ -75,6 +79,14 @@ class VjPyDevice:
         for drum in self.drumkit.drums.values():
             drumkit_sh_names[drum.short_hand] = drum.name
         return drumkit_sh_names
+
+    @property
+    def drumkit_sh_notes(self):
+        """Mapping short-hand-names <-> notes."""
+        drumkit_sh_notes = {}
+        for drum in self.drumkit.drums.values():
+            drumkit_sh_notes[drum.short_hand] = drum.note
+        return drumkit_sh_notes
 
     @property
     def drumkit_note_names(self):

@@ -10,19 +10,17 @@ class MidiDevice:
 
     def __init__(self,
                  bpm,
-                 drumkit,
+                 resolution,
                  note_values,
-                 drumkit_sh_names,
-                 resolution="1/4"
+                 drumkit_sh_notes,
                  ):
         self.bpm = bpm
-        self.note_duration = self.bpm/60
-        self.resolution = resolution
-        self.drumkit = drumkit
-        self.note_values = note_values
-        self.drumkit_sh_names = drumkit_sh_names
         self.midi_in = mido.open_input()
         self.midi_out = mido.open_output()
+        self.resolution = resolution
+        self.note_values = note_values
+        self.note_duration = self.bpm/60
+        self.drumkit_sh_notes = drumkit_sh_notes
 
     def yield_midi_msg(self):
         """Yield MIDI messages from a MIDI in port."""
@@ -38,12 +36,12 @@ class MidiDevice:
         res = self.resolution
         note_value = self.note_values[res].relative_value / self.note_duration
         for beat in pattern:
-            if beat == '.':
-                self.play_silence(duration=note_value)
-            else:
-                drum_name = self.drumkit_sh_names[beat]
-                drum_note = self.drumkit.drums[drum_name].note
-                self.play_note(note=drum_note, duration=note_value)
+            if beat != " ":
+                if beat == '.':
+                    self.play_silence(duration=note_value)
+                else:
+                    drum_note = self.drumkit_sh_notes[beat]
+                    self.play_note(note=drum_note, duration=note_value)
 
     def play_note(self, note, velocity=50, duration=0):
         """Send a MIDI note."""
@@ -78,4 +76,3 @@ class MidiDevice:
         for _ in range(patt_len):
             random_pattern.append(random.choice(abbvs))
         return random_pattern
-

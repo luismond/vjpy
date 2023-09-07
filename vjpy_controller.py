@@ -3,22 +3,19 @@
 import os
 from vjpy import VjPyDevice, Bar
 
-vjpd = VjPyDevice(bpm=80)
+vjpd = VjPyDevice()
 md = vjpd.midi_device
-# wv = vjpd.wav_device
-# vd = vjpd.video_device
+wv = vjpd.wav_device
+vd = vjpd.video_device
 
-# %% Play a MIDI note
+#  Play a MIDI note
 md.play_note(note=36, velocity=80, duration=0)
 
-
-
-
-# %% Play pattern
-pattern = "k.h.c.h.k.k.c.h."
+#  Play MIDI pattern
+pattern = "k.h.c.h. k.k.c.h. q.o.s.i. q.o.z.tt"
 md.play_pattern(pattern)
 
-# %% Play bar
+#  Play bar
 bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
 md.play_bar(bar_)
 
@@ -36,23 +33,24 @@ md.loop_bars(bars, num_loops=1)
 rp = md.generate_random_pattern(patt_len=4)
 md.play_pattern(rp)
 
-#%%
+# %%
 for msg in md.yield_midi_msg():                       # Receive MIDI msg
     wv.play_drum_wav_from_midi_msg(msg)
 
-#%%
+# %%
 md.send_note(40)                                      # Send MIDI note
 
-#%%
+# %%
 wv.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
 
-#%%
+
+# %%
 soundbank_name = 'drums_03'
 soundbank_dir_path = os.path.join(vjpd.soundbanks_path, soundbank_name)
 soundbank_video_path = os.path.join(soundbank_dir_path, f'{soundbank_name}.mp4')
 soundbank_videoclip = vjpd.get_videoclip(soundbank_video_path)
 
-#%%
+# %%
 bpm = 140
 value = .5
 dur = (60/bpm)*value
