@@ -12,40 +12,31 @@ from vjpy import Bar, Pattern, Drumkit, Drum, NoteValue
 from moviepy.editor import (
     VideoFileClip,
     CompositeVideoClip,
-    concatenate_videoclips
+    concatenate_videoclips,
+    clips_array,
+    vfx
     )
+from moviepy.audio.fx.all import volumex
 
-class MidiDevice:
-    def __init__(self,
-                 bpm=90,
-                 resolution="1/4"
-                 ):
-        self.sample_rate = 44100
-        self.bpm = bpm
-        self.resolution = resolution
-        self.my_drumkit = self.get_my_drumkit()
-        self.soundbanks_path = os.path.join('soundbanks')
 
 class VjPyDevice:
     """vjpy device."""
 
     # INIT AND PROPERTIES
-    def __init__(self,
-                 bpm=90,
-                 resolution="1/4"
-                 ):
-        self.sample_rate = 44100
-        self.bpm = bpm
-        self.resolution = resolution
+    def __init__(self):
         self.my_drumkit = self.get_my_drumkit()
-        self.soundbanks_path = os.path.join('soundbanks')
+        self.midi_device = MidiDevice(
+            my_drumkit=self.my_drumkit,
+            note_values=self.note_values,
+            drumkit_sh_names=self.drumkit_sh_names
+            )
+        self.wav_device = WavDevice(
+            drumkit_note_names=self.drumkit_note_names,
+            drumkit_sh_names=self.drumkit_sh_names
+            )
+        self.video_device = VideoDevice()
 
     # NOTE DURATIONS & VALUES
-    @property
-    def note_duration(self):
-        """Note duration expressed in seconds."""
-        return self.bpm/60
-
     @property
     def note_values(self):
         """Musical definitions of notes' values."""
@@ -59,8 +50,50 @@ class VjPyDevice:
             }
         return note_values
 
+    def get_my_drumkit(self):
+        """Temp 'my drumkit' object."""
+        mydrumkit = Drumkit(
+        name='MyDrumKit',
+        drums={
+            'kick': Drum(name='kick', note=43, short_hand='k'),
+            'hat': Drum(name='hat', note=38, short_hand='h'),
+            'clap': Drum(name='clap', note=40, short_hand='c')
+            }
+        )
+        return mydrumkit
 
-    # I/O
+    @property
+    def drumkit_sh_names(self):
+        """Mapping short-hand-names <-> full-names."""
+        drumkit_sh_names = {}
+        for drum in self.my_drumkit.drums.values():
+            drumkit_sh_names[drum.short_hand] = drum.name
+        return drumkit_sh_names
+
+    @property
+    def drumkit_note_names(self):
+        """Mapping notes <-> note names."""
+        drumkit_note_names = {}
+        for drum in self.my_drumkit.drums.values():
+            drumkit_note_names[drum.note] = drum.name
+        return drumkit_note_names
+
+
+class MidiDevice:
+    def __init__(self,
+                 my_drumkit,
+                 note_values,
+                 drumkit_sh_names,
+                 bpm=90,
+                 resolution="1/4"
+                 ):
+        self.bpm = bpm
+        self.resolution = resolution
+        self.my_drumkit = my_drumkit
+        self.note_values = note_values
+        self.drumkit_sh_names = drumkit_sh_names
+
+
     @property
     def midi_in(self):
         """MIDI in."""
@@ -79,65 +112,6 @@ class VjPyDevice:
     def send_note(self, note):
         """Send a MIDI note through a MIDI out port."""
         self.midi_out.send(mido.Message('note_on', note=note))
-
-    # DRUMS
-    @property
-    def drumkit_sh_names(self):
-        """Mapping short-hand-names <-> full-names."""
-        drumkit_sh_names = {}
-        for drum in self.my_drumkit.drums.values():
-            drumkit_sh_names[drum.short_hand] = drum.name
-        return drumkit_sh_names
-
-    @property
-    def drumkit_note_names(self):
-        """Mapping notes <-> note names."""
-        drumkit_note_names = {}
-        for drum in self.my_drumkit.drums.values():
-            drumkit_note_names[drum.note] = drum.name
-        return drumkit_note_names
-    
-    def play_drum(self, drum_name, duration=0):
-        """Send a drum MIDI note."""
-        drum_note = self.my_drumkit.drums[drum_name].note
-        self.play_note(note=drum_note, duration=duration)
-
-    def get_my_drumkit(self):
-        """Temp 'my drumkit' object."""
-        mydrumkit = Drumkit(
-        name='MyDrumKit',
-        drums={
-            'kick': Drum(name='kick', note=43, short_hand='k'),
-            'hat': Drum(name='hat', note=38, short_hand='h'),
-            'clap': Drum(name='clap', note=40, short_hand='c')
-            }
-        )
-        return mydrumkit
-
-    @staticmethod
-    def play_silence(duration=0):
-        """Play a silence of n duration."""
-        time.sleep(duration)    
-    
-    # PATTERNS & BARS
-    @property
-    def pattern_example(self):
-        return Pattern(pattern='k.h.sshhh.s.s.k.')
-    
-    @property
-    def bar_example(self):
-        return Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
-
-    @property
-    def bars_example(self):
-        bars_example = [
-            Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-            Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
-            Bar(bar_num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-            Bar(bar_num=4, patterns=['k.h.', 'chhh', 'hhhh', 'cccc'])
-        ]
-        return bars_example
-
 
     def play_pattern(self, pattern):
         """Play a sequence of notes."""
@@ -179,10 +153,33 @@ class VjPyDevice:
             random_pattern.append(random.choice(abbvs))
         return random_pattern
 
+    @staticmethod
+    def play_silence(duration=0):
+        """Play a silence of n duration."""
+        time.sleep(duration)    
+
+    @property
+    def note_duration(self):
+        """Note duration expressed in seconds."""
+        return self.bpm/60
+
+    # DRUMS
+    def play_drum(self, drum_name, duration=0):
+        """Send a drum MIDI note."""
+        drum_note = self.my_drumkit.drums[drum_name].note
+        self.play_note(note=drum_note, duration=duration)
+
+
+class WavDevice:
+    def __init__(self, drumkit_note_names, drumkit_sh_names):
+        self.sample_rate = 44100
+        self.drumkit_note_names = drumkit_note_names
+        self.drumkit_sh_names = drumkit_sh_names
+
     def play_drum_wav_from_midi_msg(self, midi_msg):
         """Play a drum wav file associated with a midi message."""
         wav_name = self.drumkit_note_names[midi_msg.note]
-        playsound(f"{DRUMKIT_PATH}/{wav_name}.wav")
+        playsound(f"vjpy/data/wav/drumkits/myfunkkit/{wav_name}.wav")
 
     def write_concatenated_wavs(self, shs):#notes):
         """
@@ -204,9 +201,11 @@ class VjPyDevice:
         wav_array_c_name = "vjpy/data/wav/wav_examples/concat.wav"
         write(wav_array_c_name, self.sample_rate, wav_array_c)
         playsound(wav_array_c_name)
-
-    ## Video methods
-
+        
+class VideoDevice:
+    def __init__(self):
+        self.soundbanks_path = os.path.join('soundbanks')
+        
     def get_videoclip(self, video_filename):
         return VideoFileClip(video_filename)
     
@@ -215,17 +214,6 @@ class VjPyDevice:
     
     def concatenate_subclips(self, subclips):
         return concatenate_videoclips(subclips)
-    
-    # todo: implement compositing
-    #from moviepy.editor import clips_array, CompositeVideoClip
-
-    # c_subclips = CompositeVideoClip(
-    #     [
-    #      k.set_position((300, 0)),
-    #      m.set_position((400, 50)),
-    #      g.set_position((500, 100))
-    #      ]
-    #     )
     
     def get_bars_subclips(self, bars):
         subclips = []
@@ -237,3 +225,5 @@ class VjPyDevice:
 
     def write_concatenated_subclips(self, concatenated_subclips, subclip_name):
         concatenated_subclips.write_videofile(subclip_name)
+        
+    # todo: implement compositing

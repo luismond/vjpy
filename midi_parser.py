@@ -23,3 +23,10 @@ m_type = m.type                             # midi message type ('note on', 'not
 m_note = m.note                             # midi message note (int)
 m_time = m.time                             # midi message time (int)
 m_velo = m.velocity                         # midi message velocity (int)
+
+messages[:20]
+
+notes = set()
+
+for m in messages:
+    notes.add(m.note)
