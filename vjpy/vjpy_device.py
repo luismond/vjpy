@@ -56,16 +56,16 @@ class VjPyDevice:
         drumkit = Drumkit(
             name='TR808EmulationKit',
             drums={
-                'kick1': Drum(name='kick1', note=36, short_hand='🥾'),
-                'kick2': Drum(name='kick2', note=37, short_hand='👟'),
-                'snare1': Drum(name='snare1', note=38, short_hand='🥁'),
-                'clap1': Drum(name='clap1', note=41, short_hand='👏'),
-                'tom1': Drum(name='tom1', note=42, short_hand='🪘'),
-                'hat1': Drum(name='hat1', note=43, short_hand='🔔'),
-                'hato': Drum(name='hato', note=46, short_hand='🐍'),
-                'shkr': Drum(name='shaker', note=49, short_hand='🧂'),
-                'clve': Drum(name='clave', note=50, short_hand='🪵'),
-                'cwbl': Drum(name='cowbell', note=51, short_hand='🐄'),
+                'kick1': Drum(name='kick1', note=36, short_hand='k', emoji='🥾'),
+                'kick2': Drum(name='kick2', note=37, short_hand='q', emoji='👟'),
+                'snare1': Drum(name='snare1', note=38, short_hand='s', emoji='🥁'),
+                'clap1': Drum(name='clap1', note=40, short_hand='c', emoji='👏'),
+                'tom1': Drum(name='tom1', note=42, short_hand='t', emoji='🪘'),
+                'hat1': Drum(name='hat1', note=44, short_hand='h', emoji='🔔'),
+                'hato': Drum(name='hato', note=46, short_hand='o', emoji='🐍'),
+                'shkr': Drum(name='shaker', note=48, short_hand='r', emoji='🧂'),
+                'clve': Drum(name='clave', note=50, short_hand='v', emoji='🪵'),
+                'cwbl': Drum(name='cowbell', note=51, short_hand='w', emoji='🐄'),
                 }
             )
         return drumkit
