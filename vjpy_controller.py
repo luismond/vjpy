@@ -1,9 +1,7 @@
 """vjpy controller."""
 
 from vjpy import VjPyDevice, patterns
-
-
-vjpd = VjPyDevice(bpm=90)
+vjpd = VjPyDevice(bpm=120)
 md = vjpd.midi_device
 wv = vjpd.wav_device
 
@@ -14,7 +12,7 @@ md.play_note(note=38, velocity=120, duration=0)
 for _ in range(2):
     md.play_patterns(patterns)
 
-#%% Generate pattern
+# %% Generate pattern
 rp = md.generate_random_pattern(patt_len=8)
 md.play_pattern(rp)
 
@@ -26,8 +24,8 @@ for msg in md.yield_midi_msg():
 md.play_note(40)
 
 # %%
-# wv.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
-
+wv.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
+#%%
 
 # # %%
 # soundbank_name = 'drums_03'
