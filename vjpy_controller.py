@@ -42,30 +42,9 @@ patterns = {
             }
         }
 
-drums = {"h": 44, "k": 36, "s": 38}
-
-
-def play_patterns(patts):
-    for pattern in patterns.values():
-        steps = {1: [], 2: [], 3: [], 4: [],
-                 5: [], 6: [], 7: [], 8: []}
-        # for each hit in pattern, append it to the steps
-        for key in pattern:
-            for step, hit in enumerate(pattern[key]):
-                if hit == "x":
-                    steps[step+1].append(drums[key])
-        # use each note in each step to send a midi message
-        for step in steps.values():
-            for note in step:
-                if note == 0:
-                    msg = mido.Message('note_off', note=note, velocity=120)
-                else:
-                    msg = mido.Message('note_on', note=note, velocity=120)
-                md.midi_out.send(msg)
-            sleep(.25)
 
 for _ in range(4):
-    play_patterns(patterns)
+    md.play_patterns(patterns)
 
 md.midi_out.close()
 
