@@ -6,7 +6,7 @@ from time import sleep
 from vjpy import VjPyDevice, patterns
 from pprint import pprint as pp
 
-vjpd = VjPyDevice(bpm=140)
+vjpd = VjPyDevice(bpm=90)
 md = vjpd.midi_device
 
 # Play MIDI note
@@ -14,13 +14,9 @@ md = vjpd.midi_device
 
 # Play MIDI patterns
 
-for _ in range(4):
+for _ in range(2):
     md.play_patterns(patterns)
 md.midi_out.close()
-
-
-# %%Loop bar
-md.loop_bar(bar_1, num_loops=4)
 
 #%% Generate pattern
 rp = md.generate_random_pattern(patt_len=8)

@@ -53,7 +53,8 @@ class MidiDevice:
                     "s": ["_","_","x","_","_","x","_","x", ]  # snare
                     },
         """
-        # drums = {"h": 44, "k": 36, "s": 38}
+        res = self.resolution
+        note_value = self.note_values[res].relative_value / self.note_duration
         for pattern in patterns.values():
             steps = {1: [], 2: [], 3: [], 4: [],
                      5: [], 6: [], 7: [], 8: []}
@@ -71,8 +72,7 @@ class MidiDevice:
                     else:
                         msg = mido.Message('note_on', note=note, velocity=120)
                     self.midi_out.send(msg)
-                time.sleep(.25)
-        # self.midi_out.close()
+                time.sleep(note_value)
 
     def play_note(self, note, velocity=50, duration=0):
         """Send a MIDI note."""
