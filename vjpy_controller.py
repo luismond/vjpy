@@ -3,44 +3,13 @@
 import os
 import mido
 from time import sleep
-from vjpy import VjPyDevice#, Bar
+from vjpy import VjPyDevice, patterns
 from pprint import pprint as pp
 
 vjpd = VjPyDevice(bpm=140)
 md = vjpd.midi_device
 # Play MIDI note
 #md.play_note(note=38, velocity=120, duration=0)
-
-patterns = {
-    "01":
-        {
-            #      1   2   3   4   5   6   7   8   
-            "h": ["x","x","x","x","x","_","x","_", ],
-            "k": ["x","_","_","_","x","_","x","_", ],
-            "s": ["_","_","x","_","_","x","_","x", ]
-            },
-    "02":
-        {
-            #      1   2   3   4   5   6   7   8   
-            "h": ["x","x","x","x","x","_","x","_", ],
-            "k": ["x","_","_","_","x","_","_","_", ],
-            "s": ["_","_","x","_","_","x","x","x", ]
-            },
-    "03":
-        {
-            #      1   2   3   4   5   6   7   8   
-            "h": ["x","x","x","x","x","x","x","x", ],
-            "k": ["x","_","_","_","x","_","_","_", ],
-            "s": ["_","_","x","x","_","_","_","_", ]
-            },
-    "04":
-        {
-            #      1   2   3   4   5   6   7   8   
-            "h": ["_","x","_","x","_","x","_","x", ],
-            "k": ["x","x","x","_","_","_","_","_", ],
-            "s": ["_","_","_","x","_","_","x","_", ]
-            }
-        }
 
 
 for _ in range(4):
