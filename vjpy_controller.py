@@ -4,34 +4,74 @@ import os
 import mido
 from time import sleep
 from vjpy import VjPyDevice#, Bar
+from pprint import pprint as pp
 
-vjpd = VjPyDevice(bpm=90)
+vjpd = VjPyDevice(bpm=140)
 md = vjpd.midi_device
-
 # Play MIDI note
 #md.play_note(note=38, velocity=120, duration=0)
 
-n1 = [36, 44]
-n2 = [44]
-n3 = [38, 44]
-n4 = [46]
+patterns = {
+    "01":
+        {
+            #      1   2   3   4   5   6   7   8   
+            "h": ["x","x","x","x","x","_","x","_", ],
+            "k": ["x","_","_","_","x","_","x","_", ],
+            "s": ["_","_","x","_","_","x","_","x", ]
+            },
+    "02":
+        {
+            #      1   2   3   4   5   6   7   8   
+            "h": ["x","x","x","x","x","_","x","_", ],
+            "k": ["x","_","_","_","x","_","_","_", ],
+            "s": ["_","_","x","_","_","x","x","x", ]
+            },
+    "03":
+        {
+            #      1   2   3   4   5   6   7   8   
+            "h": ["x","x","x","x","x","x","x","x", ],
+            "k": ["x","_","_","_","x","_","_","_", ],
+            "s": ["_","_","x","x","_","_","_","_", ]
+            },
+    "04":
+        {
+            #      1   2   3   4   5   6   7   8   
+            "h": ["_","x","_","x","_","x","_","x", ],
+            "k": ["x","x","x","_","_","_","_","_", ],
+            "s": ["_","_","_","x","_","_","x","_", ]
+            }
+        }
 
-ns = [n1, n2, n3, n4]
+drums = {"h": 44, "k": 36, "s": 38}
 
-for _ in range(8):
-    for n in ns:
-        msgs = []
-        for e in n:
-            msg = mido.Message('note_on', note=e, velocity=120)
-            msgs.append(msg)
-        print(msgs)
-        for msg in msgs:
-            md.midi_out.send(msg)
-        sleep(.5)
+
+def play_patterns(patts):
+    for pattern in patterns.values():
+        steps = {1: [], 2: [], 3: [], 4: [],
+                 5: [], 6: [], 7: [], 8: []}
+        # for each hit in pattern, append it to the steps
+        for key in pattern:
+            for step, hit in enumerate(pattern[key]):
+                if hit == "x":
+                    steps[step+1].append(drums[key])
+        # use each note in each step to send a midi message
+        for step in steps.values():
+            for note in step:
+                if note == 0:
+                    msg = mido.Message('note_off', note=note, velocity=120)
+                else:
+                    msg = mido.Message('note_on', note=note, velocity=120)
+                md.midi_out.send(msg)
+            sleep(.25)
+
+for _ in range(4):
+    play_patterns(patterns)
 
 md.midi_out.close()
 
-
+#%%
+for n in enumerate(range(1,6)):
+    print(n[0]+1)
 #%%
 for _ in range(4):
     for msg in msgs:
