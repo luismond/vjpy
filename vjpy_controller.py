@@ -24,10 +24,9 @@ for msg in md.yield_midi_msg():
 md.play_note(40)
 
 # %% Concatenate wavs
-cw = wv.concatenate_wavs(['k','h','c','h'])
+cw = wv.concatenate_wavs(['k', 'h', 'c', 'h'])
 filename = "concat_wavs.wav"
 wv.play_wav(filename)
-
 wv.write_wav(filename, cw)
 
 #%%
