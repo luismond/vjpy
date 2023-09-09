@@ -18,13 +18,18 @@ md.play_pattern(rp)
 
 # %% Receive MIDI msg
 for msg in md.yield_midi_msg():
-    wv.play_drum_wav_from_midi_msg(msg)
+    wv.play_wav_from_midi_msg(msg)
 
 # %% Send MIDI note
 md.play_note(40)
 
-# %%
-wv.write_concatenated_wavs(['k','h','c','h'])         # Concat wavs
+# %% Concatenate wavs
+cw = wv.concatenate_wavs(['k','h','c','h'])
+filename = "concat_wavs.wav"
+wv.play_wav(filename)
+
+wv.write_wav(filename, cw)
+
 #%%
 
 # # %%
