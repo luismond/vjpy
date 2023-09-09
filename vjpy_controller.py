@@ -8,79 +8,19 @@ from pprint import pprint as pp
 
 vjpd = VjPyDevice(bpm=140)
 md = vjpd.midi_device
+
 # Play MIDI note
 #md.play_note(note=38, velocity=120, duration=0)
 
+# Play MIDI patterns
 
 for _ in range(4):
     md.play_patterns(patterns)
-
 md.midi_out.close()
 
-#%%
-for n in enumerate(range(1,6)):
-    print(n[0]+1)
-#%%
-for _ in range(4):
-    for msg in msgs:
-        midi_out.send(msg)
-    sleep(.5)
-
-#%%
-    midi_out.send(msg1)
-    midi_out.send(msg2)
-    midi_out.send(msg3)
-    midi_out.send(msg4)
-    midi_out.send(msg5)
-    midi_out.send(msg6)
-    midi_out.send(msg7)
-    midi_out.send(msg8)
-    sleep(.5)
-    
-
-
-#%%
-# Play MIDI pattern
-#         1.2.3.4.5.6.7.8.
-patt_1 = "k h s h k h s h "
-patt_2 = "k h s k k h o ss"
-
-# #       1.2.3.4.5.6.7.8.
-# hats = "....x.....x.x.x."
-# kick = "x.....x.x......."
-# snre = "..x.......x....."
-
-
-for _ in range(4):
-    md.play_pattern(patt_1)
-    md.play_pattern(patt_2)
-
-# %%  Play bar
-# bar_1 = Bar(bar_num=1, patterns=['🥾👟🧂🔇', ' 👏🔇🔔🔔'])
-# bar_2 = Bar(bar_num=1, patterns=['🥾🧂🧂🧂', ' 🥁🔔🪘🔔'])
-# bar_3 = Bar(bar_num=1, patterns=['🥾🔇🧂🔇', ' 👏🔔🔔🔔'])
-# bar_4 = Bar(bar_num=1, patterns=['🥾🧂🧂🧂', ' 🥁🪘🪘🪘'])
-
-# bar_5 = Bar(bar_num=1, patterns=['🥾🧂🧂🧂', ' 👏🔇🐍🔇'])
-# bar_6 = Bar(bar_num=1, patterns=['🥾👟🥾🥾', ' 🥾👟🥾🥾'])
-# bar_7 = Bar(bar_num=1, patterns=['🥾🔇🧂🔇', ' 👏🔇🐍🔇'])
-# bar_8 = Bar(bar_num=1, patterns=['🥾🔇🪵🪵', ' 🐄🐄🐄🐄'])
-
-# for _ in range(4):
-#     md.play_bar(bar_1)
-#     md.play_bar(bar_2)
-#     md.play_bar(bar_3)
-#     md.play_bar(bar_4)
-#     print('\n')
-#     md.play_bar(bar_5)
-#     md.play_bar(bar_6)
-#     md.play_bar(bar_7)
-#     md.play_bar(bar_8)
-#     print('\n')
 
 # %%Loop bar
 md.loop_bar(bar_1, num_loops=4)
-
 
 #%% Generate pattern
 rp = md.generate_random_pattern(patt_len=8)
