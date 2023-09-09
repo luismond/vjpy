@@ -49,3 +49,11 @@ patterns = {
             "v": ["x", "_", "x", "_", "_", "_", "x", "_"],
             }
         }
+
+# random patterns
+# rp = "qrvtctss"
+# rp2 = "wkrhsoqk"
+# for _ in range(8):
+#     for _ in range(3):
+#         md.play_pattern(rp)
+#     md.play_pattern(rp2)

@@ -1,9 +1,8 @@
 """MIDI device class."""
 
-import mido
 import time
 import random
-
+import mido
 
 class MidiDevice:
     """MIDI device."""
@@ -27,23 +26,20 @@ class MidiDevice:
         for midi_msg in self.midi_in:
             yield midi_msg
 
-    # def play_pattern(self, pattern):
-    #     """Play a sequence of notes."""
-    #     res = self.resolution
-    #     note_value = self.note_values[res].relative_value / self.note_duration
-    #     print(pattern+"\n")
-    #     # print("\t"+pattern)
-    #     for beat in pattern:
-    #         # if beat != ' ':
-    #         if beat == ' ':
-    #             self.play_silence(duration=note_value)
-    #         else:
-    #             drum_note = self.drumkit_sh_notes[beat]
-    #             self.play_note(note=drum_note, duration=note_value)
+    def play_pattern(self, pattern):
+        """Play a sequence of notes."""
+        res = self.resolution
+        note_value = self.note_values[res].relative_value / self.note_duration
+        for beat in pattern:
+            if beat == ' ':
+                self.play_silence(duration=note_value)
+            else:
+                drum_note = self.drumkit_sh_notes[beat]
+                self.play_note(note=drum_note, duration=note_value)
 
     def play_patterns(self, patterns):
         """
-        Play a set of patterns with the following shape:
+        Play a list of patterns with the following shape:
 
             'pattern_01':
                 {
@@ -68,27 +64,35 @@ class MidiDevice:
             for step in steps.values():
                 for note in step:
                     if note == 0:
-                        msg = mido.Message('note_off', note=note, velocity=120)
+                        msg = mido.Message("note_off", note=note, velocity=120)
                     else:
-                        msg = mido.Message('note_on', note=note, velocity=120)
+                        msg = mido.Message("note_on", note=note, velocity=120)
                     self.midi_out.send(msg)
                 time.sleep(note_value)
 
     def play_note(self, note, velocity=50, duration=0):
         """Send a MIDI note."""
-        msg = mido.Message('note_on', note=note, velocity=velocity)
+        msg = mido.Message("note_on", note=note, velocity=velocity)
         self.midi_out.send(msg)
         time.sleep(duration)
-        # self.midi_out.close()
 
-    # def play_bar(self, bar_):
-    #     """Play a sequence of patterns."""
-    #     self.play_pattern("".join(bar_.patterns))
+    def generate_random_pattern(self, patt_len):
+        """Generate_random_pattern."""
+        short_hands = ["k", "q", "s", "c", "t", "h", "o", "r", "v", "w" ]
+        # abbvs = ["👟", "🥾", "🥁", "👏", "🪘", "🔔", "🐍", "🧂", "🪵", "🐄"]
+        random_pattern = []
+        for _ in range(patt_len):
+            random_pattern.append(random.choice(short_hands))
+        return ''.join(random_pattern)
 
     @staticmethod
     def play_silence(duration=0):
         """Play a silence of n duration."""
         time.sleep(duration)
+
+    # def play_bar(self, bar_):
+    #     """Play a sequence of patterns."""
+    #     self.play_pattern("".join(bar_.patterns))
 
     # def loop_bar(self, bar_, num_loops=1):
     #     """Iterate over a bar_."""
@@ -100,11 +104,3 @@ class MidiDevice:
     #     for _ in range(num_loops):
     #         for bar_ in bars:
     #             self.loop_bar(bar_)
-
-    def generate_random_pattern(self, patt_len):
-        """Generate_random_pattern."""
-        abbvs = ["👟", "🥾", "🥁", "👏", "🪘", "🔔", "🐍", "🧂", "🪵", "🐄"]
-        random_pattern = []
-        for _ in range(patt_len):
-            random_pattern.append(random.choice(abbvs))
-        return ''.join(random_pattern)

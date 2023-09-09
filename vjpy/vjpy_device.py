@@ -5,7 +5,6 @@ import numpy as np
 from scipy.io import wavfile
 from scipy.io.wavfile import write
 from playsound import playsound
-from vjpy import Drumkit, Drum, NoteValue, MidiDevice # Bar, Pattern,
 from moviepy.editor import (
     VideoFileClip,
     CompositeVideoClip,
@@ -14,6 +13,7 @@ from moviepy.editor import (
     vfx
     )
 from moviepy.audio.fx.all import volumex
+from vjpy import Drumkit, Drum, NoteValue, MidiDevice
 
 
 class VjPyDevice:
@@ -118,8 +118,8 @@ class WavDevice:
         """
         # msgs = [mido.Message('note_on', note=note) for note in notes]
         wav_array = []
-        for sh in shs:  # for msg in msgs:
-            wav_name = f"{self.drumkit_sh_names[sh]}.wav"
+        for short_hand in shs:  # for msg in msgs:
+            wav_name = f"{self.drumkit_sh_names[short_hand]}.wav"
             # wav_name = f"{self.drumkit_note_names[msg.note]}.wav"
             wav_path = f"vjpy/data/wav/drumkits/myfunkkit/{wav_name}"
             _, data = wavfile.read(wav_path)
@@ -128,20 +128,20 @@ class WavDevice:
         wav_array_c_name = "vjpy/data/wav/wav_examples/concat.wav"
         write(wav_array_c_name, self.sample_rate, wav_array_c)
         playsound(wav_array_c_name)
-        
+
 class VideoDevice:
     def __init__(self):
         self.soundbanks_path = os.path.join('soundbanks')
-        
+
     def get_videoclip(self, video_filename):
         return VideoFileClip(video_filename)
-    
+
     def get_videosubclip(self, video_clip, start=0, duration=.075):
         return video_clip.subclip(start, start + duration)
-    
+
     def concatenate_subclips(self, subclips):
         return concatenate_videoclips(subclips)
-    
+
     def get_bars_subclips(self, bars):
         subclips = []
         for bar_ in bars:
@@ -152,5 +152,5 @@ class VideoDevice:
 
     def write_concatenated_subclips(self, concatenated_subclips, subclip_name):
         concatenated_subclips.write_videofile(subclip_name)
-        
+
     # todo: implement compositing
