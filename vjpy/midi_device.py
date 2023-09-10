@@ -4,6 +4,7 @@ import time
 import random
 import mido
 
+
 class MidiDevice:
     """MIDI device."""
 
@@ -39,11 +40,11 @@ class MidiDevice:
 
     def play_patterns(self, patterns):
         """
-        Play a list of patterns with the following shape:
+        Play a list of patterns with the following shape.
 
             'pattern_01':
                 {
-                    #      1   2   3   4   5   6   7   8   
+                    #      1   2   3   4   5   6   7   8
                     "h": ["x","x","x","x","x","_","x","_", ], # hi-hat
                     "k": ["x","_","_","_","x","_","x","_", ], # kick
                     "s": ["_","_","x","_","_","x","_","x", ]  # snare
@@ -60,6 +61,7 @@ class MidiDevice:
                     if hit == "x":
                         note = self.drumkit_sh_notes[key]
                         steps[step+1].append(note)
+                        # todo: implement metronome here?
             # use each note in each step to send a midi message
             for step in steps.values():
                 for note in step:
@@ -78,8 +80,8 @@ class MidiDevice:
 
     def generate_random_pattern(self, patt_len):
         """Generate_random_pattern."""
-        short_hands = ["k", "q", "s", "c", "t", "h", "o", "r", "v", "w" ]
-        # abbvs = ["👟", "🥾", "🥁", "👏", "🪘", "🔔", "🐍", "🧂", "🪵", "🐄"]
+        short_hands = ["k", "q", "s", "c", "t", "h", "o", "r", "v", "w"]
+        # emoji = ["👟", "🥾", "🥁", "👏", "🪘", "🔔", "🐍", "🧂", "🪵", "🐄"]
         random_pattern = []
         for _ in range(patt_len):
             random_pattern.append(random.choice(short_hands))
