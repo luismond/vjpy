@@ -17,18 +17,19 @@ rp = md.generate_random_pattern(patt_len=8)
 md.play_pattern(rp)
 
 # %% Receive MIDI msg
-for msg in md.yield_midi_msg():
-    wv.play_wav_from_midi_msg(msg)
+# for msg in md.yield_midi_msg():
+#     wv.play_wav_from_midi_msg(msg)
 
 # %% Send MIDI note
-md.play_note(40)
+# md.play_note(40)
 
 # %% Concatenate wavs
 wav_list = ["clap1.wav", "kick1.wav", "hat1.wav"]
 drumkit = "myfunkkit"
-c = wv.concatenate_wavs(wav_list, drumkit=drumkit)
+
+wav_concat = wv.concatenate_wavs(wav_list, drumkit=drumkit)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wav.wav")
-wv.write_wav(concat_wav_path, c)
+wv.write_wav(concat_wav_path, wav_concat)
 wv.play_wav(concat_wav_path)
 
 # %%  Mix wavs
