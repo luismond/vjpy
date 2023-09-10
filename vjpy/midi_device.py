@@ -1,5 +1,6 @@
 """MIDI device class."""
 
+import os
 import time
 import random
 import mido
@@ -21,6 +22,7 @@ class MidiDevice:
         self.note_values = note_values
         self.note_duration = self.bpm/60
         self.drumkit_sh_notes = drumkit_sh_notes
+        self.midi_data_dir = os.path.join("vjpy", "data", "midi")
 
     def yield_midi_msg(self):
         """Yield MIDI messages from a MIDI in port."""

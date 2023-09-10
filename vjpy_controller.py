@@ -6,7 +6,7 @@ md = vjpd.midi_device
 wv = vjpd.wav_device
 
 # %% Play MIDI note
-md.play_note(note=38, velocity=120, duration=0)
+md.play_note(note=44, velocity=120, duration=0)
 
 # %% Play MIDI patterns
 for _ in range(2):
