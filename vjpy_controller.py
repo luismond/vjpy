@@ -1,5 +1,5 @@
 """vjpy controller."""
-
+import os
 from vjpy import VjPyDevice, patterns
 vjpd = VjPyDevice(bpm=120)
 md = vjpd.midi_device
@@ -24,10 +24,19 @@ for msg in md.yield_midi_msg():
 md.play_note(40)
 
 # %% Concatenate wavs
-cw = wv.concatenate_wavs(['k', 'h', 'c', 'h'])
-filename = "concat.wav"
-wv.write_wav(filename, cw)
-wv.play_wav(filename)
+wav_list = ["clap1.wav", "kick1.wav", "hat1.wav"]
+drumkit = "myfunkkit"
+c = wv.concatenate_wavs(wav_list, drumkit=drumkit)
+concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wav.wav")
+wv.write_wav(concat_wav_path, c)
+wv.play_wav(concat_wav_path)
+
+# %%  Mix wavs
+wav_mixed = wv.mix_wavs(wav_list, drumkit)
+mixed_wav_path = os.path.join(wv.wav_dir, "examples", "mixed_wav.wav")
+wv.write_wav(mixed_wav_path, wav_mixed)
+wv.play_wav(mixed_wav_path)
+
 #%%
 
 # # %%

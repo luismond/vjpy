@@ -1,6 +1,6 @@
 """vjpy backend."""
 
-from vjpy import NoteValue, MidiDevice, WavDevice, drum_kits #Drumkit, Drum, 
+from vjpy import NoteValue, MidiDevice, WavDevice, drum_kits
 
 
 class VjPyDevice:
@@ -18,10 +18,7 @@ class VjPyDevice:
             drumkit_sh_notes=self.drumkit_sh_notes
             )
 
-        self.wav_device = WavDevice(
-            drumkit_note_names=self.drumkit_note_names,
-            drumkit_sh_names=self.drumkit_sh_names
-            )
+        self.wav_device = WavDevice()
 
         # self.video_device = VideoDevice()
 
