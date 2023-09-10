@@ -25,10 +25,9 @@ md.play_note(40)
 
 # %% Concatenate wavs
 cw = wv.concatenate_wavs(['k', 'h', 'c', 'h'])
-filename = "concat_wavs.wav"
-wv.play_wav(filename)
+filename = "concat.wav"
 wv.write_wav(filename, cw)
-
+wv.play_wav(filename)
 #%%
 
 # # %%

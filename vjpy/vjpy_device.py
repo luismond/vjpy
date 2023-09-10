@@ -1,6 +1,6 @@
 """vjpy backend."""
 
-from vjpy import Drumkit, Drum, NoteValue, MidiDevice, WavDevice
+from vjpy import NoteValue, MidiDevice, WavDevice, drum_kits #Drumkit, Drum, 
 
 
 class VjPyDevice:
@@ -9,6 +9,7 @@ class VjPyDevice:
     def __init__(self, bpm=100, resolution="1/4"):
         self.bpm = bpm
         self.resolution = resolution
+        self.drum_kit = drum_kits["TR808EmulationKit"]
 
         self.midi_device = MidiDevice(
             bpm=self.bpm,
@@ -38,30 +39,10 @@ class VjPyDevice:
         return note_values
 
     @property
-    def drumkit(self):
-        """Sample drumkit object."""
-        drumkit = Drumkit(
-            name='TR808EmulationKit',
-            drums={
-                'kick1': Drum(name='kick1', note=36, short_hand='k', emoji='🥾'),
-                'kick2': Drum(name='kick2', note=37, short_hand='q', emoji='👟'),
-                'snare1': Drum(name='snare1', note=38, short_hand='s', emoji='🥁'),
-                'clap1': Drum(name='clap1', note=40, short_hand='c', emoji='👏'),
-                'tom1': Drum(name='tom1', note=42, short_hand='t', emoji='🪘'),
-                'hat1': Drum(name='hat1', note=44, short_hand='h', emoji='🔔'),
-                'hato': Drum(name='hato', note=46, short_hand='o', emoji='🐍'),
-                'shkr': Drum(name='shaker', note=48, short_hand='r', emoji='🧂'),
-                'clve': Drum(name='clave', note=50, short_hand='v', emoji='🪵'),
-                'cwbl': Drum(name='cowbell', note=51, short_hand='w', emoji='🐄'),
-                }
-            )
-        return drumkit
-
-    @property
     def drumkit_sh_names(self):
         """Mapping short-hand-names <-> full-names."""
         drumkit_sh_names = {}
-        for drum in self.drumkit.drums.values():
+        for drum in self.drum_kit.drums.values():
             drumkit_sh_names[drum.short_hand] = drum.name
         return drumkit_sh_names
 
@@ -69,7 +50,7 @@ class VjPyDevice:
     def drumkit_sh_notes(self):
         """Mapping short-hand-names <-> notes."""
         drumkit_sh_notes = {}
-        for drum in self.drumkit.drums.values():
+        for drum in self.drum_kit.drums.values():
             drumkit_sh_notes[drum.short_hand] = drum.note
         return drumkit_sh_notes
 
@@ -77,7 +58,7 @@ class VjPyDevice:
     def drumkit_note_names(self):
         """Mapping notes <-> note names."""
         drumkit_note_names = {}
-        for drum in self.drumkit.drums.values():
+        for drum in self.drum_kit.drums.values():
             drumkit_note_names[drum.note] = drum.name
         return drumkit_note_names
 
