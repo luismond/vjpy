@@ -6,7 +6,7 @@ md = vjpd.midi_device
 wv = vjpd.wav_device
 
 # %% Play MIDI note
-md.play_note(note=38, velocity=120, duration=0)
+md.play_note(note=44, velocity=120, duration=0)
 
 # %% Play MIDI patterns
 for _ in range(2):
@@ -15,6 +15,10 @@ for _ in range(2):
 # %% Generate pattern
 rp = md.generate_random_pattern(patt_len=8)
 md.play_pattern(rp)
+
+# %% Play MIDI file
+filename = os.path.join(md.midi_data_dir, "drum_beat_2.mid")
+md.play_midi_file(filename)
 
 # %% Receive MIDI msg
 # for msg in md.yield_midi_msg():

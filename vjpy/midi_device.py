@@ -1,7 +1,10 @@
 """MIDI device class."""
 
+
+import os
 import time
 import random
+from collections import defaultdict
 import mido
 
 
@@ -21,6 +24,7 @@ class MidiDevice:
         self.note_values = note_values
         self.note_duration = self.bpm/60
         self.drumkit_sh_notes = drumkit_sh_notes
+        self.midi_data_dir = os.path.join("vjpy", "data", "midi")
 
     def yield_midi_msg(self):
         """Yield MIDI messages from a MIDI in port."""
@@ -91,6 +95,47 @@ class MidiDevice:
     def play_silence(duration=0):
         """Play a silence of n duration."""
         time.sleep(duration)
+
+    def play_midi_file(self, filename):
+        """Read a Hydrogen MIDI file and get the notes of each step."""
+        mid = mido.MidiFile(filename, clip=True)
+        track = mid.tracks[0]
+        meta_messages = track[:4]
+
+        # Calculate BPM and note value
+        tempo = meta_messages[2].tempo
+        bpm = round(int(60000000)/tempo)
+        note_duration = bpm/60
+        note_value = .5 / note_duration
+
+        # Get the notes of each step
+        messages = track[4:-1]
+        steps = defaultdict(list)
+        step_ = 0
+        for msg in messages:
+            if msg.type == "note_on":
+                step_ += msg.time
+                print(step_)
+                steps[step_].append(msg.note)
+
+        # Send the MIDI messages of each step
+        for step in steps.values():
+            for note in step:
+                if note == 0:
+                    msg = mido.Message("note_off", note=note, velocity=120)
+                else:
+                    msg = mido.Message("note_on", note=note, velocity=120)
+                self.midi_out.send(msg)
+            time.sleep(note_value)
+
+        return_obj = {
+            "tempo": tempo,
+            "bpm": bpm,
+            "note_value": note_value,
+            "messages": messages,
+            "steps": steps
+            }
+        return return_obj
 
     # def play_bar(self, bar_):
     #     """Play a sequence of patterns."""
