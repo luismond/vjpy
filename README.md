@@ -21,9 +21,9 @@ patterns = {
     "01":
         {
             #      1    2    3    4    5    6    7    8
-            "h": ["x", "x", "x", "x", "x", "_", "x", "_"],
-            "k": ["x", "_", "_", "_", "_", "_", "_", "_"],
-            "c": ["_", "_", "_", "_", "x", "_", "_", "_"]
+            "h": ["x", "x", "x", "x", "x", "_", "x", "_"], # hi-hat
+            "k": ["x", "_", "_", "_", "_", "_", "_", "_"], # kick
+            "c": ["_", "_", "_", "_", "x", "_", "_", "_"]  # clap
         }
 ```
 
@@ -44,6 +44,27 @@ A drumkit features drums. Each Drum is accesible by name, MIDI note, a shorthand
 ```
 
 
+## Hydrogen MIDI file (modus SMF0)
+
+```python
+MD = VJPD.midi_device                               # device
+MID_NAME = "drum_beat.mid")                         # file
+mid = mido.MidiFile(MID_NAME, clip=True)            # object
+track = mid.tracks[0]                               # track
+
+meta_messages = [msg for msg in track[:4]]          # meta messages
+copyright_ = meta_messages[0]                           # copyright
+track_name = meta_messages[1]                           # name
+tempo = meta_messages[2]                                # tempo
+time_signature = meta_messages[3]                       # signature
+
+messages = [msg for msg in track[4:-1]]             # messages
+msg = messages[0]
+m_type = msg.type                                       # type ('note on', 'note off')
+m_note = msg.note                                       # note (int)
+m_time = msg.time                                       # time (int)
+m_velo = msg.velocity                                   # velocity (int)
+```
 
 
 ## Video sounbank structure
@@ -104,6 +125,9 @@ Define the following devices:
 30-ago-23:
 - Implemented video sequencing logic.
 
+10-sep-23:
+- Implemented polyphonic MIDI and WAV patterns
+
 ## Related work
 
 Hexstatic, Coldcut music videos from the early 2000's, created with VJPro. 
@@ -137,25 +161,3 @@ In a standing wave, the amplitude of vibration has nulls at some positions where
 - Load the video files into video objects and use them to compose video beats
 
 
-## Hydrogen MIDI file (modus SMF0)
-```python
-MD = VJPD.midi_device                           # device
-MID_NAME = os.path.join(                        # file
-    MD.midi_data_dir, "drum_beat_2.mid")
-mid = mido.MidiFile(MID_NAME, clip=True)        # object
-track = mid.tracks[0]                           # track
-
-meta_messages = [msg for msg in track[:4]]          # meta messages
-copyright_ = meta_messages[0]                           # copyright
-track_name = meta_messages[1]                           # name
-tempo = meta_messages[2]                                # tempo
-time_signature = meta_messages[3]                       # signature
-dur = 60000/(114*tempo.tempo)                           # duration in ms?
-
-messages = [msg for msg in track[4:-1]]             # messages
-m = messages[0]
-m_type = m.type                                         # type ('note on', 'note off')
-m_note = m.note                                         # note (int)
-m_time = m.time                                         # time (int)
-m_velo = m.velocity                                     # velocity (int)
-```
