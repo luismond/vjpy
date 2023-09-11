@@ -150,14 +150,12 @@ In a standing wave, the amplitude of vibration has nulls at some positions where
 
 - Record video clips hitting drums.
 - Slice the video clips in a video editing software (one video per sound)
--- If the sound bank has several clips, load them all into the time line
--- Merge, edit, condense and separate the audio
--- Clean the audio in an audio software
---- Volume, normalization, high-pass, low-pass effects on drum
--- Re-import video+audio for further processing
-
-- Try to set the starting frame to a point where the sound is at its peak
-- Name the subvideo clips with the name of the corresponding sound
-- Load the video files into video objects and use them to compose video beats
+- If the sound bank has several clips, load them all into the time line
+- Merge, edit, condense and separate the audio
+- Clean the audio in an audio software
+- Volume, normalization, high-pass, low-pass accordingly
+- Re-import video+audio for further processing
+- Set the starting frames to a point where the sound is at its peak
+- Load the video file into a video object and use it to sequence videobeats
 
 
