@@ -133,7 +133,7 @@ bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
 ```
 
 ## Video sounbank structure
-
+```
 soundbank name: "drums_01"
 
 |soundbanks             # soundbanks directory
@@ -146,6 +146,7 @@ soundbank name: "drums_01"
     |_ drums_01_assets  # openshot project assets
   |_ beats              # videobeats directory
     |_ beat_01.mp4      # videobeat file
+```
  
 ## Roadmap
 
@@ -222,4 +223,25 @@ In a standing wave, the amplitude of vibration has nulls at some positions where
 - Load the video files into video objects and use them to compose video beats
 
 
+## Hydrogen MIDI file (modus SMF0)
+```python
+MD = VJPD.midi_device                           # device
+MID_NAME = os.path.join(                        # file
+    MD.midi_data_dir, "drum_beat_2.mid")
+mid = mido.MidiFile(MID_NAME, clip=True)        # object
+track = mid.tracks[0]                           # track
 
+meta_messages = [msg for msg in track[:4]]          # meta messages
+copyright_ = meta_messages[0]                           # copyright
+track_name = meta_messages[1]                           # name
+tempo = meta_messages[2]                                # tempo
+time_signature = meta_messages[3]                       # signature
+dur = 60000/(114*tempo.tempo)                           # duration in ms?
+
+messages = [msg for msg in track[4:-1]]             # messages
+m = messages[0]
+m_type = m.type                                         # type ('note on', 'note off')
+m_note = m.note                                         # note (int)
+m_time = m.time                                         # time (int)
+m_velo = m.velocity                                     # velocity (int)
+```

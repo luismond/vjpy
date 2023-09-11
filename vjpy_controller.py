@@ -16,6 +16,10 @@ for _ in range(2):
 rp = md.generate_random_pattern(patt_len=8)
 md.play_pattern(rp)
 
+# %% Play MIDI file
+filename = os.path.join(md.midi_data_dir, "drum_beat_2.mid")
+md.play_midi_file(filename)
+
 # %% Receive MIDI msg
 # for msg in md.yield_midi_msg():
 #     wv.play_wav_from_midi_msg(msg)
