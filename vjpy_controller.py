@@ -20,30 +20,40 @@ md.play_pattern(rp)
 filename = os.path.join(md.midi_data_dir, "drum_beat_2.mid")
 md.play_midi_file(filename)
 
-# %% Receive MIDI msg
-# for msg in md.yield_midi_msg():
-#     wv.play_wav_from_midi_msg(msg)
-
-# %% Send MIDI note
-# md.play_note(40)
-
 # %% Concatenate wavs
-wav_list = ["clap1.wav", "kick1.wav", "hat1.wav"]
+wav_names = ["clap1.wav", "kick1.wav", "hat1.wav"]
 drumkit = "myfunkkit"
-
-wav_concat = wv.concatenate_wavs(wav_list, drumkit=drumkit)
+wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit, wn) for wn in wav_names]
+wav_concat = wv.concatenate_wavs(wav_list)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wav.wav")
 wv.write_wav(concat_wav_path, wav_concat)
 wv.play_wav(concat_wav_path)
 
 # %%  Mix wavs
-wav_mixed = wv.mix_wavs(wav_list, drumkit)
+wav_names = ["concat_clap.wav", "concat_hat1.wav", "concat_kick.wav"]
+wav_list = [os.path.join(wv.wav_dir, "examples", wn) for wn in wav_names]
+wav_mixed = wv.mix_wavs(wav_list)
 mixed_wav_path = os.path.join(wv.wav_dir, "examples", "mixed_wav.wav")
 wv.write_wav(mixed_wav_path, wav_mixed)
 wv.play_wav(mixed_wav_path)
 
-#%%
+# %% Concatenate wav patterns
+patterns = {
+    "01":
+        {
+            #      1    2    3    4    5    6    7    8
+            "k": ["x", "_", "_", "_", "x", "x", "x", "_"],
+            "h": ["x", "x", "x", "x", "x", "x", "_", "x"],
+            "c": ["_", "_", "x", "_", "_", "_", "_", "x"]
+            }
+        }
 
+patt_concat = wv.mix_wav_patterns(patterns)
+concat_wav_path = os.path.join(wv.wav_dir, "examples", "pattern.wav")
+wv.write_wav(concat_wav_path, patt_concat)
+wv.play_wav(concat_wav_path)
+
+#%%
 # # %%
 # soundbank_name = 'drums_03'
 # soundbank_dir_path = os.path.join(vjpd.soundbanks_path, soundbank_name)
