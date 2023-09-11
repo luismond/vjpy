@@ -1,136 +1,50 @@
 # vjpy
-Python module to create audiovisual sequences
+Python module to create MIDI, audio and visual rhythms.
 
 ![logo by dall-e mini](https://i.imgur.com/HmeYbDU.jpg)
 
 ## Concept
-
-Use midi, audio and video python modules to create audiovisual sequences. 
-
+A text-based approach to rhythm sequencing, with a focus on visual rhythmic sequences.
 
 ## Basic usage
 
 ```python
->>> from vjpy import MidiSequencer, TR808EmulationKit
->>> from vjpy.patterns import bar_, bars, pattern
->>> from time import sleep
+>>> from vjpy import VjPyDevice
+>>> vjpd = VjPyDevice()
+>>> md = vjpd.midi_device
+>>> md.play_patterns(patterns)
 ```
 
 ### Pattern example
 ```python
->>> pattern = Pattern(pattern='k.h.')
+patterns = {
+    "01":
+        {
+            #      1    2    3    4    5    6    7    8
+            "h": ["x", "x", "x", "x", "x", "_", "x", "_"],
+            "k": ["x", "_", "_", "_", "_", "_", "_", "_"],
+            "c": ["_", "_", "_", "_", "x", "_", "_", "_"]
+        }
 ```
 
-### Bar example
-```python
->>> bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
-```
+### Drumkit example 
 
-### Bars example
-```python
->>> bars = [
-    Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
-    Bar(bar_num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=4, patterns=['k.h.', 'chhh', 'kkvv', 'cccc']),
-    Bar(bar_num=5, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=6, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
-    Bar(bar_num=7, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=8, patterns=['k.h.', 'chhh', 'kkkk', 'cccc'])
-]
-```
-
-
-### Instantiate a sequencer device and set the bpm to 120
+A drumkit features drums. Each Drum is accesible by name, MIDI note, a shorthand and an emoji.
 
 ```python
->>> bpm = 120
->>> seq = MidiSequencer(bpm=bpm)
+
+"myfunkkit": Drumkit(
+    name="myfunkkit",
+    drums={
+        "kick1": Drum(name="kick1", note=36, short_hand="k", emoji="🥾"),
+        "clap1": Drum(name="clap1", note=40, short_hand="c", emoji="👏"),
+        "hat1": Drum(name="hat1", note=44, short_hand="h", emoji="🔔")
+        }
+    )
 ```
 
 
-### Print drumkit info
-```python
->>> print("Drumkit info:\n")
->>> pp(TR808EmulationKit.drums)
-```
 
-```python
-Drumkit info:
-
-{'clap': Drum(name='clap', note=40, short_hand='c'),
- 'clave': Drum(name='clave', note=50, short_hand='v'),
- 'conga': Drum(name='conga', note=49, short_hand='g'),
- 'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
- 'hat': Drum(name='hat', note=45, short_hand='h'),
- 'kick': Drum(name='kick', note=36, short_hand='k'),
- 'snare': Drum(name='snare', note=38, short_hand='s'),
- 'tom': Drum(name='tom', note=43, short_hand='t')}
-```
-
-
-### Play a pattern
-
-```python
->>> patt = pattern.pattern
->>> seq.play_pattern(pattern.pattern)
-```
-
-```python
-♪♪ Playing a pattern (a dot represents silence)
-k.h.:
-```
-
-### Play a bar of patterns
-
-```python
->>> seq.play_bar(bar_)
-```
-
-```python
-♪♪ Playing a bar:
-['k.h.', 'chhh', 'khhh', 'chhh']
-```
-
-### Loop a bar
-```python
->>> num_loops = 4
->>> seq.loop_bar(bars[0], num_loops)
-```
-
-```python
-♪♪ Looping a bar 4 times:
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-```
-
-### Loop a sequence of bars
-
-```python
->>> num_loops = 2
->>> seq.loop_bars(bars, num_loops)
-```
-
-```python
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=2 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=3 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=4 patterns=['k.h.', 'chhh', 'kkvv', 'cccc']
-bar_num=5 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=6 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=7 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=2 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=3 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=4 patterns=['k.h.', 'chhh', 'kkvv', 'cccc']
-bar_num=5 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=6 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=7 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
-```
 
 ## Video sounbank structure
 ```
