@@ -126,8 +126,16 @@ This function will take a pattern and render the corresponding sounds into a sin
 ![Screenshot from 2023-09-11 22-13-11](https://github.com/luismond/vjpy/assets/8634121/6bff7e35-2f5a-49b3-9c0b-2177f5157587)
 
 
+### Video device
 
-## Video sounbank structure
+The video device is similar to the audio device. It can concatenate and mix video clips in the same manner.
+
+This is the main focus of vjpy: enable the easy creation of video sequences, or what I call 'videobeats':
+
+
+
+
+### Video sounbank structure
 ```
 soundbank name: "drums_01"
 
