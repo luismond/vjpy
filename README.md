@@ -1,7 +1,7 @@
+![Screenshot from 2023-09-11 22-28-44](https://github.com/luismond/vjpy/assets/8634121/dd814c7e-8f52-417d-8aab-cf42608bb14e)
+
 # vjpy
 Python module to create MIDI, audio and visual rhythms.
-
-![logo by dall-e mini](https://i.imgur.com/HmeYbDU.jpg)
 
 ## Concept
 A text-based approach to drum sequencing, with a focus on *visual* rhythmic sequences.
@@ -131,6 +131,10 @@ This function will take a pattern and render the corresponding sounds into a sin
 The video device is similar to the audio device. It can concatenate and mix video clips in the same manner.
 
 This is the main focus of vjpy: enable the easy creation of video sequences, or what I call 'videobeats':
+
+
+
+https://github.com/luismond/vjpy/assets/8634121/37a08f65-5c2d-4e44-94f2-d2776a2c8a4b
 
 
 
