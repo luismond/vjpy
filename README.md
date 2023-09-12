@@ -6,7 +6,13 @@ Python module to create MIDI, audio and visual rhythms.
 ## Concept
 A text-based approach to rhythm sequencing, with a focus on visual rhythmic sequences.
 
-## Basic usage
+
+## Devices
+
+
+### MIDI sequencer
+
+This sequencer can send MIDI messages to an external software such as Hydrogen.
 
 ```python
 >>> from vjpy import VjPyDevice
