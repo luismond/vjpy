@@ -91,6 +91,7 @@ wav_concat = wv.concatenate_wavs(wav_list)
 ```
 
 This function will merge these three wav files into a single one.
+![Screenshot from 2023-09-11 22-08-08](https://github.com/luismond/vjpy/assets/8634121/e0925b83-17da-4167-96b1-975c41799f4b)
 
 
 ```python
@@ -122,6 +123,7 @@ rendered_pattern = wv.mix_wav_patterns(patterns)
 ```
 
 This function will take a pattern and render the corresponding sounds into a single mixed and concatenated audio file.
+![Screenshot from 2023-09-11 22-13-11](https://github.com/luismond/vjpy/assets/8634121/6bff7e35-2f5a-49b3-9c0b-2177f5157587)
 
 
 
