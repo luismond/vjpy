@@ -37,7 +37,7 @@ class MidiDevice:
         note_value = self.note_values[res].relative_value / self.note_duration
         for beat in pattern:
             if beat == ' ':
-                self.play_silence(duration=note_value)
+                time.sleep(note_value)
             else:
                 drum_note = self.drumkit_sh_notes[beat]
                 self.play_note(note=drum_note, duration=note_value)
@@ -65,7 +65,7 @@ class MidiDevice:
                     if hit == "x":
                         note = self.drumkit_sh_notes[key]
                         steps[step+1].append(note)
-                        # todo: implement metronome here?
+                        # todo: implement metronome here
             # use each note in each step to send a midi message
             for step in steps.values():
                 for note in step:
@@ -90,11 +90,6 @@ class MidiDevice:
         for _ in range(patt_len):
             random_pattern.append(random.choice(short_hands))
         return ''.join(random_pattern)
-
-    @staticmethod
-    def play_silence(duration=0):
-        """Play a silence of n duration."""
-        time.sleep(duration)
 
     def play_midi_file(self, filename):
         """Read a Hydrogen MIDI file and get the notes of each step."""

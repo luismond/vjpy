@@ -5,6 +5,7 @@ from vjpy import patterns, patterns_01
 
 vj = VjPyDevice()
 
+#%%
 md = MidiDevice(
     bpm=vj.bpm,
     resolution=vj.resolution,
@@ -75,11 +76,10 @@ drum_subclips = {
     "v": vd.get_subclip(start=34.248), # tom1b
     "w": vd.get_subclip(start=37.160), # tom2a
     "u": vd.get_subclip(start=39.010), # tom2b
-    "_": vd.get_subclip(start=01.500)  # silence
+    "_": vd.get_subclip(start=06.005)  # silence
 }
 
 
-#%%
 beat_n = '14'
 vd.concat_drum_subpatterns(patterns_01, drum_subclips, beat_n)
 vd.composite_vertical_videobeat(beat_n)
