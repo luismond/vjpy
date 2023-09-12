@@ -136,18 +136,3 @@ class MidiDevice:
             "steps": steps
             }
         return return_obj
-
-    # def play_bar(self, bar_):
-    #     """Play a sequence of patterns."""
-    #     self.play_pattern("".join(bar_.patterns))
-
-    # def loop_bar(self, bar_, num_loops=1):
-    #     """Iterate over a bar_."""
-    #     for _ in range(num_loops):
-    #         self.play_bar(bar_)
-
-    # def loop_bars(self, bars, num_loops=1):
-    #     """Iterate over a sequence of bars_."""
-    #     for _ in range(num_loops):
-    #         for bar_ in bars:
-    #             self.loop_bar(bar_)

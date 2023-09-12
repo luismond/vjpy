@@ -27,10 +27,6 @@ class WavDevice:
         """Concatenate an array of wavs."""
         wav_array = []
         for wav_path in wav_list:
-            # wav_path = os.path.join(f"{self.wav_dir}",
-            #                         "drumkits",
-            #                         f"{drumkit}",
-            #                         f"{wav_name}")
             _, data = wavfile.read(wav_path)
             wav_array.append(data)
         print("\nWav file concatenation completed.")
@@ -40,10 +36,6 @@ class WavDevice:
         """Mix an array of wavs."""
         wav_array = []
         for wav_path in wav_list:
-            # wav_path = os.path.join(f"{self.wav_dir}",
-            #                         "drumkits",
-            #                         f"{drumkit}",
-            #                         f"{wav_name}")
             _, data = wavfile.read(wav_path)
             wav_array.append(data)
 
@@ -52,12 +44,12 @@ class WavDevice:
             wav_mixed += wav
         return wav_mixed
 
-    def mix_wav_patterns(self, patterns):
+    def render_wav_patterns(self, patterns):
         """Concatenate and mix a drum pattern."""
-        d = {"h": "hat1.wav",
-             "k": "kick1.wav",
-             "c": "clap1.wav",
-             "_": "silence.wav"}
+        drums_d = {"h": "hat.wav",
+                   "k": "kick.wav",
+                   "c": "clap.wav",
+                   "_": "silence.wav"}
         drumkit = "myfunkkit"
         for pattern in patterns.values():
             steps = {1: [], 2: [], 3: [], 4: [],
@@ -66,12 +58,12 @@ class WavDevice:
             for key in pattern:
                 for step, hit in enumerate(pattern[key]):
                     if hit == "x":
-                        note = d[key]
+                        note = drums_d[key]
                         steps[step+1].append(note)
 
             # for each step, mix the corresponding wavs
             wavs_mixed = []
-            for step_n, step in steps.items():
+            for _, step in steps.items():
                 wav_list = [os.path.join(
                     self.wav_dir, "drumkits", drumkit, wn) for wn in step]
                 wav_mixed = self.mix_wavs(wav_list)
