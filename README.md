@@ -4,7 +4,7 @@ Python module to create MIDI, audio and visual rhythms.
 ![logo by dall-e mini](https://i.imgur.com/HmeYbDU.jpg)
 
 ## Concept
-A text-based approach to rhythm sequencing, with a focus on visual rhythmic sequences.
+A text-based approach to drum sequencing, with a focus on *visual* rhythmic sequences.
 
 
 ## Devices
@@ -12,7 +12,10 @@ A text-based approach to rhythm sequencing, with a focus on visual rhythmic sequ
 
 ### MIDI sequencer
 
-This sequencer can send MIDI messages to an external software such as Hydrogen.
+The MIDI sequencer can send MIDI messages to an external software such as Hydrogen.
+
+The patterns are laid down in simple text within a dictionary structure.
+
 
 ```python
 >>> from vjpy import VjPyDevice
@@ -33,10 +36,6 @@ patterns = {
         }
 ```
 
-
-https://github.com/luismond/vjpy/assets/8634121/d21af765-0cf8-4df5-8215-89c5f2a391e6
-
-
 ### Drumkit example 
 
 A drumkit features drums. Each Drum is accesible by name, MIDI note, a shorthand and an emoji.
@@ -53,8 +52,10 @@ A drumkit features drums. Each Drum is accesible by name, MIDI note, a shorthand
     )
 ```
 
+The MIDI device can also read and play MIDI files.
 
-## Hydrogen MIDI file (modus SMF0)
+
+### Hydrogen MIDI file (modus SMF0)
 
 ```python
 MD = VJPD.midi_device                               # device
@@ -75,6 +76,53 @@ m_note = msg.note                                       # note (int)
 m_time = msg.time                                       # time (int)
 m_velo = msg.velocity                                   # velocity (int)
 ```
+
+
+### Audio device
+
+The audio device can read, write, concatenate and mix audio files.
+
+```python
+
+# wav concatenation
+wav_list = ["clap.wav", "kick.wav", "hat.wav"]
+wav_concat = wv.concatenate_wavs(wav_list)
+
+```
+
+This function will merge these three wav files into a single one.
+
+
+```python
+
+# wav mixing
+wav_list = ["clap.wav", "kick.wav", "hat.wav"]
+wav_mixed = wv.mix_wavs(wav_list)
+
+```
+
+This function will 'add' or mix the three wavs together.
+
+
+```python
+
+Pattern audio rendering
+
+patterns = {
+    "01":
+        {
+            #      1    2    3    4    5    6    7    8
+            "k": ["x", "_", "_", "_", "x", "x", "x", "_"], # kick
+            "h": ["x", "x", "x", "x", "x", "x", "_", "x"], # hi-hat
+            "s": ["_", "_", "x", "_", "_", "_", "_", "x"]  # snare
+            }
+        }
+
+rendered_pattern = wv.mix_wav_patterns(patterns)
+```
+
+This function will take a pattern and render the corresponding sounds into a single mixed and concatenated audio file.
+
 
 
 ## Video sounbank structure
