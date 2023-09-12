@@ -1,6 +1,7 @@
-![Screenshot from 2023-09-11 22-28-44](https://github.com/luismond/vjpy/assets/8634121/dd814c7e-8f52-417d-8aab-cf42608bb14e)
+![vjpy_logo](https://github.com/luismond/vjpy/assets/8634121/0101b95c-1f13-49e1-a628-6b14de403a5d)
 
 # vjpy
+
 Python module to create MIDI, audio and visual rhythms.
 
 ## Concept
