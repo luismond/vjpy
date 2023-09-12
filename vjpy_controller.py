@@ -1,12 +1,16 @@
 """vjpy controller."""
 import os
-from vjpy import VjPyDevice, patterns, patterns_01
+from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice
+from vjpy import patterns, patterns_01
 
-soundbank_name = 'drums_03'
-vjpd = VjPyDevice(soundbank_name=soundbank_name)
-md = vjpd.midi_device
-wv = vjpd.wav_device
-vd = vjpd.video_device
+vj = VjPyDevice()
+
+md = MidiDevice(
+    bpm=vj.bpm,
+    resolution=vj.resolution,
+    note_values=vj.note_values,
+    drumkit_sh_notes=vj.drumkit_sh_notes)
+
 # %% Play MIDI note
 md.play_note(note=44, velocity=120, duration=0)
 
@@ -22,6 +26,8 @@ filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 md.play_midi_file(filename)
 
 # %% Play wav
+wv = WavDevice()
+
 drumkit = "myfunkkit"
 wav_names = ["kick.wav", "hat.wav", "clap.wav"]
 wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit, wn) for wn in wav_names]
@@ -29,37 +35,33 @@ wv.play_wav(wav_list[0])
 
 # %% Concatenate wavs
 wav_concat = wv.concatenate_wavs(wav_list)
-concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wav.wav")
+concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wavs.wav")
 wv.write_wav(concat_wav_path, wav_concat)
 wv.play_wav(concat_wav_path)
 
 # %%  Mix wavs
 wav_mixed = wv.mix_wavs(wav_list)
-mixed_wav_path = os.path.join(wv.wav_dir, "examples", "mixed_wav.wav")
+mixed_wav_path = os.path.join(wv.wav_dir, "examples", "mixed_wavs.wav")
 wv.write_wav(mixed_wav_path, wav_mixed)
 wv.play_wav(mixed_wav_path)
 
 # %% Render wav pattern
-patterns = {
-    "01":
-        {
-            #      1    2    3    4    5    6    7    8
-            "k": ["x", "_", "_", "_", "x", "x", "x", "_"],
-            "h": ["_", "x", "x", "x", "x", "x", "_", "x"],
-            "c": ["_", "_", "x", "_", "_", "_", "_", "x"]
-            }
-        }
-
 patt_concat = wv.render_wav_patterns(patterns)
-concat_wav_path = os.path.join(wv.wav_dir, "examples", "pattern.wav")
+concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_pattern.wav")
 wv.write_wav(concat_wav_path, patt_concat)
 wv.play_wav(concat_wav_path)
 
 # %% Video device
 
-# Get subclips corresponding to a drum or cymbal hit."""
-# todo: adapt the Drumkit data class for this use case
+vd = VideoDevice(
+    bpm=vj.bpm,
+    soundbank_name="drums_03",
+    resolution=vj.resolution,
+    note_values=vj.note_values,
+    note_duration=vj.note_duration
+    )
 
+# Get subclips corresponding to a drumkit hit.
 drum_subclips = {
     "r": vd.get_subclip(start=03.710), # ride
     "x": vd.get_subclip(start=07.137), # china
