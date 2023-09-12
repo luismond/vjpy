@@ -1,138 +1,145 @@
-# vjpy
-Python module to create audiovisual sequences
+![Screenshot from 2023-09-11 22-28-44](https://github.com/luismond/vjpy/assets/8634121/dd814c7e-8f52-417d-8aab-cf42608bb14e)
 
-![logo by dall-e mini](https://i.imgur.com/HmeYbDU.jpg)
+# vjpy
+Python module to create MIDI, audio and visual rhythms.
 
 ## Concept
+A text-based approach to drum sequencing, with a focus on *visual* rhythmic sequences.
 
-Use midi, audio and video python modules to create audiovisual sequences. 
+
+## Devices
 
 
-## Basic usage
+### MIDI sequencer
+
+The MIDI sequencer can send MIDI messages to an external software such as Hydrogen.
+
+The patterns are laid down in simple text within a dictionary structure.
+
 
 ```python
->>> from vjpy import MidiSequencer, TR808EmulationKit
->>> from vjpy.patterns import bar_, bars, pattern
->>> from time import sleep
+>>> from vjpy import VjPyDevice
+>>> vjpd = VjPyDevice()
+>>> md = vjpd.midi_device
+>>> md.play_patterns(patterns)
 ```
 
 ### Pattern example
 ```python
->>> pattern = Pattern(pattern='k.h.')
+patterns = {
+    "01":
+        {
+            #      1    2    3    4    5    6    7    8
+            "h": ["x", "x", "x", "x", "x", "_", "x", "_"], # hi-hat
+            "k": ["x", "_", "_", "_", "_", "_", "_", "_"], # kick
+            "c": ["_", "_", "_", "_", "x", "_", "_", "_"]  # clap
+        }
 ```
 
-### Bar example
-```python
->>> bar_ = Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh'])
-```
+### Drumkit example 
 
-### Bars example
-```python
->>> bars = [
-    Bar(bar_num=1, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=2, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
-    Bar(bar_num=3, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=4, patterns=['k.h.', 'chhh', 'kkvv', 'cccc']),
-    Bar(bar_num=5, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=6, patterns=['k.h.', 'chhh', 'khhh', 'cchh']),
-    Bar(bar_num=7, patterns=['k.h.', 'chhh', 'khhh', 'chhh']),
-    Bar(bar_num=8, patterns=['k.h.', 'chhh', 'kkkk', 'cccc'])
-]
-```
-
-
-### Instantiate a sequencer device and set the bpm to 120
+A drumkit features drums. Each Drum is accesible by name, MIDI note, a shorthand and an emoji.
 
 ```python
->>> bpm = 120
->>> seq = MidiSequencer(bpm=bpm)
+
+"myfunkkit": Drumkit(
+    name="myfunkkit",
+    drums={
+        "kick1": Drum(name="kick1", note=36, short_hand="k", emoji="🥾"),
+        "clap1": Drum(name="clap1", note=40, short_hand="c", emoji="👏"),
+        "hat1": Drum(name="hat1", note=44, short_hand="h", emoji="🔔")
+        }
+    )
 ```
 
-
-### Print drumkit info
-```python
->>> print("Drumkit info:\n")
->>> pp(TR808EmulationKit.drums)
-```
-
-```python
-Drumkit info:
-
-{'clap': Drum(name='clap', note=40, short_hand='c'),
- 'clave': Drum(name='clave', note=50, short_hand='v'),
- 'conga': Drum(name='conga', note=49, short_hand='g'),
- 'cowbell': Drum(name='cowbell', note=51, short_hand='w'),
- 'hat': Drum(name='hat', note=45, short_hand='h'),
- 'kick': Drum(name='kick', note=36, short_hand='k'),
- 'snare': Drum(name='snare', note=38, short_hand='s'),
- 'tom': Drum(name='tom', note=43, short_hand='t')}
-```
+The MIDI device can also read and play MIDI files.
 
 
-### Play a pattern
+### Hydrogen MIDI file (modus SMF0)
 
 ```python
->>> patt = pattern.pattern
->>> seq.play_pattern(pattern.pattern)
+MD = VJPD.midi_device                               # device
+MID_NAME = "drum_beat.mid")                         # file
+mid = mido.MidiFile(MID_NAME, clip=True)            # object
+track = mid.tracks[0]                               # track
+
+meta_messages = [msg for msg in track[:4]]          # meta messages
+copyright_ = meta_messages[0]                           # copyright
+track_name = meta_messages[1]                           # name
+tempo = meta_messages[2]                                # tempo
+time_signature = meta_messages[3]                       # signature
+
+messages = [msg for msg in track[4:-1]]             # messages
+msg = messages[0]
+m_type = msg.type                                       # type ('note on', 'note off')
+m_note = msg.note                                       # note (int)
+m_time = msg.time                                       # time (int)
+m_velo = msg.velocity                                   # velocity (int)
 ```
+
+
+### Audio device
+
+The audio device can read, write, concatenate and mix audio files.
 
 ```python
-♪♪ Playing a pattern (a dot represents silence)
-k.h.:
+
+# Wav concatenation
+wav_list = ["clap.wav", "kick.wav", "hat.wav"]
+wav_concat = wv.concatenate_wavs(wav_list)
+
 ```
 
-### Play a bar of patterns
+This function will merge these three wav files into a single one.
+![Screenshot from 2023-09-11 22-08-08](https://github.com/luismond/vjpy/assets/8634121/e0925b83-17da-4167-96b1-975c41799f4b)
+
 
 ```python
->>> seq.play_bar(bar_)
+
+# Wav mixing
+wav_list = ["clap.wav", "kick.wav", "hat.wav"]
+wav_mixed = wv.mix_wavs(wav_list)
+
 ```
+
+This function will 'add' or mix the three wavs together.
+
 
 ```python
-♪♪ Playing a bar:
-['k.h.', 'chhh', 'khhh', 'chhh']
+
+# Pattern audio rendering
+
+patterns = {
+    "01":
+        {
+            #      1    2    3    4    5    6    7    8
+            "k": ["x", "_", "_", "_", "x", "x", "x", "_"], # kick
+            "h": ["x", "x", "x", "x", "x", "x", "_", "x"], # hi-hat
+            "s": ["_", "_", "x", "_", "_", "_", "_", "x"]  # snare
+            }
+        }
+
+rendered_pattern = wv.mix_wav_patterns(patterns)
 ```
 
-### Loop a bar
-```python
->>> num_loops = 4
->>> seq.loop_bar(bars[0], num_loops)
-```
+This function will take a pattern and render the corresponding sounds into a single mixed and concatenated audio file.
+![Screenshot from 2023-09-11 22-13-11](https://github.com/luismond/vjpy/assets/8634121/6bff7e35-2f5a-49b3-9c0b-2177f5157587)
 
-```python
-♪♪ Looping a bar 4 times:
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-```
 
-### Loop a sequence of bars
+### Video device
 
-```python
->>> num_loops = 2
->>> seq.loop_bars(bars, num_loops)
-```
+The video device is similar to the audio device. It can concatenate and mix video clips in the same manner.
 
-```python
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=2 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=3 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=4 patterns=['k.h.', 'chhh', 'kkvv', 'cccc']
-bar_num=5 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=6 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=7 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
-bar_num=1 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=2 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=3 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=4 patterns=['k.h.', 'chhh', 'kkvv', 'cccc']
-bar_num=5 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=6 patterns=['k.h.', 'chhh', 'khhh', 'cchh']
-bar_num=7 patterns=['k.h.', 'chhh', 'khhh', 'chhh']
-bar_num=8 patterns=['k.h.', 'chhh', 'kkkk', 'cccc']
-```
+This is the main focus of vjpy: enable the easy creation of video sequences, or what I call 'videobeats':
 
-## Video sounbank structure
+
+
+https://github.com/luismond/vjpy/assets/8634121/37a08f65-5c2d-4e44-94f2-d2776a2c8a4b
+
+
+
+
+### Video sounbank structure
 ```
 soundbank name: "drums_01"
 
@@ -190,6 +197,9 @@ Define the following devices:
 30-ago-23:
 - Implemented video sequencing logic.
 
+10-sep-23:
+- Implemented polyphonic MIDI and WAV patterns
+
 ## Related work
 
 Hexstatic, Coldcut music videos from the early 2000's, created with VJPro. 
@@ -212,36 +222,12 @@ In a standing wave, the amplitude of vibration has nulls at some positions where
 
 - Record video clips hitting drums.
 - Slice the video clips in a video editing software (one video per sound)
--- If the sound bank has several clips, load them all into the time line
--- Merge, edit, condense and separate the audio
--- Clean the audio in an audio software
---- Volume, normalization, high-pass, low-pass effects on drum
--- Re-import video+audio for further processing
-
-- Try to set the starting frame to a point where the sound is at its peak
-- Name the subvideo clips with the name of the corresponding sound
-- Load the video files into video objects and use them to compose video beats
+- If the sound bank has several clips, load them all into the time line
+- Merge, edit, condense and separate the audio
+- Clean the audio in an audio software
+- Volume, normalization, high-pass, low-pass accordingly
+- Re-import video+audio for further processing
+- Set the starting frames to a point where the sound is at its peak
+- Load the video file into a video object and use it to sequence videobeats
 
 
-## Hydrogen MIDI file (modus SMF0)
-```python
-MD = VJPD.midi_device                           # device
-MID_NAME = os.path.join(                        # file
-    MD.midi_data_dir, "drum_beat_2.mid")
-mid = mido.MidiFile(MID_NAME, clip=True)        # object
-track = mid.tracks[0]                           # track
-
-meta_messages = [msg for msg in track[:4]]          # meta messages
-copyright_ = meta_messages[0]                           # copyright
-track_name = meta_messages[1]                           # name
-tempo = meta_messages[2]                                # tempo
-time_signature = meta_messages[3]                       # signature
-dur = 60000/(114*tempo.tempo)                           # duration in ms?
-
-messages = [msg for msg in track[4:-1]]             # messages
-m = messages[0]
-m_type = m.type                                         # type ('note on', 'note off')
-m_note = m.note                                         # note (int)
-m_time = m.time                                         # time (int)
-m_velo = m.velocity                                     # velocity (int)
-```
