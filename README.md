@@ -33,6 +33,10 @@ patterns = {
         }
 ```
 
+
+https://github.com/luismond/vjpy/assets/8634121/d21af765-0cf8-4df5-8215-89c5f2a391e6
+
+
 ### Drumkit example 
 
 A drumkit features drums. Each Drum is accesible by name, MIDI note, a shorthand and an emoji.
