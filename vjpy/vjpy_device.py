@@ -58,39 +58,3 @@ class VjPyDevice:
         for drum in self.drum_kit.drums.values():
             drumkit_note_names[drum.note] = drum.name
         return drumkit_note_names
-
-# from moviepy.editor import (
-#     VideoFileClip,
-#     CompositeVideoClip,
-#     concatenate_videoclips,
-#     clips_array,
-#     vfx
-#     )
-# from moviepy.audio.fx.all import volumex
-
-
-# class VideoDevice:
-#     def __init__(self):
-#         self.soundbanks_path = os.path.join('soundbanks')
-
-#     def get_videoclip(self, video_filename):
-#         return VideoFileClip(video_filename)
-
-#     def get_videosubclip(self, video_clip, start=0, duration=.075):
-#         return video_clip.subclip(start, start + duration)
-
-#     def concatenate_subclips(self, subclips):
-#         return concatenate_videoclips(subclips)
-
-#     def get_bars_subclips(self, bars):
-#         subclips = []
-#         for bar_ in bars:
-#             for patt in bar_:
-#                 for subclip in patt:
-#                     subclips.append(subclip)
-#         return subclips
-
-#     def write_concatenated_subclips(self, concatenated_subclips, subclip_name):
-#         concatenated_subclips.write_videofile(subclip_name)
-
-    # todo: implement compositing
