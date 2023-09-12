@@ -1,6 +1,6 @@
 """vjpy backend."""
 
-from vjpy import NoteValue, MidiDevice, WavDevice, drum_kits
+from vjpy import NoteValue, MidiDevice, WavDevice, VideoDevice, drum_kits
 
 
 class VjPyDevice:
@@ -20,7 +20,7 @@ class VjPyDevice:
 
         self.wav_device = WavDevice()
 
-        # self.video_device = VideoDevice()
+        self.video_device = VideoDevice(bpm=self.bpm)
 
     @property
     def note_values(self):
