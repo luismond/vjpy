@@ -51,7 +51,7 @@ class WavDevice:
                    "c": "clap.wav",
                    "_": "silence.wav"}
         drumkit = "myfunkkit"
-        for pattern in patterns.values():
+        for pattern in patterns.values(): # todo: make sure to add all patterns' hits
             steps = {1: [], 2: [], 3: [], 4: [],
                      5: [], 6: [], 7: [], 8: []}
             # for each hit in pattern, append it to the steps
@@ -60,7 +60,9 @@ class WavDevice:
                     if hit == "x":
                         note = drums_d[key]
                         steps[step+1].append(note)
-
+                    else:
+                        steps[step+1].append("silence.wav")
+            print(steps)
             # for each step, mix the corresponding wavs
             wavs_mixed = []
             for _, step in steps.items():
