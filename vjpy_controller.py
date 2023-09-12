@@ -1,11 +1,12 @@
 """vjpy controller."""
 import os
-from vjpy import VjPyDevice, patterns
+from vjpy import VjPyDevice, patterns, patterns_01
 
-vjpd = VjPyDevice()
+soundbank_name = 'drums_03'
+vjpd = VjPyDevice(soundbank_name=soundbank_name)
 md = vjpd.midi_device
 wv = vjpd.wav_device
-
+vd = vjpd.video_device
 # %% Play MIDI note
 md.play_note(note=44, velocity=120, duration=0)
 
@@ -55,75 +56,28 @@ wv.write_wav(concat_wav_path, patt_concat)
 wv.play_wav(concat_wav_path)
 
 # %% Video device
-vd = vjpd.video_device
 
-# Render video pattern
-soundbank_name = 'drums_03'
-soundbank_dir_path = os.path.join(vd.soundbanks_path, soundbank_name)
-soundbank_video_path = os.path.join(soundbank_dir_path, f'{soundbank_name}.mp4')
-soundbank_videoclip = vd.get_videoclip(soundbank_video_path)
-value = .5
-dur = (60/vd.bpm)*value
+# Get subclips corresponding to a drum or cymbal hit."""
+# todo: adapt the Drumkit data class for this use case
 
-drums = {
-    "b": vd.get_videosubclip(soundbank_videoclip, start=00.100, duration=dur), # bell
-    "r": vd.get_videosubclip(soundbank_videoclip, start=03.710, duration=dur), # ride
-    "x": vd.get_videosubclip(soundbank_videoclip, start=07.137, duration=dur), # china
-    "c": vd.get_videosubclip(soundbank_videoclip, start=09.770, duration=dur), # crash1
-    "d": vd.get_videosubclip(soundbank_videoclip, start=13.220, duration=dur), # crash2
-    "i": vd.get_videosubclip(soundbank_videoclip, start=17.800, duration=dur), # hat1 pedal
-    "j": vd.get_videosubclip(soundbank_videoclip, start=19.390, duration=dur), # hat2
-    "h": vd.get_videosubclip(soundbank_videoclip, start=21.290, duration=dur), # hat3
-    "y": vd.get_videosubclip(soundbank_videoclip, start=23.700, duration=dur), # hat5
-    "o": vd.get_videosubclip(soundbank_videoclip, start=23.113, duration=dur), # hat4 open
-    "k": vd.get_videosubclip(soundbank_videoclip, start=24.950, duration=dur), # kick1
-    "l": vd.get_videosubclip(soundbank_videoclip, start=26.050, duration=dur), # kick2
-    "s": vd.get_videosubclip(soundbank_videoclip, start=27.513, duration=dur), # snare1
-    "z": vd.get_videosubclip(soundbank_videoclip, start=29.512, duration=dur), # snare2
-    "t": vd.get_videosubclip(soundbank_videoclip, start=31.505, duration=dur), # tom1a
-    "v": vd.get_videosubclip(soundbank_videoclip, start=34.248, duration=dur), # tom1b
-    "w": vd.get_videosubclip(soundbank_videoclip, start=37.160, duration=dur), # tom2a
-    "u": vd.get_videosubclip(soundbank_videoclip, start=39.010, duration=dur), # tom2b
-    "_": vd.get_videosubclip(soundbank_videoclip, start=01.500, duration=dur)  # silence
+drum_subclips = {
+    "r": vd.get_subclip(start=03.710), # ride
+    "x": vd.get_subclip(start=07.137), # china
+    "c": vd.get_subclip(start=09.770), # crash
+    "h": vd.get_subclip(start=21.290), # hat
+    "o": vd.get_subclip(start=23.113), # hat open
+    "k": vd.get_subclip(start=24.950), # kick
+    "s": vd.get_subclip(start=27.513), # snare1
+    "z": vd.get_subclip(start=29.512), # snare2
+    "t": vd.get_subclip(start=31.505), # tom1a
+    "v": vd.get_subclip(start=34.248), # tom1b
+    "w": vd.get_subclip(start=37.160), # tom2a
+    "u": vd.get_subclip(start=39.010), # tom2b
+    "_": vd.get_subclip(start=01.500)  # silence
 }
 
 
-patterns = {
-    "01":
-        {
-            #      1    2    3    4    5    6    7    8
-            "k": ["x", "_", "_", "_", "x", "x", "_", "_"],
-            "h": ["_", "x", "x", "x", "x", "x", "x", "x"],
-            "s": ["_", "_", "x", "_", "_", "_", "x", "_"],
-            "r": ["x", "_", "_", "_", "_", "_", "_", "_"]
-            },
-
-    "02":
-        {
-            #      1    2    3    4    5    6    7    8
-            "k": ["x", "_", "_", "_", "x", "x", "_", "_"],
-            "h": ["_", "x", "x", "x", "x", "x", "_", "_"],
-            "s": ["_", "_", "x", "_", "_", "_", "x", "x"],
-            "r": ["x", "_", "_", "_", "_", "_", "_", "_"]
-            },
-    "03":
-        {
-            #      1    2    3    4    5    6    7    8
-            "k": ["x", "_", "_", "_", "x", "x", "_", "_"],
-            "h": ["_", "x", "x", "x", "x", "x", "_", "_"],
-            "s": ["_", "_", "x", "_", "_", "_", "x", "_"],
-            "r": ["x", "_", "_", "_", "_", "_", "_", "_"]
-            },
-    "04":
-        {
-            #      1    2    3    4    5    6    7    8
-            "k": ["x", "_", "_", "_", "x", "_", "_", "x"],
-            "h": ["_", "x", "x", "x", "x", "_", "_", "_"],
-            "s": ["_", "_", "x", "_", "x", "x", "x", "_"],
-            "r": ["x", "_", "_", "_", "_", "_", "_", "_"]
-            },
-        }
-
+#%%
 beat_n = '14'
-vd.concat_drum_subpatterns(patterns, drums, soundbank_dir_path, beat_n)
-vd.composite_vertical_videobeat(soundbank_dir_path, beat_n)
+vd.concat_drum_subpatterns(patterns_01, drum_subclips, beat_n)
+vd.composite_vertical_videobeat(beat_n)
