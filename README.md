@@ -84,7 +84,7 @@ The audio device can read, write, concatenate and mix audio files.
 
 ```python
 
-# wav concatenation
+# Wav concatenation
 wav_list = ["clap.wav", "kick.wav", "hat.wav"]
 wav_concat = wv.concatenate_wavs(wav_list)
 
@@ -96,7 +96,7 @@ This function will merge these three wav files into a single one.
 
 ```python
 
-# wav mixing
+# Wav mixing
 wav_list = ["clap.wav", "kick.wav", "hat.wav"]
 wav_mixed = wv.mix_wavs(wav_list)
 
@@ -107,7 +107,7 @@ This function will 'add' or mix the three wavs together.
 
 ```python
 
-Pattern audio rendering
+# Pattern audio rendering
 
 patterns = {
     "01":
