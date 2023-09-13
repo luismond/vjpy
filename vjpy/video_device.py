@@ -18,14 +18,14 @@ class VideoDevice:
 
     def __init__(self, bpm, soundbank_name, resolution, note_values, note_duration):
         self.soundbanks_path = "soundbanks"
-        self.bpm = bpm,
+        self.bpm = bpm
         self.soundbank_dir_path = os.path.join("soundbanks", soundbank_name)
         self.soundbank_video_path = os.path.join(self.soundbank_dir_path,
                                                  f'{soundbank_name}.mp4')
         self.resolution = resolution
         self.note_values = note_values
         self.note_duration = note_duration
-        
+
 
     @property
     def videoclip(self):
@@ -67,8 +67,7 @@ class VideoDevice:
                     else:
                         key_clip = drums["_"]
                     key_clips[key].append(key_clip)
-                    
-        print(key_clips)
+
         for key in key_clips:
             final_clip = self.concatenate_subclips(key_clips[key]*4)
             final_clip_path = os.path.join(

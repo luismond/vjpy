@@ -30,9 +30,9 @@ md.play_midi_file(filename)
 wv = WavDevice()
 
 drumkit = "myfunkkit"
-wav_names = ["kick.wav", "hat.wav", "clap.wav"]
+wav_names = ["clap.wav", "hat.wav", "kick.wav"]
 wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit, wn) for wn in wav_names]
-wv.play_wav(wav_list[0])
+wv.play_wav(wav_list[2])
 
 # %% Concatenate wavs
 wav_concat = wv.concatenate_wavs(wav_list)
