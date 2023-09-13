@@ -16,6 +16,7 @@ class WavDevice:
                  resolution,
                  bpm,
                  note_values):
+        self.drumkit = "myfunkkit"
         self.sample_rate = 44100
         self.wav_dir = os.path.join("vjpy", "data", "wav")
         self.drumkit_sh_names = drumkit_sh_names
@@ -64,17 +65,14 @@ class WavDevice:
         return wav_concat
 
     def parse_midi_steps(self, steps):
-        drumkit = "myfunkkit"
         for step in steps.values():
             for note in step:
                 if note == 0:
-                    pass#msg = mido.Message("note_off", note=note, velocity=120)
+                    pass
                 else:
                     wav = f"{self.drumkit_note_names[note]}.wav"
-                    wav_path = os.path.join(self.wav_dir, "drumkits", drumkit, wav)
-                    #msg = mido.Message("note_on", note=note, velocity=120)
+                    wav_path = os.path.join(self.wav_dir, "drumkits", self.drumkit, wav)
                 playsound(wav_path, block=False)
-                #self.midi_out.send(msg)
             time.sleep(self.note_value)
 
     def wav_patterns_to_steps(self, patterns):
@@ -82,7 +80,6 @@ class WavDevice:
         for pattern in patterns.values(): # todo: make sure to add all patterns' hits
             steps = {1: [], 2: [], 3: [], 4: [],
                      5: [], 6: [], 7: [], 8: []}
-            # for each hit in pattern, append it to the steps
             for key in pattern:
                 for step, hit in enumerate(pattern[key]):
                     if hit == "x":
@@ -93,28 +90,22 @@ class WavDevice:
             return steps
         
     def concat_wav_steps(self, steps):
-        # for each step, mix the corresponding wavs
-        drumkit = "myfunkkit"
         wavs_mixed = []
         for _, step in steps.items():
             wav_list = [os.path.join(
-                self.wav_dir, "drumkits", drumkit, wn) for wn in step]
+                self.wav_dir, "drumkits", self.drumkit, wn) for wn in step]
             wav_mixed = self.mix_wavs(wav_list)
             wavs_mixed.append(wav_mixed)
-
-        # concatenate the steps
         wav_concat = np.concatenate(wavs_mixed)
         return wav_concat
 
     def concat_wav_midi_steps(self, steps):
-        drumkit = "myfunkkit"
         wavs_mixed = []
         for _, step in steps.items():
             wav_list = [os.path.join(
-                self.wav_dir, "drumkits", drumkit, f"{self.drumkit_note_names[note]}.wav") for note in step]
+                self.wav_dir, "drumkits", self.drumkit,
+                f"{self.drumkit_note_names[note]}.wav") for note in step]
             wav_mixed = self.mix_wavs(wav_list)
             wavs_mixed.append(wav_mixed)
-
-        # concatenate the steps
         wav_concat = np.concatenate(wavs_mixed)
         return wav_concat
