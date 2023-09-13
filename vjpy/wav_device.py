@@ -11,16 +11,11 @@ class WavDevice:
     """Audio device to manipulate wav files."""
 
     def __init__(self, vj):
-        self.drumkit = "myfunkkit"
-        self.sample_rate = 44100
+        self.drumkit = vj.drumkit
         self.wav_dir = os.path.join("vjpy", "data", "wav")
         self.drumkit_sh_names = vj.drumkit_sh_names
         self.drumkit_note_names = vj.drumkit_note_names
-        self.bpm = vj.bpm
-        self.note_values = vj.note_values
-        self.note_duration = self.bpm/60
-        self.resolution = vj.resolution
-        self.note_value = self.note_values[self.resolution].relative_value / self.note_duration
+        self.note_value = vj.note_value
 
     def play_wav(self, filepath):
         """Play a wav file."""
@@ -29,7 +24,8 @@ class WavDevice:
 
     def write_wav(self, filepath, wav_object):
         """Write a wav file."""
-        write(filepath, self.sample_rate, wav_object)
+        sample_rate = 44100
+        write(filepath, sample_rate, wav_object)
         print(f"\nWav file written to {filepath}.")
 
     def concatenate_wavs(self, wav_list):
@@ -67,7 +63,8 @@ class WavDevice:
                     pass
                 else:
                     wav = f"{self.drumkit_note_names[note]}.wav"
-                    wav_path = os.path.join(self.wav_dir, "drumkits", self.drumkit, wav)
+                    wav_path = os.path.join(self.wav_dir, "drumkits",
+                                            self.drumkit.name, wav)
                 playsound(wav_path, block=False)
             time.sleep(self.note_value)
 
@@ -90,7 +87,7 @@ class WavDevice:
         wavs_mixed = []
         for _, step in steps.items():
             wav_list = [os.path.join(
-                self.wav_dir, "drumkits", self.drumkit, wn) for wn in step]
+                self.wav_dir, "drumkits", self.drumkit.name, wn) for wn in step]
             wav_mixed = self.mix_wavs(wav_list)
             wavs_mixed.append(wav_mixed)
         wav_concat = np.concatenate(wavs_mixed)
@@ -101,7 +98,7 @@ class WavDevice:
         wavs_mixed = []
         for _, step in steps.items():
             wav_list = [os.path.join(
-                self.wav_dir, "drumkits", self.drumkit,
+                self.wav_dir, "drumkits", self.drumkit.name,
                 f"{self.drumkit_note_names[note]}.wav") for note in step]
             wav_mixed = self.mix_wavs(wav_list)
             wavs_mixed.append(wav_mixed)

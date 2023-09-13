@@ -50,13 +50,7 @@ wv.write_wav(concat_wav_path, midi_patt_concat)
 wv.play_wav(concat_wav_path)
 
 # %% Video device
-vd = VideoDevice(
-    bpm=vj.bpm,
-    soundbank_name="drums_03",
-    resolution=vj.resolution,
-    note_values=vj.note_values,
-    note_duration=vj.note_duration
-    )
+vd = VideoDevice(vj, soundbank_name="drums_03")
 # Get subclips corresponding to a drumkit hit.
 drum_subclips = {
     "r": vd.get_subclip(start=03.710), # ride

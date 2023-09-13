@@ -14,10 +14,7 @@ class MidiDevice:
         self.midi_in = mido.open_input()
         self.midi_out = mido.open_output()
         self.bpm = vj.bpm
-        self.resolution = vj.resolution
-        self.note_values = vj.note_values
-        self.note_duration = self.bpm/60
-        self.note_value = self.note_values[self.resolution].relative_value / self.note_duration
+        self.note_value = vj.note_value
         self.drumkit_sh_notes = vj.drumkit_sh_notes
         self.midi_data_dir = os.path.join("vjpy", "data", "midi")
 
@@ -28,14 +25,12 @@ class MidiDevice:
 
     def play_pattern(self, pattern):
         """Play a sequence of notes."""
-        res = self.resolution
-        note_value = self.note_values[res].relative_value / self.note_duration
         for beat in pattern:
             if beat == ' ':
-                time.sleep(note_value)
+                time.sleep(self.note_value)
             else:
                 drum_note = self.drumkit_sh_notes[beat]
-                self.play_note(note=drum_note, duration=note_value)
+                self.play_note(note=drum_note, duration=self.note_value)
 
     def play_patterns(self, patterns):
         """
@@ -100,11 +95,7 @@ class MidiDevice:
                     {0: [42, 36],       # step 1
                      48: [42],          # step 2
                      96: [42, 38],      # step 3
-                     144: [42],         # step 4
-                     192: [42, 36],     # ...
-                     240: [42],
-                     288: [42, 38],
-                     336: [46]})
+                     144: [42]}         # step 4
         """
         for step in steps.values():
             for note in step:

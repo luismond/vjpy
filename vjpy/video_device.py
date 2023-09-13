@@ -12,20 +12,16 @@ from moviepy.editor import (
 # from moviepy.audio.fx.all import volumex
 
 
-
 class VideoDevice:
     """vjpy video class."""
 
-    def __init__(self, bpm, soundbank_name, resolution, note_values, note_duration):
+    def __init__(self, vj, soundbank_name):
         self.soundbanks_path = "soundbanks"
-        self.bpm = bpm
+        self.bpm = vj.bpm
         self.soundbank_dir_path = os.path.join("soundbanks", soundbank_name)
         self.soundbank_video_path = os.path.join(self.soundbank_dir_path,
                                                  f'{soundbank_name}.mp4')
-        self.resolution = resolution
-        self.note_values = note_values
-        self.note_duration = note_duration
-
+        self.note_value = vj.note_value
 
     @property
     def videoclip(self):
@@ -34,9 +30,7 @@ class VideoDevice:
 
     def get_subclip(self, start=0):
         """Get a subclip from a video object."""
-        res = self.resolution
-        note_value = self.note_values[res].relative_value / self.note_duration
-        return self.videoclip.subclip(start, start + note_value)
+        return self.videoclip.subclip(start, start + self.note_value)
 
     def concatenate_subclips(self, subclips):
         """Concatenate an array of subclips."""
@@ -79,16 +73,12 @@ class VideoDevice:
         """Mix 4 video patterns in a vertical array."""
         beat_path = os.path.join(self.soundbank_dir_path, 'beats', f'{beat_n}')
         clip1 = VideoFileClip(os.path.join(beat_path, 'k.mp4')).fx(vfx.mirror_x)
-        #clip1 = clip1
         clip2 = VideoFileClip(os.path.join(beat_path, 'h.mp4'))
         clip3 = VideoFileClip(os.path.join(beat_path, 's.mp4')).fx(vfx.mirror_x)
-        #clip3 = clip3.fx(vfx.mirror_x)
         clip4 = VideoFileClip(os.path.join(beat_path, 'r.mp4'))
         video = clips_array([[clip1],
                              [clip2],
                              [clip3],
                              [clip4]])
         video.resize(width=960).write_videofile(
-            os.path.join(beat_path, f"{beat_n}_composited.mp4"))
-
-    #  todo: implement compositing
+            os.path.join(beat_path, f"{beat_n}_array.mp4"))
