@@ -8,9 +8,10 @@ class VjPyDevice:
 
     def __init__(self, bpm=90, resolution="1/4"):
         self.bpm = bpm
-        self.resolution = resolution
-        self.drum_kit = drum_kits["myfunkkit"]
+        self.drumkit = drum_kits["myfunkkit"]
         self.note_duration = self.bpm/60
+        self.resolution = resolution
+        self.note_value = self.note_values[resolution].relative_value / self.note_duration
 
     @property
     def note_values(self):
@@ -29,7 +30,7 @@ class VjPyDevice:
     def drumkit_sh_names(self):
         """Mapping short-hand-names <-> full-names."""
         drumkit_sh_names = {}
-        for drum in self.drum_kit.drums.values():
+        for drum in self.drumkit.drums.values():
             drumkit_sh_names[drum.short_hand] = drum.name
         return drumkit_sh_names
 
@@ -37,7 +38,7 @@ class VjPyDevice:
     def drumkit_sh_notes(self):
         """Mapping short-hand-names <-> notes."""
         drumkit_sh_notes = {}
-        for drum in self.drum_kit.drums.values():
+        for drum in self.drumkit.drums.values():
             drumkit_sh_notes[drum.short_hand] = drum.note
         return drumkit_sh_notes
 
@@ -45,6 +46,6 @@ class VjPyDevice:
     def drumkit_note_names(self):
         """Mapping notes <-> full-names."""
         drumkit_note_names = {}
-        for drum in self.drum_kit.drums.values():
+        for drum in self.drumkit.drums.values():
             drumkit_note_names[drum.note] = drum.name
         return drumkit_note_names
