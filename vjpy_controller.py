@@ -32,7 +32,7 @@ wv = WavDevice()
 drumkit = "myfunkkit"
 wav_names = ["clap.wav", "hat.wav", "kick.wav"]
 wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit, wn) for wn in wav_names]
-wv.play_wav(wav_list[2])
+wv.play_wav(wav_list[0])
 
 # %% Concatenate wavs
 wav_concat = wv.concatenate_wavs(wav_list)
@@ -47,7 +47,7 @@ wv.write_wav(mixed_wav_path, wav_mixed)
 wv.play_wav(mixed_wav_path)
 
 # %% Render wav pattern
-patt_concat = wv.render_wav_patterns(patterns)
+patt_concat = wv.parse_wav_patterns(patterns)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_pattern.wav")
 wv.write_wav(concat_wav_path, patt_concat)
 wv.play_wav(concat_wav_path)

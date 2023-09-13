@@ -44,13 +44,18 @@ class WavDevice:
             wav_mixed += wav
         return wav_mixed
 
-    def render_wav_patterns(self, patterns):
+    def parse_wav_patterns(self, patterns):
+        steps = self.wav_patterns_to_steps(patterns)
+        wav_concat = self.concat_wav_steps(steps)
+        return wav_concat
+
+    def wav_patterns_to_steps(self, patterns):
         """Concatenate and mix a drum pattern."""
         drums_d = {"h": "hat.wav",
                    "k": "kick.wav",
                    "c": "clap.wav",
                    "_": "silence.wav"}
-        drumkit = "myfunkkit"
+
         for pattern in patterns.values(): # todo: make sure to add all patterns' hits
             steps = {1: [], 2: [], 3: [], 4: [],
                      5: [], 6: [], 7: [], 8: []}
@@ -62,15 +67,18 @@ class WavDevice:
                         steps[step+1].append(note)
                     else:
                         steps[step+1].append("silence.wav")
-            print(steps)
-            # for each step, mix the corresponding wavs
-            wavs_mixed = []
-            for _, step in steps.items():
-                wav_list = [os.path.join(
-                    self.wav_dir, "drumkits", drumkit, wn) for wn in step]
-                wav_mixed = self.mix_wavs(wav_list)
-                wavs_mixed.append(wav_mixed)
+            return steps
+        
+    def concat_wav_steps(self, steps):
+        # for each step, mix the corresponding wavs
+        drumkit = "myfunkkit"
+        wavs_mixed = []
+        for _, step in steps.items():
+            wav_list = [os.path.join(
+                self.wav_dir, "drumkits", drumkit, wn) for wn in step]
+            wav_mixed = self.mix_wavs(wav_list)
+            wavs_mixed.append(wav_mixed)
 
-            # concatenate the steps
-            wav_concat = np.concatenate(wavs_mixed)
-            return wav_concat
+        # concatenate the steps
+        wav_concat = np.concatenate(wavs_mixed)
+        return wav_concat
