@@ -18,14 +18,14 @@ class VideoDevice:
 
     def __init__(self, bpm, soundbank_name, resolution, note_values, note_duration):
         self.soundbanks_path = "soundbanks"
-        self.bpm = bpm,
+        self.bpm = bpm
         self.soundbank_dir_path = os.path.join("soundbanks", soundbank_name)
         self.soundbank_video_path = os.path.join(self.soundbank_dir_path,
                                                  f'{soundbank_name}.mp4')
         self.resolution = resolution
         self.note_values = note_values
         self.note_duration = note_duration
-        
+
 
     @property
     def videoclip(self):
@@ -58,6 +58,7 @@ class VideoDevice:
     def concat_drum_subpatterns(self, patterns, drums, beat_n):
         """Concatenate and write each drum sub-pattern separately."""
         key_clips = defaultdict(list)
+
         for pattern in patterns.values():
             for key, key_pattern in pattern.items():
                 for hit in key_pattern:
@@ -66,12 +67,13 @@ class VideoDevice:
                     else:
                         key_clip = drums["_"]
                     key_clips[key].append(key_clip)
-                final_clip = self.concatenate_subclips(key_clips[key]*2)
-                final_clip_path = os.path.join(
-                    self.soundbank_dir_path,
-                    'beats', f'{beat_n}', f'{key}.mp4'
-                    )
-                self.write_concatenated_subclips(final_clip, final_clip_path)
+
+        for key in key_clips:
+            final_clip = self.concatenate_subclips(key_clips[key]*4)
+            final_clip_path = os.path.join(
+                self.soundbank_dir_path, 'beats', f'{beat_n}', f'{key}.mp4'
+                )
+            self.write_concatenated_subclips(final_clip, final_clip_path)
 
     def composite_vertical_videobeat(self, beat_n):
         """Mix 4 video patterns in a vertical array."""

@@ -1,5 +1,6 @@
 """MIDI device class."""
 import os
+import time
 from playsound import playsound
 from scipy.io import wavfile
 from scipy.io.wavfile import write
@@ -9,9 +10,17 @@ import numpy as np
 class WavDevice:
     """Audio device to manipulate wav files."""
 
-    def __init__(self):
+    def __init__(self, vj):
+        self.drumkit = "myfunkkit"
         self.sample_rate = 44100
         self.wav_dir = os.path.join("vjpy", "data", "wav")
+        self.drumkit_sh_names = vj.drumkit_sh_names
+        self.drumkit_note_names = vj.drumkit_note_names
+        self.bpm = vj.bpm
+        self.note_values = vj.note_values
+        self.note_duration = self.bpm/60
+        self.resolution = vj.resolution
+        self.note_value = self.note_values[self.resolution].relative_value / self.note_duration
 
     def play_wav(self, filepath):
         """Play a wav file."""
@@ -45,32 +54,56 @@ class WavDevice:
         return wav_mixed
 
     def render_wav_patterns(self, patterns):
+        """Parse patterns and concatenate wavs."""
+        steps = self.wav_patterns_to_steps(patterns)
+        wav_concat = self.concat_wav_steps(steps)
+        return wav_concat
+
+    def play_midi_steps(self, steps):
+        """Play wavs from midi notes."""
+        for step in steps.values():
+            for note in step:
+                if note == 0:
+                    pass
+                else:
+                    wav = f"{self.drumkit_note_names[note]}.wav"
+                    wav_path = os.path.join(self.wav_dir, "drumkits", self.drumkit, wav)
+                playsound(wav_path, block=False)
+            time.sleep(self.note_value)
+
+    def wav_patterns_to_steps(self, patterns):
         """Concatenate and mix a drum pattern."""
-        drums_d = {"h": "hat.wav",
-                   "k": "kick.wav",
-                   "c": "clap.wav",
-                   "_": "silence.wav"}
-        drumkit = "myfunkkit"
         for pattern in patterns.values(): # todo: make sure to add all patterns' hits
             steps = {1: [], 2: [], 3: [], 4: [],
                      5: [], 6: [], 7: [], 8: []}
-            # for each hit in pattern, append it to the steps
             for key in pattern:
                 for step, hit in enumerate(pattern[key]):
                     if hit == "x":
-                        note = drums_d[key]
-                        steps[step+1].append(note)
+                        wav = f"{self.drumkit_sh_names[key]}.wav"
+                        steps[step+1].append(wav)
                     else:
                         steps[step+1].append("silence.wav")
-            print(steps)
-            # for each step, mix the corresponding wavs
-            wavs_mixed = []
-            for _, step in steps.items():
-                wav_list = [os.path.join(
-                    self.wav_dir, "drumkits", drumkit, wn) for wn in step]
-                wav_mixed = self.mix_wavs(wav_list)
-                wavs_mixed.append(wav_mixed)
+            return steps
 
-            # concatenate the steps
-            wav_concat = np.concatenate(wavs_mixed)
-            return wav_concat
+    def concat_wav_steps(self, steps):
+        """Concatenate wav steps from a dictionary of wav names."""
+        wavs_mixed = []
+        for _, step in steps.items():
+            wav_list = [os.path.join(
+                self.wav_dir, "drumkits", self.drumkit, wn) for wn in step]
+            wav_mixed = self.mix_wavs(wav_list)
+            wavs_mixed.append(wav_mixed)
+        wav_concat = np.concatenate(wavs_mixed)
+        return wav_concat
+
+    def concat_wav_midi_steps(self, steps):
+        """Concatenate wav files from a dictionary of midi notes."""
+        wavs_mixed = []
+        for _, step in steps.items():
+            wav_list = [os.path.join(
+                self.wav_dir, "drumkits", self.drumkit,
+                f"{self.drumkit_note_names[note]}.wav") for note in step]
+            wav_mixed = self.mix_wavs(wav_list)
+            wavs_mixed.append(wav_mixed)
+        wav_concat = np.concatenate(wavs_mixed)
+        return wav_concat

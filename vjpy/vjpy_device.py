@@ -9,7 +9,7 @@ class VjPyDevice:
     def __init__(self, bpm=90, resolution="1/4"):
         self.bpm = bpm
         self.resolution = resolution
-        self.drum_kit = drum_kits["TR808EmulationKit"]
+        self.drum_kit = drum_kits["myfunkkit"]
         self.note_duration = self.bpm/60
 
     @property
@@ -43,7 +43,7 @@ class VjPyDevice:
 
     @property
     def drumkit_note_names(self):
-        """Mapping notes <-> note names."""
+        """Mapping notes <-> full-names."""
         drumkit_note_names = {}
         for drum in self.drum_kit.drums.values():
             drumkit_note_names[drum.note] = drum.name
