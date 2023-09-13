@@ -1,5 +1,6 @@
 """MIDI device class."""
 import os
+import time
 from playsound import playsound
 from scipy.io import wavfile
 from scipy.io.wavfile import write
@@ -9,10 +10,22 @@ import numpy as np
 class WavDevice:
     """Audio device to manipulate wav files."""
 
-    def __init__(self, drumkit_sh_names):
+    def __init__(self,
+                 drumkit_sh_names,
+                 drumkit_note_names,
+                 resolution,
+                 bpm,
+                 note_values):
         self.sample_rate = 44100
         self.wav_dir = os.path.join("vjpy", "data", "wav")
         self.drumkit_sh_names = drumkit_sh_names
+        self.drumkit_note_names = drumkit_note_names
+        
+        self.bpm = bpm
+        self.note_values = note_values
+        self.note_duration = self.bpm/60
+        self.resolution = resolution
+        self.note_value = self.note_values[resolution].relative_value / self.note_duration
 
     def play_wav(self, filepath):
         """Play a wav file."""
@@ -50,6 +63,20 @@ class WavDevice:
         wav_concat = self.concat_wav_steps(steps)
         return wav_concat
 
+    def parse_midi_steps(self, steps):
+        drumkit = "myfunkkit"
+        for step in steps.values():
+            for note in step:
+                if note == 0:
+                    pass#msg = mido.Message("note_off", note=note, velocity=120)
+                else:
+                    wav = f"{self.drumkit_note_names[note]}.wav"
+                    wav_path = os.path.join(self.wav_dir, "drumkits", drumkit, wav)
+                    #msg = mido.Message("note_on", note=note, velocity=120)
+                playsound(wav_path, block=False)
+                #self.midi_out.send(msg)
+            time.sleep(self.note_value)
+
     def wav_patterns_to_steps(self, patterns):
         """Concatenate and mix a drum pattern."""
         for pattern in patterns.values(): # todo: make sure to add all patterns' hits
@@ -59,8 +86,8 @@ class WavDevice:
             for key in pattern:
                 for step, hit in enumerate(pattern[key]):
                     if hit == "x":
-                        note = f"{self.drumkit_sh_names[key]}.wav"
-                        steps[step+1].append(note)
+                        wav = f"{self.drumkit_sh_names[key]}.wav"
+                        steps[step+1].append(wav)
                     else:
                         steps[step+1].append("silence.wav")
             return steps
@@ -72,6 +99,19 @@ class WavDevice:
         for _, step in steps.items():
             wav_list = [os.path.join(
                 self.wav_dir, "drumkits", drumkit, wn) for wn in step]
+            wav_mixed = self.mix_wavs(wav_list)
+            wavs_mixed.append(wav_mixed)
+
+        # concatenate the steps
+        wav_concat = np.concatenate(wavs_mixed)
+        return wav_concat
+
+    def concat_wav_midi_steps(self, steps):
+        drumkit = "myfunkkit"
+        wavs_mixed = []
+        for _, step in steps.items():
+            wav_list = [os.path.join(
+                self.wav_dir, "drumkits", drumkit, f"{self.drumkit_note_names[note]}.wav") for note in step]
             wav_mixed = self.mix_wavs(wav_list)
             wavs_mixed.append(wav_mixed)
 
