@@ -10,23 +10,17 @@ import numpy as np
 class WavDevice:
     """Audio device to manipulate wav files."""
 
-    def __init__(self,
-                 drumkit_sh_names,
-                 drumkit_note_names,
-                 resolution,
-                 bpm,
-                 note_values):
+    def __init__(self, vj):
         self.drumkit = "myfunkkit"
         self.sample_rate = 44100
         self.wav_dir = os.path.join("vjpy", "data", "wav")
-        self.drumkit_sh_names = drumkit_sh_names
-        self.drumkit_note_names = drumkit_note_names
-        
-        self.bpm = bpm
-        self.note_values = note_values
+        self.drumkit_sh_names = vj.drumkit_sh_names
+        self.drumkit_note_names = vj.drumkit_note_names
+        self.bpm = vj.bpm
+        self.note_values = vj.note_values
         self.note_duration = self.bpm/60
-        self.resolution = resolution
-        self.note_value = self.note_values[resolution].relative_value / self.note_duration
+        self.resolution = vj.resolution
+        self.note_value = self.note_values[self.resolution].relative_value / self.note_duration
 
     def play_wav(self, filepath):
         """Play a wav file."""
@@ -59,12 +53,14 @@ class WavDevice:
             wav_mixed += wav
         return wav_mixed
 
-    def parse_wav_patterns(self, patterns):
+    def render_wav_patterns(self, patterns):
+        """Parse patterns and concatenate wavs."""
         steps = self.wav_patterns_to_steps(patterns)
         wav_concat = self.concat_wav_steps(steps)
         return wav_concat
 
-    def parse_midi_steps(self, steps):
+    def play_midi_steps(self, steps):
+        """Play wavs from midi notes."""
         for step in steps.values():
             for note in step:
                 if note == 0:
@@ -88,8 +84,9 @@ class WavDevice:
                     else:
                         steps[step+1].append("silence.wav")
             return steps
-        
+
     def concat_wav_steps(self, steps):
+        """Concatenate wav steps from a dictionary of wav names."""
         wavs_mixed = []
         for _, step in steps.items():
             wav_list = [os.path.join(
@@ -100,6 +97,7 @@ class WavDevice:
         return wav_concat
 
     def concat_wav_midi_steps(self, steps):
+        """Concatenate wav files from a dictionary of midi notes."""
         wavs_mixed = []
         for _, step in steps.items():
             wav_list = [os.path.join(

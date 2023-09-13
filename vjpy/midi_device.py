@@ -7,24 +7,18 @@ import random
 from collections import defaultdict
 import mido
 
-
 class MidiDevice:
     """MIDI device."""
 
-    def __init__(self,
-                 bpm,
-                 resolution,
-                 note_values,
-                 drumkit_sh_notes,
-                 ):
-        self.bpm = bpm
+    def __init__(self, vj):
         self.midi_in = mido.open_input()
         self.midi_out = mido.open_output()
-        self.resolution = resolution
-        self.note_values = note_values
+        self.bpm = vj.bpm
+        self.resolution = vj.resolution
+        self.note_values = vj.note_values
         self.note_duration = self.bpm/60
-        self.note_value = self.note_values[resolution].relative_value / self.note_duration
-        self.drumkit_sh_notes = drumkit_sh_notes
+        self.note_value = self.note_values[self.resolution].relative_value / self.note_duration
+        self.drumkit_sh_notes = vj.drumkit_sh_notes
         self.midi_data_dir = os.path.join("vjpy", "data", "midi")
 
     def yield_midi_msg(self):

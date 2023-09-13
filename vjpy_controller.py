@@ -4,76 +4,52 @@ from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice
 from vjpy import patterns, patterns_01
 
 vj = VjPyDevice()
-
-md = MidiDevice(
-    bpm=vj.bpm,
-    resolution=vj.resolution,
-    note_values=vj.note_values,
-    drumkit_sh_notes=vj.drumkit_sh_notes)
+md = MidiDevice(vj)
 
 # %% Play MIDI note
 md.play_note(note=44, velocity=120, duration=0)
-
 # %% Play MIDI patterns
 md.play_patterns(patterns)
-
 # %% Generate pattern
 rp = md.generate_random_pattern(patt_len=8)
 md.play_pattern(rp)
-
 # %% Play MIDI file
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 md.play_midi_file(filename)
 
 # %% Play wav
-wv = WavDevice(
-    drumkit_sh_names=vj.drumkit_sh_names,
-    drumkit_note_names=vj.drumkit_note_names,
-    bpm=vj.bpm,
-    resolution=vj.resolution,
-    note_values=vj.note_values)
-
+wv = WavDevice(vj)
 drumkit = "myfunkkit"
 wav_shs = ["c", "h", "k"] # clap, hihat, kick
 wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit,
                          f"{vj.drumkit_sh_names[wn]}.wav") for wn in wav_shs]
 wv.play_wav(wav_list[0])
-
 # %% Concatenate wavs
 wav_concat = wv.concatenate_wavs(wav_list)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wavs.wav")
 wv.write_wav(concat_wav_path, wav_concat)
 wv.play_wav(concat_wav_path)
-
 # %%  Mix wavs
 wav_mixed = wv.mix_wavs(wav_list)
 mixed_wav_path = os.path.join(wv.wav_dir, "examples", "mixed_wavs.wav")
 wv.write_wav(mixed_wav_path, wav_mixed)
 wv.play_wav(mixed_wav_path)
-
 # %% Render wav pattern
-patt_concat = wv.parse_wav_patterns(patterns)
+patt_concat = wv.render_wav_patterns(patterns)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_pattern.wav")
 wv.write_wav(concat_wav_path, patt_concat)
 wv.play_wav(concat_wav_path)
-
-
 # %% Parse MIDI file and play wavs
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 steps = md.parse_midi_file(filename)
-wv.parse_midi_steps(steps)
-
+wv.play_midi_steps(steps)
 # %% Parse MIDI file and render pattern
-
-filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
-steps = md.parse_midi_file(filename)
 midi_patt_concat = wv.concat_wav_midi_steps(steps)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_midi_pattern.wav")
 wv.write_wav(concat_wav_path, midi_patt_concat)
 wv.play_wav(concat_wav_path)
 
 # %% Video device
-
 vd = VideoDevice(
     bpm=vj.bpm,
     soundbank_name="drums_03",
@@ -81,7 +57,6 @@ vd = VideoDevice(
     note_values=vj.note_values,
     note_duration=vj.note_duration
     )
-
 # Get subclips corresponding to a drumkit hit.
 drum_subclips = {
     "r": vd.get_subclip(start=03.710), # ride
@@ -98,8 +73,6 @@ drum_subclips = {
     "u": vd.get_subclip(start=39.010), # tom2b
     "_": vd.get_subclip(start=06.005)  # silence
 }
-
-
 beat_n = '14'
 vd.concat_drum_subpatterns(patterns_01, drum_subclips, beat_n)
 vd.composite_vertical_videobeat(beat_n)
