@@ -21,28 +21,37 @@ md.play_midi_file(filename)
 wv = WavDevice(vj)
 drumkit = "myfunkkit"
 wav_shs = ["c", "h", "k"] # clap, hihat, kick
-wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit,
-                         f"{vj.drumkit_sh_names[wn]}.wav") for wn in wav_shs]
-wv.play_wav(wav_list[0])
+wav_list = [os.path.join(wv.drumkit_dir,
+                          f"{vj.drumkit_sh_names[wn]}.wav") for wn in wav_shs]
+wav_path = os.path.join(wv.drumkit_dir, f"{vj.drumkit_sh_names['c']}.wav") 
+wv.play_wav(wav_path)
+
 # %% Concatenate wavs
 wav_concat = wv.concatenate_wavs(wav_list)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wavs.wav")
 wv.write_wav(concat_wav_path, wav_concat)
 wv.play_wav(concat_wav_path)
+
 # %%  Mix wavs
 wav_mixed = wv.mix_wavs(wav_list)
 mixed_wav_path = os.path.join(wv.wav_dir, "examples", "mixed_wavs.wav")
 wv.write_wav(mixed_wav_path, wav_mixed)
 wv.play_wav(mixed_wav_path)
+
 # %% Render wav pattern
-patt_concat = wv.render_wav_patterns(patterns)
+steps = wv.wav_patterns_to_steps(patterns)
+patt_concat = wv.concat_wav_steps(steps)
+
+#%%
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_pattern.wav")
 wv.write_wav(concat_wav_path, patt_concat)
 wv.play_wav(concat_wav_path)
+
 # %% Parse MIDI file and play wavs
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 steps = md.parse_midi_file(filename)
 wv.play_midi_steps(steps)
+
 # %% Parse MIDI file and render pattern
 midi_patt_concat = wv.concat_wav_midi_steps(steps)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_midi_pattern.wav")
