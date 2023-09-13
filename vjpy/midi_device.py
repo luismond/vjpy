@@ -73,7 +73,7 @@ class MidiDevice:
 
     def generate_random_pattern(self, patt_len):
         """Generate_random_pattern."""
-        short_hands = ["k", "q", "s", "c", "t", "h", "o", "r", "v", "w"]
+        short_hands = ["k", "c", "h"]#, "c", "t", "h", "o", "r", "v", "w"]
         # emoji = ["👟", "🥾", "🥁", "👏", "🪘", "🔔", "🐍", "🧂", "🪵", "🐄"]
         random_pattern = []
         for _ in range(patt_len):

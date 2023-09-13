@@ -20,9 +20,9 @@ drum_kits = {
     "myfunkkit": Drumkit(
         name="myfunkkit",
         drums={
-            "kick1": Drum(name="kick1", note=36, short_hand="k", emoji="🥾"),
-            "clap1": Drum(name="clap1", note=40, short_hand="c", emoji="👏"),
-            "hat1": Drum(name="hat1", note=44, short_hand="h", emoji="🔔")
+            "kick": Drum(name="kick", note=36, short_hand="k", emoji="🥾"),
+            "clap": Drum(name="clap", note=40, short_hand="c", emoji="👏"),
+            "hat": Drum(name="hat", note=44, short_hand="h", emoji="🔔")
             }
         )
     }

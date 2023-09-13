@@ -1,7 +1,7 @@
 """vjpy data classes."""
 
 from pydantic import BaseModel
-
+from typing import Optional
 
 class Pattern(BaseModel):
     """Pattern."""
@@ -20,7 +20,7 @@ class Drum(BaseModel):
     name: str
     note: int
     short_hand: str
-    emoji: str
+    emoji: Optional[str]
 
 class NoteValue(BaseModel):
     """Object representing a note value."""

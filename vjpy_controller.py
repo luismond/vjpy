@@ -27,11 +27,12 @@ filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 md.play_midi_file(filename)
 
 # %% Play wav
-wv = WavDevice()
+wv = WavDevice(drumkit_sh_names=vj.drumkit_sh_names)
 
 drumkit = "myfunkkit"
-wav_names = ["clap.wav", "hat.wav", "kick.wav"]
-wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit, wn) for wn in wav_names]
+wav_shs = ["c", "h", "k"] # clap, hihat, kick
+wav_list = [os.path.join(wv.wav_dir, "drumkits", drumkit,
+                         f"{vj.drumkit_sh_names[wn]}.wav") for wn in wav_shs]
 wv.play_wav(wav_list[0])
 
 # %% Concatenate wavs

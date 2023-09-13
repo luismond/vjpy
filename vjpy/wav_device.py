@@ -9,9 +9,10 @@ import numpy as np
 class WavDevice:
     """Audio device to manipulate wav files."""
 
-    def __init__(self):
+    def __init__(self, drumkit_sh_names):
         self.sample_rate = 44100
         self.wav_dir = os.path.join("vjpy", "data", "wav")
+        self.drumkit_sh_names = drumkit_sh_names
 
     def play_wav(self, filepath):
         """Play a wav file."""
@@ -51,11 +52,6 @@ class WavDevice:
 
     def wav_patterns_to_steps(self, patterns):
         """Concatenate and mix a drum pattern."""
-        drums_d = {"h": "hat.wav",
-                   "k": "kick.wav",
-                   "c": "clap.wav",
-                   "_": "silence.wav"}
-
         for pattern in patterns.values(): # todo: make sure to add all patterns' hits
             steps = {1: [], 2: [], 3: [], 4: [],
                      5: [], 6: [], 7: [], 8: []}
@@ -63,7 +59,7 @@ class WavDevice:
             for key in pattern:
                 for step, hit in enumerate(pattern[key]):
                     if hit == "x":
-                        note = drums_d[key]
+                        note = f"{self.drumkit_sh_names[key]}.wav"
                         steps[step+1].append(note)
                     else:
                         steps[step+1].append("silence.wav")
