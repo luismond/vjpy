@@ -135,7 +135,11 @@ This is the main focus of vjpy: enable the easy creation of video sequences, or 
 
 
 
-https://github.com/luismond/vjpy/assets/8634121/37a08f65-5c2d-4e44-94f2-d2776a2c8a4b
+
+https://github.com/luismond/vjpy/assets/8634121/45731991-57d8-4555-853d-a072447b1074
+
+
+
 
 
 
