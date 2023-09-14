@@ -88,19 +88,28 @@ class VideoDevice:
         drumkit_note_shs = {}
         for drum in vdk.drums.values():
             drumkit_note_shs[drum.note] = drum.short_hand
-
-        patterns = defaultdict(dict)
-        pattern = {
-            "h": ["_", "_", "_", "_"], # todo: make pattern length dynamic
-            "k": ["_", "_", "_", "_"],
-            "s": ["_", "_", "_", "_"]
-            }
-
-        for n, s in enumerate(midi_steps.items()):
+        
+        # collect unique MIDI notes as shorthands
+        shs = set()
+        for n, s in enumerate(midi_steps.items()): 
+            notes = s[1]
+            for note in notes:
+                sh = drumkit_note_shs[note]
+                shs.add(sh)
+        
+        # create empty pattern dictionary with the necessary drum keys
+        pattern = defaultdict(list)
+        for sh in shs:
+            for n in range(len(midi_steps.items())):
+                pattern[sh].append("_")
+        
+        # replace empty slots with corresponding drum hits
+        for n, s in enumerate(midi_steps.items()): 
             notes = s[1]
             for note in notes:
                 sh = drumkit_note_shs[note]
                 pattern[sh][n] = "x"
-
+        
+        patterns = defaultdict(dict)
         patterns["01"] = pattern
         return patterns
