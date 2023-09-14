@@ -113,3 +113,38 @@ class VideoDevice:
         patterns = defaultdict(dict)
         patterns["01"] = pattern
         return patterns
+
+    # def midi_steps_to_pattern_triple_array(self, midi_steps, vdk):
+    #     """Convert a parsed midi steps dictionary to vjpy pattern for 3-array video beat."""
+    #     drumkit_note_shs = {}
+    #     for drum in vdk.drums.values():
+    #         drumkit_note_shs[drum.note] = drum.short_hand
+    #     arrays = ["1", "2", "3"] # Drum groups. 1: cymbals, 2: snare, toms, 3: pedals
+    #     array_d = {
+    #         "h": "1",
+    #         "r": "1",
+    #         "x": "1",
+    #         "c": "1",
+    #         "o": "1",
+    #         "t": "2",
+    #         "w": "2",
+    #         "s": "2",
+    #         "z": "2",
+    #         "k": "3"
+    #         }
+    #     # create empty pattern dictionary with the necessary drum group keys
+    #     pattern = defaultdict(list)
+    #     for a in arrays:
+    #         for n in range(len(midi_steps.items())):
+    #             pattern[a].append("_")
+        
+    #     # replace empty slots with corresponding drum hits
+    #     for n, s in enumerate(midi_steps.items()): 
+    #         notes = s[1]
+    #         for note in notes:
+    #             sh = drumkit_note_shs[note]
+    #             a_ = array_d[sh]
+    #             pattern[a_][n] = sh
+    #     patterns = defaultdict(dict)
+    #     patterns["01"] = pattern
+    #     return patterns
