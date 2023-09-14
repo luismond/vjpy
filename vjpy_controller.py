@@ -7,7 +7,6 @@ vj = VjPyDevice()
 md = MidiDevice(vj)
 wv = WavDevice(vj)
 
-
 # %% Play MIDI note
 md.play_note(note=44, velocity=120, duration=0)
 # %% Play MIDI patterns
@@ -19,33 +18,21 @@ md.play_pattern(rp)
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 md.play_midi_file(filename)
 
-
 # %% Play wav
-
 wav_names = ["clap.wav", "hat.wav", "kick.wav"]
 wav_paths = [os.path.join(wv.drumkit_dir, wav_name) for wav_name in wav_names]
 wv.play_wav(wav_paths[0])
-
-#%%  Concatenate wavs
+# %%  Concatenate wavs
 wav_concat = wv.concatenate_wavs(wav_paths, "concat_wavs.wav", play=True)
-
-#%%   Mix wavs
+# %%   Mix wavs
 wav_mixed = wv.mix_wavs(wav_paths, "mixed_wavs.wav", play=True)
-
-#%%  Render wav pattern
+# %%  Render wav pattern
 steps = wv.wav_patterns_to_steps(patterns)
-patt_concat = wv.concat_wav_steps(steps, "rendered_pattern.wav", play=True)
-
-#%% Parse MIDI file and play wavs
+patt_concat = wv.render_wav_steps(steps, "rendered_wav_pattern.wav", play=True)
+# %% Parse a MIDI file, render a target wav and play it
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
-midi_note_steps = md.parse_midi_file(filename)
-#wv.play_midi_steps(midi_note_steps)
-
-# Parse MIDI file and render pattern
-midi_patt_concat = wv.render_midi_note_steps(midi_note_steps)
-concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_midi_pattern.wav")
-wv.write_wav(concat_wav_path, midi_patt_concat)
-wv.play_wav(concat_wav_path)
+midi_steps = md.parse_midi_file(filename)
+midi_patt_wav = wv.render_midi_steps(midi_steps, "rendered_midi_pattern.wav", play=True)
 
 # %% Video device
 vd = VideoDevice(vj, soundbank_name="drums_03")
