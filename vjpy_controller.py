@@ -5,6 +5,8 @@ from vjpy import patterns, patterns_01
 
 vj = VjPyDevice()
 md = MidiDevice(vj)
+wv = WavDevice(vj)
+
 
 # %% Play MIDI note
 md.play_note(note=44, velocity=120, duration=0)
@@ -17,8 +19,9 @@ md.play_pattern(rp)
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 md.play_midi_file(filename)
 
+
 # %% Play wav
-wv = WavDevice(vj)
+
 drumkit = "myfunkkit"
 wav_shs = ["c", "h", "k"] # clap, hihat, kick
 wav_list = [os.path.join(wv.drumkit_dir,
@@ -26,34 +29,32 @@ wav_list = [os.path.join(wv.drumkit_dir,
 wav_path = os.path.join(wv.drumkit_dir, f"{vj.drumkit_sh_names['c']}.wav") 
 wv.play_wav(wav_path)
 
-# %% Concatenate wavs
+#  Concatenate wavs
 wav_concat = wv.concatenate_wavs(wav_list)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "concat_wavs.wav")
 wv.write_wav(concat_wav_path, wav_concat)
 wv.play_wav(concat_wav_path)
 
-# %%  Mix wavs
+#   Mix wavs
 wav_mixed = wv.mix_wavs(wav_list)
 mixed_wav_path = os.path.join(wv.wav_dir, "examples", "mixed_wavs.wav")
 wv.write_wav(mixed_wav_path, wav_mixed)
 wv.play_wav(mixed_wav_path)
 
-# %% Render wav pattern
+#  Render wav pattern
 steps = wv.wav_patterns_to_steps(patterns)
 patt_concat = wv.concat_wav_steps(steps)
-
-#%%
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_pattern.wav")
 wv.write_wav(concat_wav_path, patt_concat)
 wv.play_wav(concat_wav_path)
 
-# %% Parse MIDI file and play wavs
+# Parse MIDI file and play wavs
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
-steps = md.parse_midi_file(filename)
-wv.play_midi_steps(steps)
+midi_note_steps = md.parse_midi_file(filename)
+wv.play_midi_steps(midi_note_steps)
 
-# %% Parse MIDI file and render pattern
-midi_patt_concat = wv.concat_wav_midi_steps(steps)
+# Parse MIDI file and render pattern
+midi_patt_concat = wv.render_midi_note_steps(midi_note_steps)
 concat_wav_path = os.path.join(wv.wav_dir, "examples", "rendered_midi_pattern.wav")
 wv.write_wav(concat_wav_path, midi_patt_concat)
 wv.play_wav(concat_wav_path)

@@ -49,15 +49,17 @@ class WavDevice:
     def wav_patterns_to_steps(self, patterns):
         """Concatenate and mix a drum pattern."""
         for pattern in patterns.values(): # todo: make sure to add all patterns' hits
-            steps = {1: [], 2: [], 3: [], 4: [],
-                      5: [], 6: [], 7: [], 8: []}
+            steps = {
+                1: [], 2: [], 3: [], 4: [],
+                5: [], 6: [], 7: [], 8: []
+                }
             for key in pattern:
-                for step, hit in enumerate(pattern[key]):
-                    if hit == "x":
+                for step_n, step in enumerate(pattern[key]):
+                    if step == "x":
                         wav = f"{self.drumkit_sh_names[key]}.wav"
-                        steps[step+1].append(wav)
+                        steps[step_n+1].append(wav)
                     else:
-                        steps[step+1].append("silence.wav")
+                        steps[step_n+1].append("silence.wav")
             return steps
 
     def concat_wav_steps(self, steps):
@@ -82,7 +84,7 @@ class WavDevice:
                 playsound(wav_path, block=False)
             time.sleep(self.note_value)
 
-    def concat_wav_midi_steps(self, steps):
+    def render_midi_note_steps(self, steps):
         """Concatenate wav files from a dictionary of midi notes."""
         wavs_mixed = []
         for _, step in steps.items():
