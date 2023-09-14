@@ -297,4 +297,19 @@
 # bar_01 = [patt_01, patt_02, patt_03, patt_04 ]
 # bars = [bar_01, bar_01, bar_01, bar_01]
 
-
+# bankname = "drums_03"
+# # drum_subclips = {
+#     "r": vd.get_subclip(videoclip, start=03.710), # ride
+#     "x": vd.get_subclip(videoclip, start=07.137), # china
+#     "c": vd.get_subclip(videoclip, start=09.770), # crash
+#     "h": vd.get_subclip(videoclip, start=21.290), # hat
+#     "o": vd.get_subclip(videoclip, start=23.113), # hat open
+#     "k": vd.get_subclip(videoclip, start=24.950), # kick
+#     "s": vd.get_subclip(videoclip, start=27.513), # snare1
+#     "z": vd.get_subclip(videoclip, start=29.512), # snare2
+#     "t": vd.get_subclip(videoclip, start=31.505), # tom1a
+#     "v": vd.get_subclip(videoclip, start=34.248), # tom1b
+#     "w": vd.get_subclip(videoclip, start=37.160), # tom2a
+#     "u": vd.get_subclip(videoclip, start=39.010), # tom2b
+#     "_": vd.get_subclip(videoclip, start=06.005)  # silence
+# }
