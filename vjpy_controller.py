@@ -3,7 +3,7 @@ import os
 from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice, patterns
 from vjpy import Drumkit, Drum
 
-vj = VjPyDevice()
+vj = VjPyDevice(bpm=100)
 
 md = MidiDevice(vj)
 wd = WavDevice(vj)
@@ -42,15 +42,21 @@ subclip = vd.get_subclip(videoclip, start=03.710) # ride
 vdk = Drumkit(
     name="videokit",
     drums={
-        "k": Drum(name="kick", note=36, short_hand="k",
-                  clip=vd.get_subclip(videoclip, start=24.950)),
-        "h": Drum(name="hat", note=42, short_hand="h",
-                  clip=vd.get_subclip(videoclip, start=21.290)),
-        "s": Drum(name="snare", note=38, short_hand="s",
-                  clip=vd.get_subclip(videoclip, start=27.513)),
-        "_": Drum(name="silence", note=41, short_hand="_",
-                  clip=vd.get_subclip(videoclip, start=06.005))
-        })
+        "k": Drum(name="kick", note=36, short_hand="k", clip=vd.get_subclip(videoclip, start=24.950)),
+        "h": Drum(name="hat", note=42, short_hand="h", clip=vd.get_subclip(videoclip, start=21.290)),
+        "s": Drum(name="snare", note=38, short_hand="s", clip=vd.get_subclip(videoclip, start=27.513)),
+        "z": Drum(name="snare2", note=40, short_hand="z", clip=vd.get_subclip(videoclip, start=29.512)),
+        "r": Drum(name='ride', note=51, short_hand="r", clip=vd.get_subclip(videoclip, start=03.710)),
+        "x": Drum(name="china", note=57, short_hand="x", clip=vd.get_subclip(videoclip, start=07.137)),
+        "c": Drum(name="crash", note=49, short_hand="c", clip=vd.get_subclip(videoclip, start=09.770)),
+        "o": Drum(name="hat_open", note=82, short_hand="o", clip=vd.get_subclip(videoclip, start=23.113)),
+        "t": Drum(name="tom1", note=45, short_hand="t", clip=vd.get_subclip(videoclip, start=31.505)),
+        "w": Drum(name="tom2", note=41, short_hand="w", clip=vd.get_subclip(videoclip, start=37.160)),
+        "_": Drum(name="silence", note=0, short_hand="_", clip=vd.get_subclip(videoclip, start=06.005)),
+        }
+    )
+
+
 # %% Concatenate drum subclips acordding to patterns
 vd.concat_drum_subpatterns(patterns, vdk, loops_n=2)
 # %% Composite a polyphonic, vertical video array from the concatenated drum subclips
@@ -59,6 +65,9 @@ vd.composite_vertical_videobeat(patterns)
 # %% Read a MIDI file, render a target video
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 midi_steps = md.parse_midi_file(filename)
+#%%
 patterns = vd.midi_steps_to_pattern(midi_steps, vdk)
-vd.concat_drum_subpatterns(patterns, vdk, loops_n=4)
+vd.concat_drum_subpatterns(patterns, vdk, loops_n=2)
 vd.composite_vertical_videobeat(patterns)
+
+#%% Read a MIDI file, render a three-array video
