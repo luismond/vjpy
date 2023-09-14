@@ -3,7 +3,7 @@ import os
 from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice, patterns
 from vjpy import Drumkit, Drum
 
-vj = VjPyDevice(bpm=100)
+vj = VjPyDevice()
 
 md = MidiDevice(vj)
 wd = WavDevice(vj)

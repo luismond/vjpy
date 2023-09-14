@@ -94,8 +94,9 @@ class VideoDevice:
         for n, s in enumerate(midi_steps.items()): 
             notes = s[1]
             for note in notes:
-                sh = drumkit_note_shs[note]
-                shs.add(sh)
+                if note != 81:
+                    sh = drumkit_note_shs[note]
+                    shs.add(sh)
         
         # create empty pattern dictionary with the necessary drum keys
         pattern = defaultdict(list)
@@ -107,8 +108,9 @@ class VideoDevice:
         for n, s in enumerate(midi_steps.items()): 
             notes = s[1]
             for note in notes:
-                sh = drumkit_note_shs[note]
-                pattern[sh][n] = "x"
+                if note != 81:
+                    sh = drumkit_note_shs[note]
+                    pattern[sh][n] = "x"
         
         patterns = defaultdict(dict)
         patterns["01"] = pattern
