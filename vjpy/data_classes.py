@@ -1,12 +1,14 @@
 """vjpy data classes."""
 
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, Field
+from typing import Optional, Any, List
 
 class Pattern(BaseModel):
     """Pattern."""
+    x: str # timeline
+    a: List[str] = Field(max_length=8)
+    b: List[str] = Field(max_length=8)
 
-    pattern: str
 
 class Drumkit(BaseModel):
     """Object representing a collection of drums."""
@@ -20,10 +22,21 @@ class Drum(BaseModel):
     name: str
     note: int
     short_hand: str
-    emoji: Optional[str]
+    emoji: Optional[str] = None 
+    clip: Optional[Any] = None
 
 class NoteValue(BaseModel):
     """Object representing a note value."""
 
     name: str
     relative_value: float
+
+
+# todo: develop the pattern model
+# patterns = {
+#     "01": Pattern(
+#         x="  1    2    3    4    5    6    7    8",
+#         a= ["x", "_", "_", "_", "_", "_", "_", "_"],
+#         b= ["x", "_", "_", "_", "_", "_", "_", "_"]
+#         )
+#     }

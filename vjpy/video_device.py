@@ -15,22 +15,20 @@ from moviepy.editor import (
 class VideoDevice:
     """vjpy video class."""
 
-    def __init__(self, vj, soundbank_name):
-        self.soundbanks_path = "soundbanks"
+    def __init__(self, vj, bankname, beatname):
+        self.bankname = bankname
+        self.beatname = beatname
         self.bpm = vj.bpm
-        self.soundbank_dir_path = os.path.join("soundbanks", soundbank_name)
-        self.soundbank_video_path = os.path.join(self.soundbank_dir_path,
-                                                 f'{soundbank_name}.mp4')
         self.note_value = vj.note_value
 
-    @property
-    def videoclip(self):
+    def make_videoclip(self):
         """Make a video object."""
-        return VideoFileClip(self.soundbank_video_path)
+        filepath = os.path.join("soundbanks", self.bankname, f"{self.bankname}.mp4")
+        return VideoFileClip(filepath)
 
-    def get_subclip(self, start=0):
+    def get_subclip(self, videoclip, start=0):
         """Get a subclip from a video object."""
-        return self.videoclip.subclip(start, start + self.note_value)
+        return videoclip.subclip(start, start + self.note_value)
 
     def concatenate_subclips(self, subclips):
         """Concatenate an array of subclips."""
@@ -49,36 +47,60 @@ class VideoDevice:
         """Write concatenated subclips."""
         concatenated_subclips.write_videofile(subclip_name)
 
-    def concat_drum_subpatterns(self, patterns, drums, beat_n):
+    def concat_drum_subpatterns(self, patterns, drum_subclips, loops_n=1):
         """Concatenate and write each drum sub-pattern separately."""
+        soundbank_dir_path = os.path.join("soundbanks", self.bankname)
         key_clips = defaultdict(list)
 
         for pattern in patterns.values():
             for key, key_pattern in pattern.items():
                 for hit in key_pattern:
                     if hit == "x":
-                        key_clip = drums[key]
+                        key_clip = drum_subclips.drums[key].clip
                     else:
-                        key_clip = drums["_"]
+                        key_clip = drum_subclips.drums["_"].clip
                     key_clips[key].append(key_clip)
 
         for key in key_clips:
-            final_clip = self.concatenate_subclips(key_clips[key]*4)
+            final_clip = self.concatenate_subclips(key_clips[key]*loops_n)
             final_clip_path = os.path.join(
-                self.soundbank_dir_path, 'beats', f'{beat_n}', f'{key}.mp4'
+                soundbank_dir_path, 'beats', f'{self.beatname}', f'{key}.mp4'
                 )
             self.write_concatenated_subclips(final_clip, final_clip_path)
 
-    def composite_vertical_videobeat(self, beat_n):
-        """Mix 4 video patterns in a vertical array."""
-        beat_path = os.path.join(self.soundbank_dir_path, 'beats', f'{beat_n}')
-        clip1 = VideoFileClip(os.path.join(beat_path, 'k.mp4')).fx(vfx.mirror_x)
-        clip2 = VideoFileClip(os.path.join(beat_path, 'h.mp4'))
-        clip3 = VideoFileClip(os.path.join(beat_path, 's.mp4')).fx(vfx.mirror_x)
-        clip4 = VideoFileClip(os.path.join(beat_path, 'r.mp4'))
+    def composite_vertical_videobeat(self, patterns):
+        """Composite a polyphonic vertical video array from concatenated drum subclips."""
+        dks = list(patterns["01"].keys()) # drum keys
+        soundbank_dir_path = os.path.join("soundbanks", self.bankname)
+        beat_path = os.path.join(soundbank_dir_path, "beats", f"{self.beatname}")
+        clip1 = VideoFileClip(os.path.join(beat_path, f"{dks[0]}.mp4")).fx(vfx.mirror_x)
+        clip2 = VideoFileClip(os.path.join(beat_path, f"{dks[1]}.mp4"))
+        clip3 = VideoFileClip(os.path.join(beat_path, f"{dks[2]}.mp4")).fx(vfx.mirror_x)
         video = clips_array([[clip1],
                              [clip2],
-                             [clip3],
-                             [clip4]])
+                             [clip3]])
         video.resize(width=960).write_videofile(
-            os.path.join(beat_path, f"{beat_n}_array.mp4"))
+            os.path.join(beat_path, f"{self.beatname}_array.mp4"))
+
+
+    def midi_steps_to_pattern(self, midi_steps, vdk):
+        """Convert a parsed midi steps dictionary to vjpy pattern."""
+        drumkit_note_shs = {}
+        for drum in vdk.drums.values():
+            drumkit_note_shs[drum.note] = drum.short_hand
+
+        patterns = defaultdict(dict)
+        pattern = {
+            "h": ["_", "_", "_", "_"], # todo: make pattern length dynamic
+            "k": ["_", "_", "_", "_"],
+            "s": ["_", "_", "_", "_"]
+            }
+
+        for n, s in enumerate(midi_steps.items()):
+            notes = s[1]
+            for note in notes:
+                sh = drumkit_note_shs[note]
+                pattern[sh][n] = "x"
+
+        patterns["01"] = pattern
+        return patterns
