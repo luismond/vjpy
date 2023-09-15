@@ -20,15 +20,16 @@ class VideoDevice:
         self.beatname = beatname
         self.bpm = vj.bpm
         self.note_value = vj.note_value
+        print(self.note_value)
 
     def make_videoclip(self):
         """Make a video object."""
         filepath = os.path.join("soundbanks", self.bankname, f"{self.bankname}.mp4")
         return VideoFileClip(filepath)
 
-    def get_subclip(self, videoclip, start=0):
+    def get_subclip(self, videoclip, start=0, x=1):
         """Get a subclip from a video object."""
-        return videoclip.subclip(start, start + self.note_value)
+        return videoclip.subclip(start, start + self.note_value*x)
 
     def concatenate_subclips(self, subclips):
         """Concatenate an array of subclips."""
