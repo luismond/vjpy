@@ -31,6 +31,19 @@ class NoteValue(BaseModel):
     name: str
     relative_value: float
 
+class Bass(BaseModel):
+    """Object representing a bass guitar."""
+
+    name: str
+    notes: dict
+
+class BassNote(BaseModel):
+    """Object representing a bass note."""
+
+    name: str
+    note: int
+    short_hand: str
+    clip: Optional[Any] = None
 
 # todo: develop the pattern model
 # patterns = {
