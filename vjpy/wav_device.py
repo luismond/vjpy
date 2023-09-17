@@ -17,42 +17,35 @@ class WavDevice:
         self.drumkit_sh_names = vj.drumkit_sh_names
         self.drumkit_note_names = vj.drumkit_note_names
         self.note_value = vj.note_value
+        self.sample_rate = 44100
+        self.frames_duration = round(self.sample_rate*self.note_value)
 
     def play_wav(self, filepath, block=False):
         """Play a wav file."""
         playsound(filepath, block=block)
 
-    def concatenate_wavs(self, wav_paths, output_filename, play=False):
+    def concatenate_wavs(self, wav_paths):
         """Concatenate an array of wavs."""
         wav_array = []
         for wav_path in wav_paths:
             _, data = wavfile.read(wav_path)
-            wav_array.append(data)
+            wav_array.append(data[:self.frames_duration])
         wav_concat = np.concatenate(wav_array)
-        concat_wav_path = os.path.join(self.wav_dir, "examples", output_filename)
-        self.write_wav(concat_wav_path, wav_concat)
-        if play:
-            self.play_wav(concat_wav_path)
         return wav_concat
 
     def write_wav(self, filepath, wav_object):
         """Write a wav file."""
-        sample_rate = 44100
-        write(filepath, sample_rate, wav_object)
+        write(filepath, self.sample_rate, wav_object)
 
-    def mix_wavs(self, wav_paths, output_filename, play=False):
+    def mix_wavs(self, wav_paths):
         """Mix an array of wavs."""
         wav_array = []
         for wav_path in wav_paths:
             _, data = wavfile.read(wav_path)
-            wav_array.append(data)
+            wav_array.append(data[:self.frames_duration])
         wav_mixed = wav_array[0]
         for wav in wav_array[1:]:
             wav_mixed += wav
-        mixed_wav_path = os.path.join(self.wav_dir, "examples", output_filename)
-        self.write_wav(mixed_wav_path, wav_mixed)
-        if play:
-            self.play_wav(mixed_wav_path)
         return wav_mixed
 
     def wav_patterns_to_steps(self, patterns):
@@ -68,36 +61,26 @@ class WavDevice:
                         steps[key].append("silence.wav")
         return steps
 
-    def render_wav_steps(self, steps, output_filename, play=False):
+    def render_wav_steps(self, steps):
         """Concatenate & mix wav files from a dictionary of wav names."""
         wavs_concat = []
         for dname, step in steps.items():
             wav_paths = [os.path.join(self.drumkit_dir, wn) for wn in step]
-            wav_concat = self.concatenate_wavs(wav_paths, f"{dname}.wav")
+            wav_concat = self.concatenate_wavs(wav_paths)
             wavs_concat.append(wav_concat)
-
         wav_mixed = wavs_concat[0]
         for wav in wavs_concat[1:]:
             wav_mixed += wav
-        mixed_wav_path = os.path.join(self.wav_dir, "examples", output_filename)
-        self.write_wav(mixed_wav_path, wav_mixed)
-        if play:
-            self.play_wav(mixed_wav_path)
         return wav_mixed
 
-    def render_midi_steps(self, steps, output_filename, play=False):
+    def render_midi_steps(self, steps):
         """Mix & concatenate wav files from a dictionary of midi notes."""
         wavs_mixed = []
         for dname, step in steps.items():
             wav_list = [os.path.join(
                 self.drumkit_dir,
                 f"{self.drumkit_note_names[note]}.wav") for note in step]
-            wav_mixed = self.mix_wavs(wav_list, f"{dname}.wav")
+            wav_mixed = self.mix_wavs(wav_list)
             wavs_mixed.append(wav_mixed)
-
         wav_concat = np.concatenate(wavs_mixed)
-        concat_wav_path = os.path.join(self.wav_dir, "examples", output_filename)
-        self.write_wav(concat_wav_path, wav_concat)
-        if play:
-            self.play_wav(concat_wav_path)
         return wav_concat
