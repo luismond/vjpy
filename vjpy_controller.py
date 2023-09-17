@@ -22,17 +22,32 @@ wav_names = ["snare.wav", "hat.wav", "kick.wav"]
 wav_paths = [os.path.join(wd.drumkit_dir, wav_name) for wav_name in wav_names]
 wd.play_wav(wav_paths[0])
 # %%  Concatenate wavs
-wav_concat = wd.concatenate_wavs(wav_paths, "concat_wavs.wav", play=True)
+wav_concat = wd.concatenate_wavs(wav_paths)
+concat_wav_path = os.path.join(wd.wav_dir, "examples", "concat_wavs.wav")
+wd.write_wav(concat_wav_path, wav_concat)
+wd.play_wav(concat_wav_path)
+
 # %%   Mix wavs
-wav_mixed = wd.mix_wavs(wav_paths, "mixed_wavs.wav", play=True)
+wav_mixed = wd.mix_wavs(wav_paths)
+mixed_wav_path = os.path.join(wd.wav_dir, "examples", "mixed_wavs.wav")
+wd.write_wav(mixed_wav_path, wav_mixed)
+wd.play_wav(mixed_wav_path)
+
 # %%  Render wav pattern
 steps = wd.wav_patterns_to_steps(patterns)
-patt_concat = wd.render_wav_steps(steps, "rendered_wav_pattern.wav", play=True)
+patt_concat = wd.render_wav_steps(steps)
+mixed_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_wav_pattern.wav")
+wd.write_wav(mixed_wav_path, patt_concat)
+wd.play_wav(mixed_wav_path)
+
 # %% Parse a MIDI file, render a target wav and play it
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 midi_steps = md.parse_midi_file(filename)
-midi_patt_wav = wd.render_midi_steps(midi_steps, "rendered_midi_pattern.wav", play=True)
+midi_patt_wav = wd.render_midi_steps(midi_steps)
 
+concat_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_midi_pattern.wav")
+wd.write_wav(concat_wav_path, midi_patt_wav)
+wd.play_wav(concat_wav_path)
 
 # %% Make a video object
 videoclip = vd.make_videoclip()
