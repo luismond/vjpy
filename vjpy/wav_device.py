@@ -33,6 +33,10 @@ class WavDevice:
         wav_concat = np.concatenate(wav_array)
         return wav_concat
 
+    @staticmethod
+    def wav_stereo_to_mono(wav_object):
+        return np.int16(wav_object.sum(axis=1) / 2)
+
     def write_wav(self, filepath, wav_object):
         """Write a wav file."""
         write(filepath, self.sample_rate, wav_object)
