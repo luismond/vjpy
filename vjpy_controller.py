@@ -7,7 +7,7 @@ vj = VjPyDevice()
 
 md = MidiDevice(vj)
 wd = WavDevice(vj)
-vd = VideoDevice(vj, bankname="drums_03", beatname="14")
+vd = VideoDevice(vj, bankname="drums_03", beatname="15")
 
 # %% Play MIDI note
 md.play_note(note=44, velocity=120, duration=0)
@@ -58,31 +58,33 @@ vdk = Drumkit(
     name="videokit",
     drums={
         "k": Drum(name="kick", note=36, short_hand="k", clip=vd.get_subclip(videoclip, start=24.950)),
-        "h": Drum(name="hat", note=42, short_hand="h", clip=vd.get_subclip(videoclip, start=21.290)),
         "s": Drum(name="snare", note=38, short_hand="s", clip=vd.get_subclip(videoclip, start=27.513)),
         "z": Drum(name="snare2", note=40, short_hand="z", clip=vd.get_subclip(videoclip, start=29.512)),
-        "r": Drum(name='ride', note=51, short_hand="r", clip=vd.get_subclip(videoclip, start=03.710)),
-        "x": Drum(name="china", note=57, short_hand="x", clip=vd.get_subclip(videoclip, start=07.137)),
-        "c": Drum(name="crash", note=49, short_hand="c", clip=vd.get_subclip(videoclip, start=09.770)),
-        "o": Drum(name="hat_open", note=82, short_hand="o", clip=vd.get_subclip(videoclip, start=23.113)),
         "t": Drum(name="tom1", note=45, short_hand="t", clip=vd.get_subclip(videoclip, start=31.505)),
-        "w": Drum(name="tom2", note=41, short_hand="w", clip=vd.get_subclip(videoclip, start=37.160)),
+        "w": Drum(name="tom2", note=43, short_hand="w", clip=vd.get_subclip(videoclip, start=37.160)),
+
+        "r": Drum(name='ride', note=51, short_hand="r", clip=vd.get_subclip(videoclip, start=03.710)),
+        "x": Drum(name="china", note=49, short_hand="x", clip=vd.get_subclip(videoclip, start=07.137)),
+        "c": Drum(name="crash", note=57, short_hand="c", clip=vd.get_subclip(videoclip, start=09.770)),
+        "h": Drum(name="hat", note=42, short_hand="h", clip=vd.get_subclip(videoclip, start=21.290)),
+        "o": Drum(name="hat_open", note=46, short_hand="o", clip=vd.get_subclip(videoclip, start=23.113)),
+
         "_": Drum(name="silence", note=0, short_hand="_", clip=vd.get_subclip(videoclip, start=06.005)),
         }
     )
 
 
 # %% Concatenate drum subclips acordding to patterns
-vd.concat_drum_subpatterns(patterns, vdk, loops_n=2)
+#vd.concat_drum_subpatterns(patterns, vdk, loops_n=2)
 # %% Composite a polyphonic, vertical video array from the concatenated drum subclips
-vd.composite_vertical_videobeat(patterns)
+#vd.composite_vertical_videobeat(patterns)
 
 # %% Read a MIDI file, render a target video
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 midi_steps = md.parse_midi_file(filename)
 #%%
 patterns = vd.midi_steps_to_pattern(midi_steps, vdk)
-vd.concat_drum_subpatterns(patterns, vdk, loops_n=2)
+vd.concat_drum_subpatterns(patterns, vdk, loops_n=1)
 vd.composite_vertical_videobeat(patterns)
 
 #%% Read a MIDI file, render a three-array video

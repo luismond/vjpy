@@ -85,6 +85,7 @@ class MidiDevice:
             if msg.type == "note_on":
                 step += msg.time
                 steps[step].append(msg.note)
+                print(msg.note)
         return steps
 
     def play_steps(self, steps):
