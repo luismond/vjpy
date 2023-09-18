@@ -5,7 +5,7 @@ from playsound import playsound
 from scipy.io import wavfile
 from scipy.io.wavfile import write
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 class WavDevice:
     """Audio device to manipulate wav files."""
@@ -84,3 +84,13 @@ class WavDevice:
             wavs_mixed.append(wav_mixed)
         wav_concat = np.concatenate(wavs_mixed)
         return wav_concat
+
+    def plot_wav(self, wav_object):
+        length = wav_object.shape[0] / self.sample_rate
+        time = np.linspace(0., length, wav_object.shape[0])
+        plt.plot(time, wav_object, label="data")
+        plt.legend()
+        plt.xlabel("Time [s]")
+        plt.ylabel("Amplitude")
+        plt.show()
+
