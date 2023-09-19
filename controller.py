@@ -3,7 +3,7 @@ import os
 from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice, patterns
 from vjpy import Drumkit, Drum
 
-vj = VjPyDevice()
+vj = VjPyDevice(bpm=100)
 
 md = MidiDevice(vj)
 wd = WavDevice(vj)
@@ -51,9 +51,9 @@ wd.play_wav(concat_wav_path)
 
 # %% Make a video object
 videoclip = vd.make_videoclip()
-# %% Make a video subclip
+# Make a video subclip
 subclip = vd.get_subclip(videoclip, start=03.710) # ride
-# %% Define a video drum kit
+# Define a video drum kit
 vdk = Drumkit(
     name="videokit",
     drums={
@@ -69,7 +69,7 @@ vdk = Drumkit(
         "h": Drum(name="hat", note=42, short_hand="h", clip=vd.get_subclip(videoclip, start=21.2910)),
         "o": Drum(name="hat_open", note=46, short_hand="o", clip=vd.get_subclip(videoclip, start=23.0869)),
 
-        "_": Drum(name="silence", note=0, short_hand="_", clip=vd.get_subclip(videoclip, start=06.005)),
+        "_": Drum(name="silence", note=81, short_hand="_", clip=vd.get_subclip(videoclip, start=06.005)),
         }
     )
 
@@ -97,8 +97,9 @@ filename = os.path.join(md.midi_data_dir, "mono_test.mid")
 midi_steps_ = md.parse_midi_file(filename)
 midi_steps = []
 for x in midi_steps_:
-    y = midi_steps_[x][0]
-    midi_steps.append(y)
+    y = midi_steps_[x]
+    midi_steps.append(y[0])
+
 
 drumkit_note_shs = {}
 for drum in vdk.drums.values():
@@ -111,6 +112,6 @@ for note in midi_steps:
     subclip = vdk.drums[sh].clip
     subclips.append(subclip)
 
-final_clip = vd.concatenate_subclips(subclips*2)
+final_clip = vd.concatenate_subclips(subclips*4)
 vd.write_concatenated_subclips(final_clip, "final_clip.mp4")
 
