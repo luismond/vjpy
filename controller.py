@@ -63,11 +63,11 @@ vdk = Drumkit(
         "t": Drum(name="tom1", note=45, short_hand="t", clip=vd.get_subclip(videoclip, start=31.4610)),
         "w": Drum(name="tom2", note=43, short_hand="w", clip=vd.get_subclip(videoclip, start=38.9788)),
 
-        "r": Drum(name='ride', note=51, short_hand="r", clip=vd.get_subclip(videoclip, start=03.740)),
+        "r": Drum(name='ride', note=51, short_hand="r", clip=vd.get_subclip(videoclip, start=03.7158)),
         "x": Drum(name="china", note=49, short_hand="x", clip=vd.get_subclip(videoclip, start=07.1222)),
         "c": Drum(name="crash", note=57, short_hand="c", clip=vd.get_subclip(videoclip, start=09.7210)),
         "h": Drum(name="hat", note=42, short_hand="h", clip=vd.get_subclip(videoclip, start=21.2910)),
-        "o": Drum(name="hat_open", note=46, short_hand="o", clip=vd.get_subclip(videoclip, start=23.113)),
+        "o": Drum(name="hat_open", note=46, short_hand="o", clip=vd.get_subclip(videoclip, start=23.0869)),
 
         "_": Drum(name="silence", note=0, short_hand="_", clip=vd.get_subclip(videoclip, start=06.005)),
         }
