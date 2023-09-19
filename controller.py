@@ -79,8 +79,8 @@ vdk = Drumkit(
 #vd.composite_vertical_videobeat(patterns)
 
 # %% Read a MIDI file, render a target video
-filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
-midi_steps = md.parse_midi_file(filename)
+# filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
+# midi_steps = md.parse_midi_file(filename)
 #%%
 patterns = vd.midi_steps_to_pattern(midi_steps, vdk)
 vd.concat_drum_subpatterns(patterns, vdk, loops_n=1)
@@ -88,15 +88,20 @@ vd.composite_vertical_videobeat(patterns)
 
 #%% Read a monophonic MIDI file, render a 1-array video
 
-filename = os.path.join(md.midi_data_dir, "notes_test.mid")
-midi_steps = md.parse_midi_file(filename)
-
+filename = os.path.join(md.midi_data_dir, "mono_test.mid")
+midi_steps_ = md.parse_midi_file(filename)
+midi_steps = []
+for x in midi_steps_:
+    y = midi_steps_[x][0]
+    midi_steps.append(y)
+#%%
 drumkit_note_shs = {}
 for drum in vdk.drums.values():
     drumkit_note_shs[drum.note] = drum.short_hand
 
+#%%
 subclips = []
-for note in midi_steps[0]:
+for note in midi_steps:
     sh = drumkit_note_shs[note]
     subclip = vdk.drums[sh].clip
     subclips.append(subclip)
