@@ -58,15 +58,15 @@ vdk = Drumkit(
     name="videokit",
     drums={
         "k": Drum(name="kick", note=36, short_hand="k", clip=vd.get_subclip(videoclip, start=24.950)),
-        "s": Drum(name="snare", note=38, short_hand="s", clip=vd.get_subclip(videoclip, start=27.513)),
-        "z": Drum(name="snare2", note=40, short_hand="z", clip=vd.get_subclip(videoclip, start=29.512)),
-        "t": Drum(name="tom1", note=45, short_hand="t", clip=vd.get_subclip(videoclip, start=31.505)),
-        "w": Drum(name="tom2", note=43, short_hand="w", clip=vd.get_subclip(videoclip, start=37.160)),
+        "s": Drum(name="snare", note=38, short_hand="s", clip=vd.get_subclip(videoclip, start=27.5128)),
+        "z": Drum(name="snare2", note=40, short_hand="z", clip=vd.get_subclip(videoclip, start=29.5085)),
+        "t": Drum(name="tom1", note=45, short_hand="t", clip=vd.get_subclip(videoclip, start=31.4610)),
+        "w": Drum(name="tom2", note=43, short_hand="w", clip=vd.get_subclip(videoclip, start=38.9788)),
 
-        "r": Drum(name='ride', note=51, short_hand="r", clip=vd.get_subclip(videoclip, start=03.710)),
-        "x": Drum(name="china", note=49, short_hand="x", clip=vd.get_subclip(videoclip, start=07.137)),
-        "c": Drum(name="crash", note=57, short_hand="c", clip=vd.get_subclip(videoclip, start=09.770)),
-        "h": Drum(name="hat", note=42, short_hand="h", clip=vd.get_subclip(videoclip, start=21.290)),
+        "r": Drum(name='ride', note=51, short_hand="r", clip=vd.get_subclip(videoclip, start=03.740)),
+        "x": Drum(name="china", note=49, short_hand="x", clip=vd.get_subclip(videoclip, start=07.1222)),
+        "c": Drum(name="crash", note=57, short_hand="c", clip=vd.get_subclip(videoclip, start=09.7210)),
+        "h": Drum(name="hat", note=42, short_hand="h", clip=vd.get_subclip(videoclip, start=21.2910)),
         "o": Drum(name="hat_open", note=46, short_hand="o", clip=vd.get_subclip(videoclip, start=23.113)),
 
         "_": Drum(name="silence", note=0, short_hand="_", clip=vd.get_subclip(videoclip, start=06.005)),
@@ -87,6 +87,11 @@ vd.concat_drum_subpatterns(patterns, vdk, loops_n=1)
 vd.composite_vertical_videobeat(patterns)
 
 #%% Read a monophonic MIDI file, render a 1-array video
+import os
+from vjpy import VjPyDevice, MidiDevice
+from vjpy import Drumkit, Drum
+vj = VjPyDevice()
+md = MidiDevice(vj)
 
 filename = os.path.join(md.midi_data_dir, "mono_test.mid")
 midi_steps_ = md.parse_midi_file(filename)
@@ -94,18 +99,18 @@ midi_steps = []
 for x in midi_steps_:
     y = midi_steps_[x][0]
     midi_steps.append(y)
-#%%
+
 drumkit_note_shs = {}
 for drum in vdk.drums.values():
     drumkit_note_shs[drum.note] = drum.short_hand
 
-#%%
+
 subclips = []
 for note in midi_steps:
     sh = drumkit_note_shs[note]
     subclip = vdk.drums[sh].clip
     subclips.append(subclip)
 
-final_clip = vd.concatenate_subclips(subclips*4)
+final_clip = vd.concatenate_subclips(subclips*2)
 vd.write_concatenated_subclips(final_clip, "final_clip.mp4")
 
