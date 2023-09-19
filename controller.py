@@ -73,7 +73,6 @@ vdk = Drumkit(
         }
     )
 
-
 # %% Concatenate drum subclips acordding to patterns
 #vd.concat_drum_subpatterns(patterns, vdk, loops_n=2)
 # %% Composite a polyphonic, vertical video array from the concatenated drum subclips
@@ -87,4 +86,21 @@ patterns = vd.midi_steps_to_pattern(midi_steps, vdk)
 vd.concat_drum_subpatterns(patterns, vdk, loops_n=1)
 vd.composite_vertical_videobeat(patterns)
 
-#%% Read a MIDI file, render a three-array video
+#%% Read a monophonic MIDI file, render a 1-array video
+
+filename = os.path.join(md.midi_data_dir, "notes_test.mid")
+midi_steps = md.parse_midi_file(filename)
+
+drumkit_note_shs = {}
+for drum in vdk.drums.values():
+    drumkit_note_shs[drum.note] = drum.short_hand
+
+subclips = []
+for note in midi_steps[0]:
+    sh = drumkit_note_shs[note]
+    subclip = vdk.drums[sh].clip
+    subclips.append(subclip)
+
+final_clip = vd.concatenate_subclips(subclips*4)
+vd.write_concatenated_subclips(final_clip, "final_clip.mp4")
+
