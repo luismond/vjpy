@@ -1,7 +1,8 @@
 """MIDI device class."""
-import os, time
-import librosa
+import os
+import time
 from collections import defaultdict
+import librosa
 from playsound import playsound
 from scipy.io import wavfile
 from scipy.io.wavfile import write
@@ -70,7 +71,7 @@ class WavDevice:
     def render_wav_steps(self, steps):
         """Concatenate & mix wav files from a dictionary of wav names."""
         wavs_concat = []
-        for dname, step in steps.items():
+        for _, step in steps.items():
             wav_paths = [os.path.join(self.drumkit_dir, wn) for wn in step]
             wav_concat = self.concatenate_wavs(wav_paths)
             wavs_concat.append(wav_concat)
@@ -82,7 +83,7 @@ class WavDevice:
     def render_midi_steps(self, steps):
         """Mix & concatenate wav files from a dictionary of midi notes."""
         wavs_mixed = []
-        for dname, step in steps.items():
+        for _, step in steps.items():
             wav_list = [os.path.join(
                 self.drumkit_dir,
                 f"{self.drumkit_note_names[note]}.wav") for note in step]
@@ -93,27 +94,27 @@ class WavDevice:
 
     def plot_wav(self, wav_object):
         length = wav_object.shape[0] / self.sample_rate
-        time = np.linspace(0., length, wav_object.shape[0])
-        plt.plot(time, wav_object, label="data")
+        time_ = np.linspace(0., length, wav_object.shape[0])
+        plt.plot(time_, wav_object, label="data")
         plt.legend()
         plt.xlabel("Time [s]")
         plt.ylabel("Amplitude")
         plt.show()
-    
+
     def find_local_energy_peaks(self, filepath, sample_rate, prominence=3):
-        x, Fs = librosa.load(filepath) 
+        wav_object, _ = librosa.load(filepath)
         N = 2048
         w = signal.hann(N)
-        x_square = x**2
+        x_square = wav_object**2
         energy_local = np.convolve(x_square, w**2, 'same')
         peaks = signal.find_peaks(energy_local, prominence=prominence)[0]
         return peaks
-    
+
     def play_peaks(self, filepath, sample_rate, peaks):
-        x, Fs = librosa.load(filepath) 
+        wav_object, _ = librosa.load(filepath)
         for peak in peaks:
-            peak = x[peak-500:peak+7000]
-            write('test.wav', 22050, peak)
+            peak = wav_object[peak-500:peak+7000]
+            write('test.wav', sample_rate, peak)
             self.play_wav('test.wav', block=True)
             time.sleep(.5)
         os.remove("test.wav")

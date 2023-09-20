@@ -1,8 +1,5 @@
 """vjpy controller."""
 import os
-import time
-import librosa
-from scipy.io.wavfile import write
 from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice, patterns
 from vjpy import Drumkit, Drum
 
@@ -54,9 +51,8 @@ wd.play_wav(concat_wav_path)
 
 # %% Onset detection (poor man's Propellerheads' Recycle)
 filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
-sample_rate = 44100
-peaks = wd.find_local_energy_peaks(filepath, sample_rate, 3)
-wd.play_peaks(filepath, sample_rate, peaks)
+peaks = wd.find_local_energy_peaks(filepath, 44100, prominence=3)
+wd.play_peaks(filepath, 44100, peaks)
 
 # %% Make a video object
 videoclip = vd.make_videoclip()
@@ -96,11 +92,6 @@ vd.concat_drum_subpatterns(patterns, vdk, loops_n=1)
 vd.composite_vertical_videobeat(patterns)
 
 #%% Read a monophonic MIDI file, render a 1-array video
-import os
-from vjpy import VjPyDevice, MidiDevice
-from vjpy import Drumkit, Drum
-vj = VjPyDevice()
-md = MidiDevice(vj)
 
 filename = os.path.join(md.midi_data_dir, "mono_test.mid")
 midi_steps_ = md.parse_midi_file(filename)
