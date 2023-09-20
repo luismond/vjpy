@@ -1,9 +1,11 @@
 """MIDI device class."""
-import os
+import os, time
+import librosa
 from collections import defaultdict
 from playsound import playsound
 from scipy.io import wavfile
 from scipy.io.wavfile import write
+from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -97,4 +99,21 @@ class WavDevice:
         plt.xlabel("Time [s]")
         plt.ylabel("Amplitude")
         plt.show()
-
+    
+    def find_local_energy_peaks(self, filepath, sample_rate, prominence=3):
+        x, Fs = librosa.load(filepath) 
+        N = 2048
+        w = signal.hann(N)
+        x_square = x**2
+        energy_local = np.convolve(x_square, w**2, 'same')
+        peaks = signal.find_peaks(energy_local, prominence=prominence)[0]
+        return peaks
+    
+    def play_peaks(self, filepath, sample_rate, peaks):
+        x, Fs = librosa.load(filepath) 
+        for peak in peaks:
+            peak = x[peak-500:peak+7000]
+            write('test.wav', 22050, peak)
+            self.play_wav('test.wav', block=True)
+            time.sleep(.5)
+        os.remove("test.wav")
