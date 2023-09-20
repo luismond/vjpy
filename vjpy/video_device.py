@@ -20,7 +20,6 @@ class VideoDevice:
         self.beatname = beatname
         self.bpm = vj.bpm
         self.note_value = vj.note_value
-        print(self.note_value)
 
     def make_videoclip(self):
         """Make a video object."""
