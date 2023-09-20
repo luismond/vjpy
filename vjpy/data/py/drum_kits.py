@@ -23,7 +23,7 @@ drum_kits = {
             "kick": Drum(name="kick", note=36, short_hand="k", emoji="🥾"),
             "snare": Drum(name="snare", note=38, short_hand="s", emoji="👏"),
             "hat": Drum(name="hat", note=42, short_hand="h", emoji="🔔"),
-            "hat_open": Drum(name="hat_open", note=46, short_hand="o", emoji="🐍"),
+            "hat_open": Drum(name="hat_open", note=40, short_hand="o", emoji="🐍"),
             "silence": Drum(name="silence", note=81, short_hand="_")
             }
         )

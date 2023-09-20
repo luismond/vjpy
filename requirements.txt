@@ -9,3 +9,5 @@ jupyterlab==4.0.3
 moviepy==1.0.3
 python-dotenv==1.0.0
 moviepy==1.0.3
+librosa
+libfmp

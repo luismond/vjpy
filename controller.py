@@ -49,6 +49,11 @@ concat_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_midi_pattern.wa
 wd.write_wav(concat_wav_path, midi_patt_wav)
 wd.play_wav(concat_wav_path)
 
+# %% Onset detection (poor man's Propellerheads' Recycle)
+filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
+peaks = wd.find_local_energy_peaks(filepath, 44100, prominence=3)
+wd.play_peaks(filepath, 44100, peaks)
+
 # %% Make a video object
 videoclip = vd.make_videoclip()
 # Make a video subclip
@@ -87,11 +92,6 @@ vd.concat_drum_subpatterns(patterns, vdk, loops_n=1)
 vd.composite_vertical_videobeat(patterns)
 
 #%% Read a monophonic MIDI file, render a 1-array video
-import os
-from vjpy import VjPyDevice, MidiDevice
-from vjpy import Drumkit, Drum
-vj = VjPyDevice()
-md = MidiDevice(vj)
 
 filename = os.path.join(md.midi_data_dir, "mono_test.mid")
 midi_steps_ = md.parse_midi_file(filename)
@@ -114,4 +114,3 @@ for note in midi_steps:
 
 final_clip = vd.concatenate_subclips(subclips*4)
 vd.write_concatenated_subclips(final_clip, "final_clip.mp4")
-
