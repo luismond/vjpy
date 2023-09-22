@@ -23,7 +23,7 @@ class WavDevice:
         self.sample_rate = 44100
         self.frames_duration = round(self.sample_rate*self.note_value)
 
-    def play_wav(self, filepath, block=False):
+    def play_wav(self, filepath, block=True):
         """Play a wav file."""
         playsound(filepath, block=block)
 

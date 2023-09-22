@@ -9,6 +9,7 @@ from moviepy.editor import (
     clips_array,
     vfx
     )
+from vjpy import Drumkit, Drum
 # from moviepy.audio.fx.all import volumex
 
 
@@ -116,6 +117,47 @@ class VideoDevice:
         patterns = defaultdict(dict)
         patterns["01"] = pattern
         return patterns
+
+    def get_vdk(self, videoclip):
+        vdk = Drumkit(
+            name="videokit",
+            drums={
+                "k": Drum(name="kick", note=36, short_hand="k", clip=self.get_subclip(videoclip, start=24.950)),
+                "s": Drum(name="snare", note=38, short_hand="s", clip=self.get_subclip(videoclip, start=27.5128)),
+                "z": Drum(name="snare2", note=40, short_hand="z", clip=self.get_subclip(videoclip, start=29.5085)),
+                "t": Drum(name="tom1", note=45, short_hand="t", clip=self.get_subclip(videoclip, start=31.4610)),
+                "w": Drum(name="tom2", note=43, short_hand="w", clip=self.get_subclip(videoclip, start=38.9788)),
+        
+                "r": Drum(name='ride', note=51, short_hand="r", clip=self.get_subclip(videoclip, start=03.7158)),
+                "x": Drum(name="china", note=49, short_hand="x", clip=self.get_subclip(videoclip, start=07.1222)),
+                "c": Drum(name="crash", note=57, short_hand="c", clip=self.get_subclip(videoclip, start=09.7210)),
+                "h": Drum(name="hat", note=42, short_hand="h", clip=self.get_subclip(videoclip, start=21.2910)),
+                "o": Drum(name="hat_open", note=46, short_hand="o", clip=self.get_subclip(videoclip, start=23.0869)),
+        
+                "_": Drum(name="silence", note=81, short_hand="_", clip=self.get_subclip(videoclip, start=06.005)),
+                }
+            )
+        return vdk
+
+    
+    def render_monophonic_video(self, vdk, videoclip, midi_steps):
+        midi_steps_ = []
+        for x in midi_steps:
+            y = midi_steps[x]
+            midi_steps_.append(y[0])
+    
+        drumkit_note_shs = {}
+        for drum in vdk.drums.values():
+            drumkit_note_shs[drum.note] = drum.short_hand
+    
+        subclips = []
+        for note in midi_steps_:
+            sh = drumkit_note_shs[note]
+            subclip = vdk.drums[sh].clip
+            subclips.append(subclip)
+    
+        final_clip = self.concatenate_subclips(subclips*4)
+        self.write_concatenated_subclips(final_clip, "final_clip.mp4")
 
     # def midi_steps_to_pattern_triple_array(self, midi_steps, vdk):
     #     """Convert a parsed midi steps dictionary to vjpy pattern for 3-array video beat."""
