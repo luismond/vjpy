@@ -95,9 +95,12 @@ class WavDevice:
     def plot_wav(self, wav_object):
         length = wav_object.shape[0] / self.sample_rate
         time_ = np.linspace(0., length, wav_object.shape[0])
+        plt.figure(figsize=(8, 1))
+        x = time_
+        plt.xticks(np.arange(min(x), max(x)+1, 0.2))
         plt.plot(time_, wav_object, label="data")
         plt.legend()
-        plt.xlabel("Time [s]")
+        plt.xlabel("Time [s]", fontsize=8)
         plt.ylabel("Amplitude")
         plt.show()
 
@@ -108,13 +111,15 @@ class WavDevice:
         x_square = wav_object**2
         energy_local = np.convolve(x_square, w**2, 'same')
         peaks = signal.find_peaks(energy_local, prominence=prominence)[0]
+        print(f'Found {len(peaks)} peaks.')
         return peaks
 
     def play_peaks(self, filepath, sample_rate, peaks):
         wav_object, _ = librosa.load(filepath)
         for peak in peaks:
-            peak = wav_object[peak-500:peak+7000]
-            write('test.wav', sample_rate, peak)
+            wav_chunk = wav_object[peak-500:peak+7000]
+            self.plot_wav(wav_chunk)
+            write('test.wav', sample_rate, wav_chunk)
             self.play_wav('test.wav', block=True)
             time.sleep(.5)
         os.remove("test.wav")

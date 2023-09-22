@@ -20,6 +20,7 @@ class VideoDevice:
         self.beatname = beatname
         self.bpm = vj.bpm
         self.note_value = vj.note_value
+        self.wav_file = os.path.join("soundbanks", self.bankname, f"{self.bankname}.wav")
 
     def make_videoclip(self):
         """Make a video object."""
