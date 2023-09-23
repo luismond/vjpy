@@ -8,10 +8,10 @@ md = MidiDevice(vj)
 wd = WavDevice(vj)
 vd = VideoDevice(vj, bankname="drums_03", beatname="15")
 
-# Play MIDI file
-print('playing midi file')
-filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
-md.play_midi_file(filename)
+# # Play MIDI file
+# print('playing midi file')
+# filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
+# md.play_midi_file(filename)
 
 # Play wav
 print('playing snare.wav')
@@ -46,7 +46,7 @@ wd.play_wav(midi_patt_wav_path)
 # Onset detection
 print('Onset detection')
 filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
-peaks = wd.find_local_energy_peaks(filepath, 44100, prominence=3)
+peaks = wd.find_local_energy_peaks(filepath, prominence=3)
 wd.play_peaks(filepath, 44100, peaks)
 
 # Make a video object
