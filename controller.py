@@ -36,22 +36,16 @@ mixed_wav_path = os.path.join(wd.wav_dir, "examples", "mixed_wavs.wav")
 wd.write_wav(mixed_wav_path, wav_mixed)
 wd.play_wav(mixed_wav_path)
 
-#%% Render wav pattern
-# steps = wd.wav_patterns_to_steps(patterns)
-# patt_concat = wd.render_wav_steps(steps)
-# mixed_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_wav_pattern.wav")
-# wd.write_wav(mixed_wav_path, patt_concat)
-# wd.play_wav(mixed_wav_path)
-
 # Parse a MIDI file, render a target wav and play it
+print('Rendering drum_beat.mid')
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 midi_steps = md.parse_midi_file(filename)
 midi_patt_wav = wd.render_midi_steps(midi_steps)
 
-concat_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_midi_pattern.wav")
-wd.write_wav(concat_wav_path, midi_patt_wav)
-wd.play_wav(concat_wav_path)
-
+midi_patt_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_midi_pattern.wav")
+wd.write_wav(midi_patt_wav_path, midi_patt_wav)
+wd.play_wav(midi_patt_wav_path)
+#%%
 # Onset detection (poor man's Propellerheads' Recycle)
 filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
 peaks = wd.find_local_energy_peaks(filepath, 44100, prominence=3)
