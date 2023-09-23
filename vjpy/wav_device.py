@@ -10,6 +10,7 @@ from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 class WavDevice:
     """Audio device to manipulate wav files."""
 
@@ -38,6 +39,7 @@ class WavDevice:
 
     @staticmethod
     def wav_stereo_to_mono(wav_object):
+        """Wav stereo to mono."""
         return np.int16(wav_object.sum(axis=1) / 2)
 
     def write_wav(self, filepath, wav_object):
@@ -93,6 +95,7 @@ class WavDevice:
         return wav_concat
 
     def plot_wav(self, wav_object):
+        """Plot wav object."""
         length = wav_object.shape[0] / self.sample_rate
         time_ = np.linspace(0., length, wav_object.shape[0])
         plt.figure(figsize=(8, 1))
@@ -105,16 +108,17 @@ class WavDevice:
         plt.show()
 
     def find_local_energy_peaks(self, filepath, sample_rate, prominence=3):
+        """Find local energy peaks."""
         wav_object, _ = librosa.load(filepath)
         N = 2048
         w = signal.hann(N)
         x_square = wav_object**2
         energy_local = np.convolve(x_square, w**2, 'same')
         peaks = signal.find_peaks(energy_local, prominence=prominence)[0]
-        print(f'Found {len(peaks)} peaks.')
         return peaks
 
     def play_peaks(self, filepath, sample_rate, peaks):
+        """Play wav energy peaks."""
         wav_object, _ = librosa.load(filepath)
         for peak in peaks:
             wav_chunk = wav_object[peak-500:peak+7000]
