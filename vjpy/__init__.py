@@ -1,6 +1,6 @@
 """vjpy init"""
 
-from vjpy.data_classes import Pattern, Drumkit, Drum, NoteValue
+from vjpy.data_classes import Drumkit, Drum, NoteValue#, Pattern, 
 from vjpy.data.py.drum_kits import drum_kits
 from vjpy.vjpy_device import VjPyDevice
 from vjpy.midi_device import MidiDevice
