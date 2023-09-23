@@ -6,12 +6,11 @@ from vjpy import NoteValue, drum_kits
 class VjPyDevice:
     """vjpy device."""
 
-    def __init__(self, bpm=200, resolution="1/2"):
+    def __init__(self, bpm=120, resolution="1/2"):
         self.bpm = bpm
-        self.drumkit = drum_kits["myfunkkit"]
         self.note_duration = self.bpm/60
-        self.resolution = resolution
         self.note_value = self.note_values[resolution].relative_value / self.note_duration
+        self.drumkit = drum_kits["myfunkkit"]
 
     @property
     def note_values(self):
@@ -25,22 +24,6 @@ class VjPyDevice:
             '1/32': NoteValue(name='thirty-second_note', relative_value=0.0312)
             }
         return note_values
-
-    @property
-    def drumkit_sh_names(self):
-        """Mapping short-hand-names <-> full-names."""
-        drumkit_sh_names = {}
-        for drum in self.drumkit.drums.values():
-            drumkit_sh_names[drum.short_hand] = drum.name
-        return drumkit_sh_names
-
-    @property
-    def drumkit_sh_notes(self):
-        """Mapping short-hand-names <-> notes."""
-        drumkit_sh_notes = {}
-        for drum in self.drumkit.drums.values():
-            drumkit_sh_notes[drum.short_hand] = drum.note
-        return drumkit_sh_notes
 
     @property
     def drumkit_note_names(self):
