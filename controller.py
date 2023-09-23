@@ -2,7 +2,7 @@
 import os
 from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice
 
-vj = VjPyDevice(bpm=100)
+vj = VjPyDevice()
 
 md = MidiDevice(vj)
 wd = WavDevice(vj)
@@ -59,7 +59,8 @@ videoclip = vd.make_videoclip()
 # Define a video drum kit
 vdk = vd.get_vdk(videoclip)
 
-#%% Read a MIDI file, render a target video
+# Read a MIDI file, render a target video
+print('Rendering video beat from midi')
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 midi_steps = md.parse_midi_file(filename)
 patterns = vd.midi_steps_to_pattern(midi_steps, vdk)

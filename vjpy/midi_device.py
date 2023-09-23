@@ -2,9 +2,9 @@
 
 import os
 import time
-#import random
 from collections import defaultdict
 import mido
+
 
 class MidiDevice:
     """MIDI device."""
@@ -64,44 +64,3 @@ class MidiDevice:
                     msg = mido.Message("note_on", note=note, velocity=120)
                 self.midi_out.send(msg)
             time.sleep(self.note_value)
-
-
-    # def generate_random_pattern(self, patt_len):
-    #     """Generate_random_pattern."""
-    #     short_hands = ["k", "c", "h"]#, "c", "t", "h", "o", "r", "v", "w"]
-    #     # emoji = ["👟", "🥾", "🥁", "👏", "🪘", "🔔", "🐍", "🧂", "🪵", "🐄"]
-    #     random_pattern = []
-    #     for _ in range(patt_len):
-    #         random_pattern.append(random.choice(short_hands))
-    #     return ''.join(random_pattern)
-    
-    # def play_pattern(self, pattern):
-    #     """Play a sequence of notes."""
-    #     for beat in pattern:
-    #         if beat == ' ':
-    #             time.sleep(self.note_value)
-    #         else:
-    #             drum_note = self.drumkit_sh_notes[beat]
-    #             self.play_note(note=drum_note, duration=self.note_value)
-
-    # def play_patterns(self, patterns):
-    #     """
-    #     Play a list of patterns with the following shape.
-
-    #         'pattern_01':
-    #             {
-    #                 #      1   2   3   4   5   6   7   8
-    #                 "h": ["x","x","x","x","x","_","x","_", ], # hi-hat
-    #                 "k": ["x","_","_","_","x","_","x","_", ], # kick
-    #                 "s": ["_","_","x","_","_","x","_","x", ]  # snare
-    #                 },
-    #     """
-    #     for pattern in patterns.values():
-    #         steps = {1: [], 2: [], 3: [], 4: [],
-    #                  5: [], 6: [], 7: [], 8: []}
-    #         for key in pattern:
-    #             for step, hit in enumerate(pattern[key]):
-    #                 if hit == "x":
-    #                     note = self.drumkit_sh_notes[key]
-    #                     steps[step+1].append(note)
-    #         self.play_steps(steps)
