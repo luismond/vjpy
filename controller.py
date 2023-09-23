@@ -8,9 +8,6 @@ md = MidiDevice(vj)
 wd = WavDevice(vj)
 vd = VideoDevice(vj, bankname="drums_03", beatname="15")
 
-# Play MIDI notes
-md.play_note(note=44)
-
 # Play MIDI file
 print('playing midi file')
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
