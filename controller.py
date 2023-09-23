@@ -45,25 +45,21 @@ midi_patt_wav = wd.render_midi_steps(midi_steps)
 midi_patt_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_midi_pattern.wav")
 wd.write_wav(midi_patt_wav_path, midi_patt_wav)
 wd.play_wav(midi_patt_wav_path)
-#%%
-# Onset detection (poor man's Propellerheads' Recycle)
+
+# Onset detection
+print('Onset detection')
 filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
 peaks = wd.find_local_energy_peaks(filepath, 44100, prominence=3)
 wd.play_peaks(filepath, 44100, peaks)
 
 # Make a video object
+print('Video beat making')
 videoclip = vd.make_videoclip()
-# Make a video subclip
-subclip = vd.get_subclip(videoclip, start=03.710) # ride
 
 # Define a video drum kit
 vdk = vd.get_vdk(videoclip)
-# Concatenate drum subclips acordding to patterns
-#vd.concat_drum_subpatterns(patterns, vdk, loops_n=2)
-#  Composite a polyphonic, vertical video array from the concatenated drum subclips
-#vd.composite_vertical_videobeat(patterns)
 
-# Read a MIDI file, render a target video
+#%% Read a MIDI file, render a target video
 filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
 midi_steps = md.parse_midi_file(filename)
 patterns = vd.midi_steps_to_pattern(midi_steps, vdk)
