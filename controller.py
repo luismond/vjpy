@@ -34,17 +34,14 @@ mixed_wav_path = os.path.join(wd.wav_dir, "examples", "mixed_wavs.wav")
 wd.write_wav(mixed_wav_path, wav_mixed)
 wd.play_wav(mixed_wav_path)
 
-#%% Parse a MIDI file, render a target wav and play it
+# Parse a MIDI file, render a target wav and play it
 print('Rendering drum_beat.mid')
-#filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
-#midi_steps = md.parse_midi_file(filename)
 midi_patt_wav = wd.render_midi_steps(midi_steps)
-
 midi_patt_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_midi_pattern.wav")
 wd.write_wav(midi_patt_wav_path, midi_patt_wav)
 wd.play_wav(midi_patt_wav_path)
 
-#%% Onset detection
+# Onset detection
 print('Onset detection')
 filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
 peaks = wd.find_local_energy_peaks(filepath, prominence=3)
