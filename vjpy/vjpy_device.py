@@ -6,7 +6,7 @@ from vjpy import NoteValue, drum_kits
 class VjPyDevice:
     """vjpy device."""
 
-    def __init__(self, bpm=120, resolution="1/2"):
+    def __init__(self, bpm=120, resolution="1/4"):
         self.bpm = bpm
         self.note_duration = self.bpm/60
         self.note_value = self.note_values[resolution].relative_value / self.note_duration
