@@ -10,11 +10,12 @@ vd = VideoDevice(vj)
 
 # Play MIDI file
 print('playing midi file')
-filename = os.path.join(md.midi_data_dir, "drum_beat.mid")
-midi_steps = md.parse_midi_file(filename)
-md.play_midi_file(filename)
+# fn = "drum_beat.mid"
+fn = "rudiments-test.mid"
+filename = os.path.join(md.midi_data_dir, fn)
 
-# Play wav
+md.play_midi_file(filename)
+# %% Play wav
 print('playing snare.wav')
 wav_names = ["snare.wav", "hat.wav", "kick.wav"]
 wav_paths = [os.path.join(wd.drumkit_dir, wav_name) for wav_name in wav_names]
