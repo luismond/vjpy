@@ -45,4 +45,12 @@ drum_kits = {
             "bell": Drum(name="bell", note=81, short_hand="w", emoji="🐄")
             }
         ),
+    "reasonkit2": Drumkit(
+        name="reasonkit2",
+        drums={
+            "tom_high": Drum(name="tom_high", note=39, short_hand="k", emoji="🥾"),
+            "snare": Drum(name="snare", note=38, short_hand="s", emoji="🥁"),
+            "rim": Drum(name="rim", note=40, short_hand="c", emoji="👏")
+            }
+        ),
     }

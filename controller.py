@@ -10,7 +10,8 @@ vd = VideoDevice(vj)
 
 # Play MIDI file
 print('playing midi file')
-fn = "hits.mid"
+fn = "triplets.mid"
+# fn = "hits.mid"
 filename = os.path.join(md.midi_data_dir, fn)
 msgs = md.get_sorted_midi_messages(filename)
 midi_steps = md.get_midi_steps(msgs)
@@ -42,7 +43,7 @@ midi_patt_wav_path = os.path.join(wd.wav_dir, "examples", "rendered_midi_pattern
 wd.write_wav(midi_patt_wav_path, midi_patt_wav)
 wd.play_wav(midi_patt_wav_path)
 
-# Onset detection
+# %% Onset detection
 print('Onset detection')
 filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
 peaks = wd.find_local_energy_peaks(filepath, prominence=3)

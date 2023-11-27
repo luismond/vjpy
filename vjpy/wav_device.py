@@ -39,12 +39,16 @@ class WavDevice:
         """Write a wav file."""
         write(filepath, self.sample_rate, wav_object)
 
-    def mix_wavs(self, wav_paths):
+    def mix_wavs(self, wav_paths, step_duration=None):
         """Mix an array of wavs."""
+        if step_duration is None:
+            frames_end = round(self.sample_rate * 1)
+        else:
+            frames_end = round(self.sample_rate * step_duration)
         wav_array = []
         for wav_path in wav_paths:
             _, data = wavfile.read(wav_path)
-            wav_array.append(data[:self.frames_duration])
+            wav_array.append(data[:frames_end])
         wav_mixed = wav_array[0]
         for wav in wav_array[1:]:
             wav_mixed += wav
@@ -52,20 +56,21 @@ class WavDevice:
 
     def render_midi_steps(self, steps):
         """Mix & concatenate wav files from a dictionary of midi notes."""
+        steps_start = list(steps.keys())
+        steps_duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))]
+        steps_notes = list(steps.values())
+
         wavs_mixed = []
-        for _, step in steps.items():
-            # for note in step:
-            #     print(note)
-            #     self.play_wav(os.path.join(
-            #         self.drumkit_dir,
-            #         f"{self.drumkit_note_names[note]}.wav"
-            #         )
-            #         )
+        for n, step in enumerate(steps_notes):
             wav_list = [os.path.join(
                 self.drumkit_dir,
                 f"{self.drumkit_note_names[note]}.wav") for note in step]
+            if n < len(steps_notes)-1:
+                step_duration = steps_duration[n]
+            else:
+                step_duration = 1
 
-            wav_mixed = self.mix_wavs(wav_list)
+            wav_mixed = self.mix_wavs(wav_list, step_duration)
             wavs_mixed.append(wav_mixed)
         wav_concat = np.concatenate(wavs_mixed)
         return wav_concat
