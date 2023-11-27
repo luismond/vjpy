@@ -10,8 +10,9 @@ vd = VideoDevice(vj)
 
 # Play MIDI file
 print('playing midi file')
-fn = "drum_beat.mid"
+# fn = "drum_beat.mid"
 # fn = "rudiments-test.mid"
+fn = "rudiments-linear.mid"
 filename = os.path.join(md.midi_data_dir, fn)
 msgs = md.get_sorted_midi_messages(filename)
 midi_steps = md.get_midi_steps(msgs)
