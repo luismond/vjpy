@@ -54,9 +54,17 @@ class WavDevice:
         """Mix & concatenate wav files from a dictionary of midi notes."""
         wavs_mixed = []
         for _, step in steps.items():
+            # for note in step:
+            #     print(note)
+            #     self.play_wav(os.path.join(
+            #         self.drumkit_dir,
+            #         f"{self.drumkit_note_names[note]}.wav"
+            #         )
+            #         )
             wav_list = [os.path.join(
                 self.drumkit_dir,
                 f"{self.drumkit_note_names[note]}.wav") for note in step]
+
             wav_mixed = self.mix_wavs(wav_list)
             wavs_mixed.append(wav_mixed)
         wav_concat = np.concatenate(wavs_mixed)

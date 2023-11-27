@@ -16,11 +16,23 @@ class MidiDevice:
         self.note_value = vj.note_value
 
     def play_midi_file(self, filename):
-        """Parse and play a MIDI file."""
+        """
+        Parse and play a MIDI file.
+
+        Hydrogen setup:
+            MIDI driver: ALSA
+            Input: Midi through port-0
+            Output: none
+            Use output note as input note: True
+        """
         msgs = self.get_sorted_midi_messages(filename)
         steps = self.get_midi_steps(msgs)
         steps_start = list(steps.keys())
         steps_notes = list(steps.values())
+        steps_notes_set = set()
+        for step in steps_notes:
+            for note in step:
+                steps_notes_set.add(note)
         steps_duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))]
 
         for n, step in enumerate(steps_notes):
@@ -32,6 +44,7 @@ class MidiDevice:
                 self.midi_out.send(msg)
             if n < len(steps_notes)-1:
                 time.sleep(steps_duration[n])
+        time.sleep(1)
 
     @staticmethod
     def get_midi_steps(msgs):

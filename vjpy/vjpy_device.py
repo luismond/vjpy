@@ -10,7 +10,7 @@ class VjPyDevice:
         self.bpm = bpm
         self.note_duration = self.bpm/60
         self.note_value = self.note_values[resolution].relative_value / self.note_duration
-        self.drumkit = drum_kits["myfunkkit"]
+        self.drumkit = drum_kits["reasonkit"]
 
     @property
     def note_values(self):
