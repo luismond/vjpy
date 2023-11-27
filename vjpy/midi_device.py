@@ -18,10 +18,7 @@ class MidiDevice:
     def play_midi_file(self, filename):
         """Parse and play a MIDI file."""
         msgs = self.get_sorted_midi_messages(filename)
-        steps = defaultdict(list)
-        for msg in msgs:
-            steps[msg[0]].append(msg[1])
-
+        steps = self.get_midi_steps(msgs)
         steps_start = list(steps.keys())
         steps_notes = list(steps.values())
         steps_duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))]
@@ -35,6 +32,13 @@ class MidiDevice:
                 self.midi_out.send(msg)
             if n < len(steps_notes)-1:
                 time.sleep(steps_duration[n])
+
+    @staticmethod
+    def get_midi_steps(msgs):
+        steps = defaultdict(list)
+        for msg in msgs:
+            steps[msg[0]].append(msg[1])
+        return steps
 
     @staticmethod
     def get_sorted_midi_messages(filename):
