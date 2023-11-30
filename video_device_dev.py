@@ -15,8 +15,7 @@ VJ = VjPyDevice()
 MD = MidiDevice(VJ)
 VD = VideoDevice(VJ)
 
-# # Play MIDI file
-# # print('playing midi file')
+
 FN = "jazz.mid"
 FILENAME = os.path.join(MD.midi_data_dir, FN)
 MSGS = MD.get_sorted_midi_messages(FILENAME)
@@ -65,12 +64,12 @@ drumkit_note_shs = {}
 for drum in vdk.drums.values():
     drumkit_note_shs[drum.note] = drum.short_hand
 
-# '''
-# {36: 'k',
-#  38: 's',
-#  37: 'z',
-#  45: 't'}
-# '''
+'''
+{36: 'k',
+  38: 's',
+  37: 'z',
+  45: 't'}
+'''
 
 
 # # # collect unique note shorthands
@@ -81,9 +80,9 @@ for s in STEPS.items():
         if note != 81:
             sh = drumkit_note_shs[note]
             shs.add(sh)
-# '''
-# {'h', 'r', 'k', 's'}
-# '''
+'''
+{'h', 'r', 'k', 's'}
+'''
 
 
 # # create empty pattern dictionary with the necessary drum keys
@@ -92,10 +91,10 @@ for sh in shs:
     for n in range(len(STEPS.items())):
         pattern[sh].append("_")
 
-# '''
-# k : ['_', '_', '_', '_', '_', '_', ...]
-# s : ['_', '_', '_', '_', '_', '_', ...]
-# '''
+'''
+k : ['_', '_', '_', '_', '_', '_', ...]
+s : ['_', '_', '_', '_', '_', '_', ...]
+'''
 
 # replace empty slots with corresponding drum hits
 for n, s in enumerate(STEPS.items()):
@@ -105,10 +104,10 @@ for n, s in enumerate(STEPS.items()):
             sh = drumkit_note_shs[note]
             pattern[sh][n] = "x"
 
-# '''
-# k : ['x', '_', '_', '_', 'x', '_', ...]
-# s : ['_', '_', 'x', '_', '_', '_', ...]
-# '''
+'''
+k : ['x', '_', '_', '_', 'x', '_', ...]
+s : ['_', '_', 'x', '_', '_', '_', ...]
+'''
 
 
 key_clips = defaultdict(list)
@@ -122,7 +121,7 @@ for key, key_pattern in pattern.items():
         key_clips[key].append(key_clip)
 
 for key in key_clips:
-    concat_clip = concatenate_videoclips(key_clips[key]*2)
+    concat_clip = concatenate_videoclips(key_clips[key]*1)
     concat_clip_path = os.path.join(SOUNDBANK_DIR_PATH, 'beats', f'{BEATNAME}', f'{key}.mp4')
     concat_clip.write_videofile(concat_clip_path)
 
