@@ -63,42 +63,41 @@ vdk = VideoDrumkit(
         }
     )
 
-# drumkit_note_shs = {}
-# for drum in vdk.drums.values():
-#     drumkit_note_shs[drum.note] = drum#.short_hand
 
-# # # collect unique notes
-notes_set = set()
-for s, notes in steps.items():
-    for note in notes:
-        if note != 81:
-            notes_set.add(note)
-'''
-{42, 51, 36, 38}
-'''
+def steps_to_pattern(steps):
+    # collect unique MIDI notes
+    notes_set = set()
+    for s, notes in steps.items():
+        for note in notes:
+            if note != 81:
+                notes_set.add(note)
+    '''
+    {42, 51, 36, 38}
+    '''
 
-# create empty pattern dictionary with the necessary drum keys
-pattern = defaultdict(list)
-for note in notes_set:
-    for n in range(len(steps.items())):
-        pattern[note].append("_")
+    # create empty pattern dictionary with the necessary drum keys
+    pattern = defaultdict(list)
+    for note in notes_set:
+        for n in range(len(steps.items())):
+            pattern[note].append("_")
 
-'''
-k : ['_', '_', '_', '_', '_', '_', ...]
-s : ['_', '_', '_', '_', '_', '_', ...]
-'''
+    '''
+    k : ['_', '_', '_', '_', '_', '_', ...] # kick
+    s : ['_', '_', '_', '_', '_', '_', ...] # snare
+    '''
 
-# replace empty slots with corresponding drum hits
-for n, s in enumerate(steps.items()):
-    notes = s[1]
-    for note in notes:
-        if note != 81:
-            pattern[note][n] = "x"
+    # replace positions with corresponding drum hits
+    for n, s in enumerate(steps.items()):
+        notes = s[1]
+        for note in notes:
+            if note != 81:
+                pattern[note][n] = "x"
 
-'''
-k : ['x', '_', '_', '_', 'x', '_', ...]
-s : ['_', '_', 'x', '_', '_', '_', ...]
-'''
+    '''
+    k : ['x', '_', '_', '_', 'x', '_', ...] # kick
+    s : ['_', '_', 'x', '_', '_', '_', ...] # snare
+    '''
+    return pattern
 
 
 def render_drum_patterns(pattern):
@@ -132,6 +131,7 @@ def render_video_array(pattern):
     clips_array([[clip] for clip in clips]).resize(width=960).write_videofile(VIDEO_ARRAY_PATH)
 
 
+pattern = steps_to_pattern(steps)
 render_drum_patterns(pattern)
 render_video_array(pattern)
 
