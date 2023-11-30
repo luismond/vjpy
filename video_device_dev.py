@@ -100,20 +100,23 @@ k : ['x', '_', '_', '_', 'x', '_', ...]
 s : ['_', '_', 'x', '_', '_', '_', ...]
 '''
 
-key_clips = defaultdict(list)
 
-for key, key_pattern in pattern.items():
-    for hit in key_pattern:
-        if hit == "x":
-            key_clip = get_subclip(videoclip, start=vdk.drums[key].start, duration=duration)
-        else:
-            key_clip = get_subclip(videoclip, start=vdk.drums[81].start, duration=duration)
-        key_clips[key].append(key_clip)
+def render_drum_patterns(pattern):
+    """Render a video representing one drum pattern."""
+    key_clips = defaultdict(list)
 
-for key in key_clips:
-    concat_clip = concatenate_videoclips(key_clips[key]*1)
-    concat_clip_path = os.path.join(SOUNDBANK_DIR_PATH, 'beats', f'{BEATNAME}', f'{key}.mp4')
-    concat_clip.write_videofile(concat_clip_path)
+    for key, key_pattern in pattern.items():
+        for hit in key_pattern:
+            if hit == "x":
+                key_clip = get_subclip(videoclip, start=vdk.drums[key].start, duration=duration)
+            else:
+                key_clip = get_subclip(videoclip, start=vdk.drums[81].start, duration=duration)
+            key_clips[key].append(key_clip)
+
+    for key in key_clips:
+        concat_clip = concatenate_videoclips(key_clips[key]*1)
+        concat_clip_path = os.path.join(SOUNDBANK_DIR_PATH, 'beats', f'{BEATNAME}', f'{key}.mp4')
+        concat_clip.write_videofile(concat_clip_path)
 
 
 def render_video_array(pattern):
@@ -129,6 +132,7 @@ def render_video_array(pattern):
     clips_array([[clip] for clip in clips]).resize(width=960).write_videofile(VIDEO_ARRAY_PATH)
 
 
+render_drum_patterns(pattern)
 render_video_array(pattern)
 
 # Read a monophonic MIDI file, render a 1-array video
