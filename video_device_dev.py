@@ -15,13 +15,14 @@ vj = VjPyDevice()
 md = MidiDevice(vj)
 vd = VideoDevice(vj)
 
+fn = "jazz.mid"
+filename = os.path.join(md.midi_data_dir, fn)
+msgs = md.get_sorted_midi_messages(filename)
+steps = md.get_midi_steps(msgs)
 
-FN = "jazz.mid"
-FILENAME = os.path.join(md.midi_data_dir, FN)
-MSGS = md.get_sorted_midi_messages(FILENAME)
-STEPS = md.get_midi_steps(MSGS)
 BANKNAME = 'drums_03'
 BEATNAME = 15
+
 SOUNDBANK_DIR_PATH = os.path.join("soundbanks", BANKNAME)
 SOUNDBANK_PATH = os.path.join("soundbanks", BANKNAME, f"{BANKNAME}.mp4")
 BEAT_PATH = os.path.join(SOUNDBANK_DIR_PATH, "beats", f"{BEATNAME}")
@@ -29,7 +30,7 @@ VIDEO_ARRAY_PATH = os.path.join(BEAT_PATH, f"{BEATNAME}_array.mp4")
 videoclip = VideoFileClip(SOUNDBANK_PATH)
 
 
-steps_start = list(STEPS.keys())
+steps_start = list(steps.keys())
 duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))][0]
 
 
@@ -74,7 +75,7 @@ for drum in vdk.drums.values():
 
 # # # collect unique note shorthands
 shs = set()
-for s in STEPS.items():
+for s in steps.items():
     notes = s[1]
     for note in notes:
         if note != 81:
@@ -88,7 +89,7 @@ for s in STEPS.items():
 # # create empty pattern dictionary with the necessary drum keys
 pattern = defaultdict(list)
 for sh in shs:
-    for n in range(len(STEPS.items())):
+    for n in range(len(steps.items())):
         pattern[sh].append("_")
 
 '''
@@ -97,7 +98,7 @@ s : ['_', '_', '_', '_', '_', '_', ...]
 '''
 
 # replace empty slots with corresponding drum hits
-for n, s in enumerate(STEPS.items()):
+for n, s in enumerate(steps.items()):
     notes = s[1]
     for note in notes:
         if note != 81:

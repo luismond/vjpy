@@ -7,3 +7,4 @@ vjpy-setup.sh
 *vjpy_media
 *.mp4
 /soundbanks
+*TEMP_MPY*
