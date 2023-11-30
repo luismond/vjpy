@@ -18,8 +18,24 @@ class Drum(BaseModel):
     note: int
     short_hand: str
     emoji: Optional[str] = None
-    clip: Optional[Any] = None
+    start: Optional[float] = None
 
+
+class VideoDrumkit(BaseModel):
+    """Object representing a collection of video drums."""
+
+    name: str
+    drums: dict
+
+
+class VideoDrum(BaseModel):
+    """Object representing a drum (with name, note, shorthand and emoji)."""
+
+    name: str
+    note: int
+    short_hand: str
+    clip: Optional[Any] = None
+    start: float
 
 class NoteValue(BaseModel):
     """Object representing a note value."""
