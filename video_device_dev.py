@@ -25,7 +25,14 @@ STEPS = MD.get_midi_steps(MSGS)
 BANKNAME = 'drums_03'
 BEATNAME = 15
 soundbank_dir_path = os.path.join("soundbanks", BANKNAME)
-videoclip = VD.make_videoclip(bankname=BANKNAME)
+filepath = os.path.join("soundbanks", BANKNAME, f"{BANKNAME}.mp4")
+videoclip = VideoFileClip(filepath)
+
+def get_subclip(videoclip, start=0, duration=None):
+    """Get a subclip from a video object."""
+    if duration is None:
+        duration = VD.note_value
+    return videoclip.subclip(start, start + duration)  # + step duration
 
 # Define a video drum kit
 vdk = VideoDrumkit(
