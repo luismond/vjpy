@@ -11,15 +11,15 @@ from moviepy.editor import (
 from vjpy import VideoDrumkit, VideoDrum
 
 
-VJ = VjPyDevice()
-MD = MidiDevice(VJ)
-VD = VideoDevice(VJ)
+vj = VjPyDevice()
+md = MidiDevice(vj)
+vd = VideoDevice(vj)
 
 
 FN = "jazz.mid"
-FILENAME = os.path.join(MD.midi_data_dir, FN)
-MSGS = MD.get_sorted_midi_messages(FILENAME)
-STEPS = MD.get_midi_steps(MSGS)
+FILENAME = os.path.join(md.midi_data_dir, FN)
+MSGS = md.get_sorted_midi_messages(FILENAME)
+STEPS = md.get_midi_steps(MSGS)
 BANKNAME = 'drums_03'
 BEATNAME = 15
 SOUNDBANK_DIR_PATH = os.path.join("soundbanks", BANKNAME)
@@ -36,7 +36,7 @@ duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))][0]
 def get_subclip(videoclip, start=0, duration=None):
     """Get a subclip from a video object."""
     if duration is None:
-        duration = VD.note_value
+        duration = vd.note_value
     return videoclip.subclip(start, start + duration)  # + step duration
 
 
