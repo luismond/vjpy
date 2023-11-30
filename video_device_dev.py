@@ -15,24 +15,31 @@ VJ = VjPyDevice()
 MD = MidiDevice(VJ)
 VD = VideoDevice(VJ)
 
-# Play MIDI file
-# print('playing midi file')
+# # Play MIDI file
+# # print('playing midi file')
 FN = "jazz.mid"
 FILENAME = os.path.join(MD.midi_data_dir, FN)
 MSGS = MD.get_sorted_midi_messages(FILENAME)
 STEPS = MD.get_midi_steps(MSGS)
-
 BANKNAME = 'drums_03'
 BEATNAME = 15
-soundbank_dir_path = os.path.join("soundbanks", BANKNAME)
-filepath = os.path.join("soundbanks", BANKNAME, f"{BANKNAME}.mp4")
-videoclip = VideoFileClip(filepath)
+SOUNDBANK_DIR_PATH = os.path.join("soundbanks", BANKNAME)
+SOUNDBANK_PATH = os.path.join("soundbanks", BANKNAME, f"{BANKNAME}.mp4")
+BEAT_PATH = os.path.join(SOUNDBANK_DIR_PATH, "beats", f"{BEATNAME}")
+VIDEO_ARRAY_PATH = os.path.join(BEAT_PATH, f"{BEATNAME}_array.mp4")
+videoclip = VideoFileClip(SOUNDBANK_PATH)
+
+
+steps_start = list(STEPS.keys())
+duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))][0]
+
 
 def get_subclip(videoclip, start=0, duration=None):
     """Get a subclip from a video object."""
     if duration is None:
         duration = VD.note_value
     return videoclip.subclip(start, start + duration)  # + step duration
+
 
 # Define a video drum kit
 vdk = VideoDrumkit(
@@ -54,21 +61,19 @@ vdk = VideoDrumkit(
         }
     )
 
-# Read a MIDI file, render a target video
-# print('Rendering video beat from midi')
-
 drumkit_note_shs = {}
 for drum in vdk.drums.values():
     drumkit_note_shs[drum.note] = drum.short_hand
-'''
-{36: 'k',
- 38: 's',
- 37: 'z',
- 45: 't'}
-'''
+
+# '''
+# {36: 'k',
+#  38: 's',
+#  37: 'z',
+#  45: 't'}
+# '''
 
 
-# # collect unique note shorthands
+# # # collect unique note shorthands
 shs = set()
 for s in STEPS.items():
     notes = s[1]
@@ -76,21 +81,21 @@ for s in STEPS.items():
         if note != 81:
             sh = drumkit_note_shs[note]
             shs.add(sh)
-'''
-{'h', 'r', 'k', 's'}
-'''
+# '''
+# {'h', 'r', 'k', 's'}
+# '''
 
 
-# create empty pattern dictionary with the necessary drum keys
+# # create empty pattern dictionary with the necessary drum keys
 pattern = defaultdict(list)
 for sh in shs:
     for n in range(len(STEPS.items())):
         pattern[sh].append("_")
 
-'''
-k : ['_', '_', '_', '_', '_', '_', ...]
-s : ['_', '_', '_', '_', '_', '_', ...]
-'''
+# '''
+# k : ['_', '_', '_', '_', '_', '_', ...]
+# s : ['_', '_', '_', '_', '_', '_', ...]
+# '''
 
 # replace empty slots with corresponding drum hits
 for n, s in enumerate(STEPS.items()):
@@ -100,51 +105,37 @@ for n, s in enumerate(STEPS.items()):
             sh = drumkit_note_shs[note]
             pattern[sh][n] = "x"
 
-'''
-k : ['x', '_', '_', '_', 'x', '_', ...]
-s : ['_', '_', 'x', '_', '_', '_', ...]
-'''
+# '''
+# k : ['x', '_', '_', '_', 'x', '_', ...]
+# s : ['_', '_', 'x', '_', '_', '_', ...]
+# '''
 
-
-patterns = defaultdict(dict)
-patterns["01"] = pattern
 
 key_clips = defaultdict(list)
-steps_start = list(STEPS.keys())
-duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))][0]
 
-for pattern in patterns.values():
-    for key, key_pattern in pattern.items():
-        for n, hit in enumerate(key_pattern):
-            if hit == "x":
-                key_clip = VD.get_subclip(videoclip, start=vdk.drums[key].start, duration=duration)
-            else:
-                key_clip = VD.get_subclip(videoclip, start=vdk.drums['_'].start, duration=duration)
-            key_clips[key].append(key_clip)
+for key, key_pattern in pattern.items():
+    for n, hit in enumerate(key_pattern):
+        if hit == "x":
+            key_clip = get_subclip(videoclip, start=vdk.drums[key].start, duration=duration)
+        else:
+            key_clip = get_subclip(videoclip, start=vdk.drums['_'].start, duration=duration)
+        key_clips[key].append(key_clip)
 
 for key in key_clips:
-    final_clip = concatenate_videoclips(key_clips[key]*2)
-    final_clip_path = os.path.join(
-        soundbank_dir_path, 'beats', f'{BEATNAME}', f'{key}.mp4'
-        )
-    final_clip.write_videofile(final_clip_path)
-    # write_concatenated_subclips(final_clip, final_clip_path)
+    concat_clip = concatenate_videoclips(key_clips[key]*2)
+    concat_clip_path = os.path.join(SOUNDBANK_DIR_PATH, 'beats', f'{BEATNAME}', f'{key}.mp4')
+    concat_clip.write_videofile(concat_clip_path)
 
 
-"""Composite a polyphonic vertical video array from concatenated drum subclips."""
-dks = list(patterns["01"].keys())
+# """Composite a polyphonic vertical video array from concatenated drum subclips."""
+pattern_keys = list(pattern.keys())
+clip_1 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[0]}.mp4")).fx(vfx.mirror_x)
+clip_2 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[1]}.mp4"))
+clip_3 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[2]}.mp4")).fx(vfx.mirror_x)
+clip_4 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[3]}.mp4"))
+video_array = clips_array([[clip_1], [clip_2], [clip_3], [clip_4]])
+video_array.resize(width=960).write_videofile(VIDEO_ARRAY_PATH)
 
-beat_path = os.path.join(soundbank_dir_path, "beats", f"{BEATNAME}")
-clip1 = VideoFileClip(os.path.join(beat_path, f"{dks[0]}.mp4")).fx(vfx.mirror_x)
-clip2 = VideoFileClip(os.path.join(beat_path, f"{dks[1]}.mp4"))
-clip3 = VideoFileClip(os.path.join(beat_path, f"{dks[2]}.mp4")).fx(vfx.mirror_x)
-clip4 = VideoFileClip(os.path.join(beat_path, f"{dks[3]}.mp4"))
-video = clips_array([[clip1],
-                     [clip2],
-                     [clip3],
-                     [clip4]])
-video.resize(width=960).write_videofile(
-    os.path.join(beat_path, f"{BEATNAME}_array.mp4"))
 
-# Read a monophonic MIDI file, render a 1-array video
-#vd.render_monophonic_video(vdk, videoclip, midi_steps)
+# # Read a monophonic MIDI file, render a 1-array video
+# #vd.render_monophonic_video(vdk, videoclip, midi_steps)
