@@ -67,7 +67,6 @@ vdk = VideoDrumkit(
 # for drum in vdk.drums.values():
 #     drumkit_note_shs[drum.note] = drum#.short_hand
 
-
 # # # collect unique notes
 notes_set = set()
 for s, notes in steps.items():
@@ -75,9 +74,8 @@ for s, notes in steps.items():
         if note != 81:
             notes_set.add(note)
 '''
-{'h', 'r', 'k', 's'}
+{42, 51, 36, 38}
 '''
-
 
 # create empty pattern dictionary with the necessary drum keys
 pattern = defaultdict(list)
