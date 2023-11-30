@@ -33,6 +33,7 @@ class MidiDevice:
         for step in steps_notes:
             for note in step:
                 steps_notes_set.add(note)
+        print(steps_notes_set)
         steps_duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))]
 
         for n, step in enumerate(steps_notes):
