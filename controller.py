@@ -10,8 +10,7 @@ vd = VideoDevice(vj)
 
 # Play MIDI file
 print('playing midi file')
-#fn = "paradiddles.mid"
-fn = "hits.mid"
+fn = "jazz.mid"
 filename = os.path.join(md.midi_data_dir, fn)
 msgs = md.get_sorted_midi_messages(filename)
 midi_steps = md.get_midi_steps(msgs)
@@ -49,31 +48,7 @@ filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
 peaks = wd.find_local_energy_peaks(filepath, prominence=3)
 wd.play_peaks(filepath, 44100, peaks)
 
-# %% Make a video object
-print('Video beat making')
-
-bankname = 'drums_03'
-beatname = 15
-videoclip = vd.make_videoclip(bankname=bankname)
-
-# Define a video drum kit
-vdk = vd.get_vdk(videoclip)
-
-# Read a MIDI file, render a target video
-print('Rendering video beat from midi')
-patterns = vd.midi_steps_to_pattern(midi_steps, vdk)
-vd.concat_drum_subpatterns(
-    patterns,
-    vdk,
-    bankname=bankname,
-    beatname=beatname,
-    loops_n=1
-    )
-vd.composite_vertical_videobeat(
-    patterns,
-    bankname=bankname,
-    beatname=beatname
-    )
-
-# Read a monophonic MIDI file, render a 1-array video
-vd.render_monophonic_video(vdk, videoclip, midi_steps)
+# Make a video object
+print('Video beat')
+vd = VideoDevice(vj)
+vd.make_vid(midi_steps)
