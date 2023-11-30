@@ -27,30 +27,27 @@ class MidiDevice:
         """
         msgs = self.get_sorted_midi_messages(filename)
         steps = self.get_midi_steps(msgs)
-        steps_start = list(steps.keys())
-        steps_notes = list(steps.values())
-        steps_notes_set = set()
-        for step in steps_notes:
-            for note in step:
-                steps_notes_set.add(note)
-        steps_duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))]
 
-        for n, step in enumerate(steps_notes):
-            for note in step:
+        for n, step in enumerate(list(steps.values())):
+            for note in step["notes"]:
                 if note == 0:
                     msg = mido.Message("note_off", note=note, velocity=120)
                 else:
                     msg = mido.Message("note_on", note=note, velocity=120)
                 self.midi_out.send(msg)
-            if n < len(steps_notes)-1:
-                time.sleep(steps_duration[n])
+            if n < len(list(steps.values()))-1:
+                time.sleep(step["duration"])
         time.sleep(1)
 
-    @staticmethod
-    def get_midi_steps(msgs):
-        steps = defaultdict(list)
-        for msg in msgs:
-            steps[msg[0]].append(msg[1])
+    def get_midi_steps(self, msgs):
+        steps = {msg[0]: {"notes": []} for msg in msgs}
+        for n, msg in enumerate(msgs):
+            steps[msg[0]]["notes"].append(msg[1])
+            if n < len(msgs)-1:
+                steps[msg[0]]["duration"] = msgs[n+1][0]-msg[0]
+            else:
+                steps[msg[0]]["duration"] = self.note_value
+
         return steps
 
     @staticmethod
@@ -60,9 +57,6 @@ class MidiDevice:
         midi_messages = []
         for instrument in midi_data.instruments:
             for note in instrument.notes:
-                start = note.start
-                pitch = note.pitch
-                # velocity = note.velocity
-                midi_messages.append([start, pitch])
+                midi_messages.append([note.start, note.pitch])
         midi_messages = sorted(midi_messages, key=lambda x: (x[0], x[1]))
         return midi_messages

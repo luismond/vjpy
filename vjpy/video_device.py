@@ -65,7 +65,8 @@ class VideoDevice:
         # collect unique MIDI notes as shorthands
         shs = set()
         for n, s in enumerate(midi_steps.items()):
-            notes = s[1]
+            print(s)
+            notes = s[1]["notes"]
             for note in notes:
                 if note != 81:
                     sh = drumkit_note_shs[note]
@@ -77,7 +78,7 @@ class VideoDevice:
                 pattern[sh].append("_")
         # replace empty slots with corresponding drum hits
         for n, s in enumerate(midi_steps.items()):
-            notes = s[1]
+            notes = s[1]["notes"]
             for note in notes:
                 if note != 81:
                     sh = drumkit_note_shs[note]
