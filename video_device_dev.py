@@ -44,25 +44,30 @@ def get_subclip(videoclip, start=0, duration=None):
 
 
 # Define a video drum kit
-vdk = VideoDrumkit(
-    name="videokit",
-    drums={
-        36: VideoDrum(name="kick", note=36, short_hand="k", start=24.950),
-        38: VideoDrum(name="snare", note=38, short_hand="s", start=27.5128),
-        37: VideoDrum(name="snare2", note=37, short_hand="z", start=29.5085),
-        45: VideoDrum(name="tom1", note=45, short_hand="t", start=31.4610),
-        41: VideoDrum(name="tom2", note=41, short_hand="w", start=38.9788),
-        43: VideoDrum(name="tom3", note=43, short_hand="p", start=38.9788),
-        51: VideoDrum(name='ride', note=51, short_hand="r", start=03.7158),
-        49: VideoDrum(name="china", note=49, short_hand="x", start=07.1222),
-        57: VideoDrum(name="crash", note=57, short_hand="c", start=09.7210),
-        42: VideoDrum(name="hat", note=42, short_hand="h", start=21.2910),
-        44: VideoDrum(name="hat", note=44, short_hand="f", start=21.2910),
-        46: VideoDrum(name="hat_open", note=46, short_hand="o", start=23.0869),
-        81: VideoDrum(name="silence", note=81, short_hand="_", start=06.005),
-        }
-    )
 
+def load_vdk():
+    """Load video drum kit."""
+    vdk = VideoDrumkit(
+        name="videokit",
+        drums={
+            36: VideoDrum(name="kick", note=36, short_hand="k", start=24.950),
+            38: VideoDrum(name="snare", note=38, short_hand="s", start=27.5128),
+            37: VideoDrum(name="snare2", note=37, short_hand="z", start=29.5085),
+            45: VideoDrum(name="tom1", note=45, short_hand="t", start=31.4610),
+            41: VideoDrum(name="tom2", note=41, short_hand="w", start=38.9788),
+            43: VideoDrum(name="tom3", note=43, short_hand="p", start=38.9788),
+            51: VideoDrum(name='ride', note=51, short_hand="r", start=03.7158),
+            49: VideoDrum(name="china", note=49, short_hand="x", start=07.1222),
+            57: VideoDrum(name="crash", note=57, short_hand="c", start=09.7210),
+            42: VideoDrum(name="hat", note=42, short_hand="h", start=21.2910),
+            44: VideoDrum(name="hat", note=44, short_hand="f", start=21.2910),
+            46: VideoDrum(name="hat_open", note=46, short_hand="o", start=23.0869),
+            81: VideoDrum(name="silence", note=81, short_hand="_", start=06.005),
+            }
+        )
+    return vdk
+
+vdk = load_vdk()
 
 def steps_to_pattern(steps):
     # collect unique MIDI notes
