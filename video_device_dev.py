@@ -23,6 +23,9 @@ steps = md.get_midi_steps(msgs)
 BANKNAME = 'drums_03'
 BEATNAME = 15
 
+
+# def make vid(BANKNAME, BEATNAME)
+
 SOUNDBANK_DIR_PATH = os.path.join("soundbanks", BANKNAME)
 SOUNDBANK_PATH = os.path.join("soundbanks", BANKNAME, f"{BANKNAME}.mp4")
 BEAT_PATH = os.path.join(SOUNDBANK_DIR_PATH, "beats", f"{BEATNAME}")
@@ -30,8 +33,8 @@ VIDEO_ARRAY_PATH = os.path.join(BEAT_PATH, f"{BEATNAME}_array.mp4")
 videoclip = VideoFileClip(SOUNDBANK_PATH)
 
 
-steps_start = list(steps.keys())
-duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))][0]
+duration = list(steps.keys())[1]-list(steps.keys())[0]
+#duration = [(b-a) for (a, b) in list(zip(steps_start, steps_start[1:]))][0]
 
 
 def get_subclip(videoclip, start=0, duration=None):
