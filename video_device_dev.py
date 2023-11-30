@@ -103,7 +103,7 @@ s : ['_', '_', 'x', '_', '_', '_', ...]
 key_clips = defaultdict(list)
 
 for key, key_pattern in pattern.items():
-    for n, hit in enumerate(key_pattern):
+    for hit in key_pattern:
         if hit == "x":
             key_clip = get_subclip(videoclip, start=vdk.drums[key].start, duration=duration)
         else:
@@ -116,15 +116,20 @@ for key in key_clips:
     concat_clip.write_videofile(concat_clip_path)
 
 
-# """Composite a polyphonic vertical video array from concatenated drum subclips."""
-pattern_keys = list(pattern.keys())
-clip_1 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[0]}.mp4")).fx(vfx.mirror_x)
-clip_2 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[1]}.mp4"))
-clip_3 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[2]}.mp4")).fx(vfx.mirror_x)
-clip_4 = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[3]}.mp4"))
-video_array = clips_array([[clip_1], [clip_2], [clip_3], [clip_4]])
-video_array.resize(width=960).write_videofile(VIDEO_ARRAY_PATH)
+def render_video_array(pattern):
+    """Composite a polyphonic vertical video array from concatenated drum pattern subclips."""
+    pattern_keys = list(pattern.keys())
+    clips = []
+    for n, patt in enumerate(pattern_keys):
+        if n % 2 == 1:
+            clip = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[n]}.mp4")).fx(vfx.mirror_x)
+        else:
+            clip = VideoFileClip(os.path.join(BEAT_PATH, f"{pattern_keys[n]}.mp4"))
+        clips.append(clip)
+    clips_array([[clip] for clip in clips]).resize(width=960).write_videofile(VIDEO_ARRAY_PATH)
 
 
-# # Read a monophonic MIDI file, render a 1-array video
-# #vd.render_monophonic_video(vdk, videoclip, midi_steps)
+render_video_array(pattern)
+
+# Read a monophonic MIDI file, render a 1-array video
+# vd.render_monophonic_video(vdk, videoclip, midi_steps)
