@@ -1,4 +1,4 @@
-"""vjpy video class."""
+# """vjpy video class."""
 
 import os
 from collections import defaultdict
@@ -16,25 +16,36 @@ import mido, time
 vj = VjPyDevice()
 
 md = MidiDevice(vj)
-wd = WavDevice(vj)
 vd = VideoDevice(vj)
 
-# Play MIDI file
-#print('Playing midi file')
+# #def make_vid(steps):
+# """Make video."""
+bankname = 'drums_03'
+beatname = 15
+soundbank_dir_path = os.path.join("soundbanks", bankname)
+soundbank_path = os.path.join("soundbanks", bankname, f"{bankname}.mp4")
+beat_path = os.path.join(soundbank_dir_path, "beats", f"{beatname}")
+video_array_path = os.path.join(beat_path, f"{beatname}_array.mp4")
+videoclip = VideoFileClip(soundbank_path)
+
+# # Play MIDI file
+# #print('Playing midi file')
 fn = "jazz.mid"
 
 fp = os.path.join(md.midi_data_dir, fn)
 msgs = md.get_sorted_midi_messages(fp)
 steps = md.get_midi_steps(msgs)
-#md.play_midi_file(fp)
+duration = list(steps.keys())[1]-list(steps.keys())[0]
+
+# #md.play_midi_file(fp)
 
 
-# # class VideoDevice:
-# #     """vjpy video class."""
+# # # class VideoDevice:
+# # #     """vjpy video class."""
 
-#     def __init__(self, vj):
-#         self.note_value = vj.note_value
-#         self.vdk = self.load_vdk()
+# #     def __init__(self, vj):
+# #         self.note_value = vj.note_value
+# #         self.vdk = self.load_vdk()
 
 def load_vdk():
     """Load video drum kit."""
@@ -67,53 +78,43 @@ def get_subclip(videoclip, start=0, duration=None):
         duration = 0.5#self.note_value
     return videoclip.subclip(start, start + duration)
 
-#def steps_to_pattern(steps):
-"""Collect unique MIDI notes."""
-notes_set = set()
-for s, notes in steps.items():
-    for note in notes['notes']:
-        if note != 81:
-            notes_set.add(note)
-'''
-{42, 51, 36, 38}
-'''
+def steps_to_pattern(steps):
+    """Collect unique MIDI notes."""
+    notes_set = set()
+    for s, notes in steps.items():
+        for note in notes['notes']:
+            if note != 81:
+                notes_set.add(note)
+    '''
+    {42, 51, 36, 38}
+    '''
 
-# create empty pattern dictionary with the necessary drum keys
-pattern = defaultdict(list)
-for note in notes_set:
-    for n in range(len(steps.items())):
-        pattern[note].append("_")
-
-
-'''
-k : ['_', '_', '_', '_', '_', '_', ...] # kick
-s : ['_', '_', '_', '_', '_', '_', ...] # snare
-'''
-
-# replace positions with corresponding drum hits
-for n, s in enumerate(steps.items()):
-    notes = s[1]['notes']
-    for note in notes:
-        if note != 81:
-            pattern[note][n] = "x"
+    # create empty pattern dictionary with the necessary drum keys
+    pattern = defaultdict(list)
+    for note in notes_set:
+        for n in range(len(steps.items())):
+            pattern[note].append("_")
 
 
-'''
-k : ['x', '_', '_', '_', 'x', '_', ...] # kick
-s : ['_', '_', 'x', '_', '_', '_', ...] # snare
-'''
-#return pattern
+    '''
+    k : ['_', '_', '_', '_', '_', '_', ...] # kick
+    s : ['_', '_', '_', '_', '_', '_', ...] # snare
+    '''
 
-#def make_vid(steps):
-"""Make video."""
-bankname = 'drums_03'
-beatname = 15
-soundbank_dir_path = os.path.join("soundbanks", bankname)
-soundbank_path = os.path.join("soundbanks", bankname, f"{bankname}.mp4")
-beat_path = os.path.join(soundbank_dir_path, "beats", f"{beatname}")
-video_array_path = os.path.join(beat_path, f"{beatname}_array.mp4")
-videoclip = VideoFileClip(soundbank_path)
-duration = list(steps.keys())[1]-list(steps.keys())[0]
+    # replace positions with corresponding drum hits
+    for n, s in enumerate(steps.items()):
+        notes = s[1]['notes']
+        for note in notes:
+            if note != 81:
+                pattern[note][n] = "x"
+
+
+    '''
+    k : ['x', '_', '_', '_', 'x', '_', ...] # kick
+    s : ['_', '_', 'x', '_', '_', '_', ...] # snare
+    '''
+    return pattern
+
 
 
 def render_drum_patterns(pattern):
@@ -155,7 +156,7 @@ def render_video_array(pattern):
         video_array_path
         )
 
-#pattern = steps_to_pattern(steps)
 
+pattern = steps_to_pattern(steps)
 render_drum_patterns(pattern)
 render_video_array(pattern)
