@@ -33,6 +33,7 @@ class VideoDrum(BaseModel):
     name: str
     note: int
     short_hand: str
+    start: float
     clip: Optional[Any] = None
 
 
