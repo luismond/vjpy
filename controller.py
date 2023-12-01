@@ -1,10 +1,8 @@
 """vjpy controller."""
 import os
 from vjpy import VjPyDevice, MidiDevice, WavDevice, VideoDevice
-from collections import defaultdict
-import mido, time
-vj = VjPyDevice()
 
+vj = VjPyDevice()
 md = MidiDevice(vj)
 wd = WavDevice(vj)
 vd = VideoDevice(vj)
@@ -50,31 +48,6 @@ filepath = os.path.join(wd.wav_dir, "examples", "drums_03.wav")
 peaks = wd.find_local_energy_peaks(filepath, prominence=3)
 wd.play_peaks(filepath, 44100, peaks)
 
-# %% Make a video object
-print('Video beat making')
-
-bankname = 'drums_03'
-beatname = 15
-videoclip = vd.make_videoclip(bankname=bankname)
-
-# Define a video drum kit
-vdk = vd.get_vdk(videoclip)
-
-# Read a MIDI file, render a target video
-print('Rendering video beat from midi')
-patterns = vd.midi_steps_to_pattern(steps, vdk)
-vd.concat_drum_subpatterns(
-    patterns,
-    vdk,
-    bankname=bankname,
-    beatname=beatname,
-    loops_n=1
-    )
-vd.composite_vertical_videobeat(
-    patterns,
-    bankname=bankname,
-    beatname=beatname
-    )
-
-# Read a monophonic MIDI file, render a 1-array video
-vd.render_monophonic_video(vdk, videoclip, steps)
+# Make a video object
+print('render video beat')
+vd.make_vid(steps)
